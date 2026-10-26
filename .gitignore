@@ -1,0 +1,9 @@
+Packages/
+ServerPackages/
+*.rbxl.lock
+*.rbxlx.lock
+sourcemap.json
+.env
+*.secret
+__pycache__/
+tools/economy-sim/out/

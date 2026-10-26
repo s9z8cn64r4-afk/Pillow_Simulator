@@ -1,0 +1,10 @@
+# Fixierte Werkzeugversionen (Installation auf dem Rechner, der Rojo/CI ausführt)
+# [ENTWURF] Versionsnummern vor der ersten Installation gegen die aktuellen Releases prüfen
+# (in der Cloud-Umgebung nicht prüfbar, GitHub-Releases gesperrt). Rojo 7.7.0 entspricht dem Studio-Plugin.
+[tools]
+rojo = "rojo-rbx/rojo@7.7.0"
+wally = "UpliftGames/wally@0.3.2"
+selene = "Kampfkarren/selene@0.28.0"
+stylua = "JohnnyMorganz/StyLua@2.0.2"
+lune = "lune-org/lune@0.9.4"
+luau-lsp = "JohnnyMorganz/luau-lsp@1.39.0"
