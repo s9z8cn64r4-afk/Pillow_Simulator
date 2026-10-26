@@ -37,7 +37,7 @@ Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` bea
 ## 5. Schlag-Ablauf
 1. Client: Eingabe → sofortiges lokales Animations-Feedback → `SwingRequest`.
 2. Server: Rate-Limit → Zustand geladen? → `now - lastSwing >= cooldown - tolerance` sonst verwerfen (Zähler) → Puppe in Reichweite (Position Server-seitig) → Ertrag = `Formulas.feathersPerSwing(...)` → `PlayerData.addFeathers` → `SwingFx` an Spieler in der Nähe.
-3. Auto-Swing: Server-Heartbeat-Schleife pro Spieler mit gleichem Cooldown, 80 % Effizienz, nur wenn Rank ≥ 2 und aktiviert; pausiert bei AFK > 20 Min. (Datensparsamkeit/Fairness der Leaderboards).
+3. Auto-Swing: Server-Heartbeat-Schleife pro Spieler mit gemeinsamem Cooldown (füllt Lücken zwischen aktiven Schlägen), 80 % Effizienz, nur wenn Rank ≥ 2 und aktiviert. AFK-Grenze: Robloxs Standard-Idle-Kick (20 Min.); eigene AFK-Logik erst bei Bedarf (Leaderboard-Fairness, M3).
 
 ## 6. Persistenz
 ProfileStore (Vendor, `ServerStorage.Vendor.ProfileStore`, ADR-0002). Join → `StartSessionAsync` (Abbruch bei Leave) → `Reconcile` → Migration → `StateInit`. Leave → `EndSession`. `BindToClose` wartet auf Abschluss. Käufe: `ProcessReceipt` schreibt ReceiptId in `purchaseHistory` und gibt `PurchaseGranted` erst nach Speicherbestätigung zurück (P3).

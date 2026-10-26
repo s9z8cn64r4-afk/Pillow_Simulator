@@ -32,6 +32,13 @@ def lua(v, indent=1):
     if isinstance(v, dict):
         if not v:
             return "{}"
+        if all(not isinstance(x, (dict, list, tuple)) or (isinstance(x, (list, tuple)) and all(isinstance(y, (int, float)) for y in x)) for x in v.values()):
+            parts = []
+            for k, x in v.items():
+                key = k if k.isidentifier() else "[" + lua(k) + "]"
+                val = "{ " + ", ".join(lua(y) for y in x) + " }" if isinstance(x, (list, tuple)) else lua(x, indent + 1)
+                parts.append(key + " = " + val)
+            return "{ " + ", ".join(parts) + " }"
         parts = []
         for k, x in v.items():
             key = k if k.isidentifier() else "[" + lua(k) + "]"

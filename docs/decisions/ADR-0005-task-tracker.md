@@ -1,6 +1,7 @@
-# ADR-0005 – Task-Tracker
+# ADR-0005 – Task-Tracker Trello
 
-- **Status:** angenommen (2026-10-27)
-- **Kontext:** GitHub Issues/Projects sind aus dieser Umgebung nicht steuerbar. Trello ist verbunden, aber der Arbeitsbereich ist am Board-Limit (10 Boards) – Board-Anlage scheiterte mit „board limit“.
-- **Entscheidung:** Fallback laut Masterprompt K.1: `docs/state/BACKLOG.md` als Markdown-Board (Spalten Backlog · Ready · In Progress · Review · QA · Done · Ideas), Task Briefs nach C.11.
-- **Wechsel später:** Sobald der Owner ein Trello-Board freigibt (eins archivieren) oder GitHub Issues nutzbar sind, wird das Backlog dorthin übertragen. Bis dahin ist BACKLOG.md die Wahrheit für Aufgaben.
+- **Status:** angenommen (2026-10-27, aktualisiert nach Owner-Freigabe)
+- **Kontext:** GitHub Issues/Projects sind aus dieser Umgebung nicht steuerbar; Trello ist verbunden (Masterprompt K.1 Fallback). Erster Versuch scheiterte am Board-Limit; Owner hat Platz geschaffen.
+- **Entscheidung:** Board **„Pillow Simulator | Studio“** (https://trello.com/b/fAGsLKn7/pillow-simulator-studio) mit Listen 🔐 Owner-Aktionen · Backlog · Ready (M1) · In Progress · Review / QA · Done · Ideas. Jede Karte trägt den Task Brief (C.11), Milestone und Priorität im Titel (`[M1] PS-01 … (P0)`).
+- **Spiegel:** `docs/state/BACKLOG.md` bleibt als Offline-Kopie; Trello ist führend für Status.
+- **Konsequenzen:** Commits referenzieren `PS-xx`. M2/M3 liegen als Paketkarten im Backlog und werden bei Milestone-Start zerlegt.

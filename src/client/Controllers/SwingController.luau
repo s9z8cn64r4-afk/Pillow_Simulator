@@ -1,0 +1,133 @@
+--!strict
+-- Eingabe → Schlag-Anfrage. Sofortiges lokales Feedback; Federn vergibt nur der Server.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+local Shared = ReplicatedStorage:WaitForChild("Shared")
+local NetClient = require(Shared.Net.NetClient)
+local Formulas = require(Shared.Util.Formulas)
+local Pillows = require(Shared.Config.Pillows)
+local Signal = require(Shared.Util.Signal)
+
+local player = Players.LocalPlayer
+
+local SwingController = {}
+SwingController.Swung = Signal.new()
+SwingController.holding = false
+local lastSwing = 0
+local State, Fx
+
+function SwingController:Init(registry)
+	State = registry.PlayerStateController
+	Fx = registry.FxController
+end
+
+function SwingController:cooldown(): number
+	local s = State.state
+	if not s then
+		return math.huge
+	end
+	local pillow = Pillows.byId[s.equippedPillow] or Pillows.byId[Pillows.starter]
+	return Formulas.cooldown(s.upgrades.swingSpeed, pillow.speed)
+end
+
+local function reducedMotion(): boolean
+	local s = State.state
+	return s ~= nil and s.settings ~= nil and s.settings.reducedMotion == true
+end
+
+-- Prozedurale Schwung-Animation (rechter Arm + Kissen-Squash)
+local function animate(cd: number)
+	local char = player.Character
+	if not char then
+		return
+	end
+	local shoulder = (char:FindFirstChild("RightUpperArm") and char.RightUpperArm:FindFirstChild("RightShoulder"))
+		or (char:FindFirstChild("Torso") and char.Torso:FindFirstChild("Right Shoulder"))
+	local dur = math.clamp(cd * 0.45, 0.08, 0.2)
+	if shoulder and shoulder:IsA("Motor6D") then
+		local base = shoulder:GetAttribute("BaseC0") :: CFrame?
+		if not base then
+			base = shoulder.C0
+			shoulder:SetAttribute("BaseC0", base)
+		end
+		local angle = if reducedMotion() then 45 else 110
+		local up = TweenService:Create(shoulder, TweenInfo.new(dur * 0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			C0 = (base :: CFrame) * CFrame.Angles(math.rad(angle), 0, math.rad(-20)),
+		})
+		local down = TweenService:Create(shoulder, TweenInfo.new(dur * 0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+			C0 = base :: CFrame,
+		})
+		up.Completed:Once(function()
+			down:Play()
+		end)
+		up:Play()
+	end
+	local tool = char:FindFirstChild("Pillow")
+	local mesh = tool and tool:FindFirstChild("Handle") and tool.Handle:FindFirstChildOfClass("SpecialMesh")
+	if mesh and not reducedMotion() then
+		mesh.Scale = Vector3.new(1.25, 0.7, 1.2)
+		TweenService:Create(mesh, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+			Scale = Vector3.new(1, 1, 1),
+		}):Play()
+	end
+end
+
+function SwingController:trySwing(): boolean
+	local now = os.clock()
+	local cd = self:cooldown()
+	if now - lastSwing < cd + 0.02 then
+		return false
+	end
+	lastSwing = now
+	NetClient.fire("SwingRequest")
+	animate(cd)
+	Fx:localSwing()
+	self.Swung:Fire()
+	return true
+end
+
+function SwingController:setHolding(on: boolean)
+	self.holding = on
+	if on then
+		self:trySwing()
+	end
+end
+
+local function hookTool(tool: Instance)
+	if not tool:IsA("Tool") or tool.Name ~= "Pillow" then
+		return
+	end
+	tool.Activated:Connect(function()
+		SwingController:setHolding(true)
+	end)
+	tool.Deactivated:Connect(function()
+		SwingController:setHolding(false)
+	end)
+	tool.Unequipped:Connect(function()
+		SwingController:setHolding(false)
+	end)
+end
+
+function SwingController:Start()
+	local function onChar(char: Model)
+		for _, c in char:GetChildren() do
+			hookTool(c)
+		end
+		char.ChildAdded:Connect(hookTool)
+	end
+	if player.Character then
+		onChar(player.Character)
+	end
+	player.CharacterAdded:Connect(onChar)
+	-- Gedrückt halten = Dauerschlag
+	RunService.Heartbeat:Connect(function()
+		if self.holding then
+			self:trySwing()
+		end
+	end)
+end
+
+return SwingController
