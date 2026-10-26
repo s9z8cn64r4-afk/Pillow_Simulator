@@ -1,6 +1,6 @@
 --!strict
 -- Client-Bootstrap: Controller laden, Init() dann Start().
-local ORDER = { "PlayerStateController", "FxController", "SwingController", "UIController" }
+local ORDER = { "PlayerStateController", "FxController", "SwingController", "SoundController", "UIController" }
 
 local folder = script:WaitForChild("Controllers")
 local registry: { [string]: any } = {}

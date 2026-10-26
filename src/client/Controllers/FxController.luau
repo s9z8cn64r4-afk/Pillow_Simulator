@@ -1,5 +1,5 @@
 --!strict
--- Kosmetische Effekte: Federburst, schwebende Zahlen, Puppen-Wackeln. Respektiert Low VFX / Reduced Motion.
+-- Kosmetische Effekte: 3D-Federburst, schwebende Zahlen, Puppen-Wackeln. Respektiert Low VFX / Reduced Motion.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -9,13 +9,17 @@ local CollectionService = game:GetService("CollectionService")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local NetClient = require(Shared.Net.NetClient)
 local NumberFormat = require(Shared.Util.NumberFormat)
+local Assets = require(Shared.Config.Assets)
 
 local player = Players.LocalPlayer
-local FEATHER_TEXTURE = "rbxasset://textures/particles/sparkles_main.dds" -- Platzhalter bis eigene Federtextur (M2)
+local MAX_FEATHERS = 60 -- Performance-Budget G.6: aktive Partikel pro Spieler
 
 local FxController = {}
 local State
-local emitters: { [Model]: ParticleEmitter } = {}
+local pool: { BasePart } = {}
+local active = 0
+local featherTemplate: BasePart? = nil
+local fxFolder: Folder
 
 function FxController:Init(registry)
 	State = registry.PlayerStateController
@@ -30,42 +34,50 @@ local function handleOf(char: Model?): BasePart?
 	return tool and tool:FindFirstChild("Handle") :: BasePart?
 end
 
-local function emitterFor(char: Model): ParticleEmitter?
-	local handle = handleOf(char)
-	if not handle then
+local function takeFeather(): BasePart?
+	if active >= MAX_FEATHERS or not featherTemplate then
 		return nil
 	end
-	local existing = emitters[char]
-	if existing and existing.Parent == handle then
-		return existing
+	active += 1
+	local f = table.remove(pool)
+	if not f then
+		f = (featherTemplate :: BasePart):Clone()
 	end
-	local pe = Instance.new("ParticleEmitter")
-	pe.Name = "FeatherBurst"
-	pe.Texture = FEATHER_TEXTURE
-	pe.Color = ColorSequence.new(Color3.fromRGB(255, 250, 240))
-	pe.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.45), NumberSequenceKeypoint.new(1, 0.1) })
-	pe.Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(1, 1) })
-	pe.Lifetime = NumberRange.new(0.5, 0.9)
-	pe.Speed = NumberRange.new(6, 12)
-	pe.SpreadAngle = Vector2.new(180, 180)
-	pe.Acceleration = Vector3.new(0, -6, 0)
-	pe.Drag = 3
-	pe.Rotation = NumberRange.new(0, 360)
-	pe.RotSpeed = NumberRange.new(-180, 180)
-	pe.Rate = 0
-	pe.Parent = handle
-	emitters[char] = pe
-	return pe
+	f.Transparency = 0
+	f.Parent = fxFolder
+	return f
 end
 
-local function burst(char: Model?, count: number)
-	if not char then
+local function releaseFeather(f: BasePart)
+	active -= 1
+	f.Parent = nil
+	table.insert(pool, f)
+end
+
+-- Federn fliegen aus dem Kissen, trudeln und verblassen (rein lokal, verankert, ohne Physik)
+local function burst(origin: Vector3?, count: number)
+	if not origin then
 		return
 	end
-	local pe = emitterFor(char)
-	if pe then
-		local n = if settings().lowVfx then math.ceil(count / 2) else count
-		pe:Emit(n)
+	local n = if settings().lowVfx then math.ceil(count / 2) else count
+	local rm = settings().reducedMotion
+	for _ = 1, n do
+		local f = takeFeather()
+		if not f then
+			return
+		end
+		local dir = Vector3.new(math.random() - 0.5, math.random() * 0.8 + 0.2, math.random() - 0.5).Unit
+		local dist = (if rm then 1.5 else 3) + math.random() * 2.5
+		local start = CFrame.new(origin) * CFrame.Angles(math.random() * 6.28, math.random() * 6.28, math.random() * 6.28)
+		f.CFrame = start
+		local life = 0.7 + math.random() * 0.5
+		local target = CFrame.new(origin + dir * dist + Vector3.new(0, -1.2, 0))
+			* CFrame.Angles(math.random() * 6.28, math.random() * 6.28, math.random() * 6.28)
+		local t1 = TweenService:Create(f, TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { CFrame = target })
+		local t2 = TweenService:Create(f, TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Transparency = 1 })
+		t1:Play()
+		t2:Play()
+		task.delay(life, releaseFeather, f)
 	end
 end
 
@@ -99,51 +111,72 @@ local function floatText(at: BasePart, text: string, color: Color3)
 	Debris:AddItem(bb, 0.85)
 end
 
-local function wobbleDummy(name: string)
-	if settings().reducedMotion then
-		return
-	end
+local function dummyByName(name: string): Model?
 	for _, d in CollectionService:GetTagged("PillowDummy") do
-		if d.Name == name and d:IsA("Model") and d.PrimaryPart then
-			local body = d.PrimaryPart
-			local base = body.CFrame
-			local t = TweenService:Create(body, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 1, true), {
-				CFrame = base * CFrame.Angles(math.rad(12), 0, 0),
-			})
-			t:Play()
-			t.Completed:Once(function()
-				body.CFrame = base
-			end)
-			return
+		if d.Name == name and d:IsA("Model") then
+			return d
 		end
 	end
+	return nil
+end
+
+local function wobbleDummy(d: Model)
+	if settings().reducedMotion or not d.PrimaryPart then
+		return
+	end
+	local body = d.PrimaryPart :: BasePart
+	local base = body:GetAttribute("BaseCFrame") :: CFrame?
+	if not base then
+		base = body.CFrame
+		body:SetAttribute("BaseCFrame", base)
+	end
+	local t = TweenService:Create(body, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 1, true), {
+		CFrame = (base :: CFrame) * CFrame.Angles(math.rad(12), 0, 0),
+	})
+	t:Play()
+	t.Completed:Once(function()
+		body.CFrame = base :: CFrame
+	end)
 end
 
 -- Sofortiges Feedback beim eigenen Schlag (vor Serverantwort)
 function FxController:localSwing()
-	burst(player.Character, 8)
+	local h = handleOf(player.Character)
+	burst(h and h.Position, 6)
 end
 
 function FxController:Start()
+	fxFolder = Instance.new("Folder")
+	fxFolder.Name = "LocalFx"
+	fxFolder.Parent = workspace
+	local assetsFolder = ReplicatedStorage:WaitForChild("Assets", 10)
+	local tpl = assetsFolder and assetsFolder:FindFirstChild(Assets.models.feather)
+	if tpl and tpl:IsA("BasePart") then
+		featherTemplate = tpl
+	else
+		warn("[PS][WARN] Feder-Modell fehlt (ReplicatedStorage.Assets." .. Assets.models.feather .. ")")
+	end
+
 	NetClient.on("SwingFx", function(userId: number, amount: number, dummyName: string?, isAuto: boolean?)
 		local who = Players:GetPlayerByUserId(userId)
 		local char = who and who.Character
+		local handle = handleOf(char)
+		local dummy = dummyName and dummyByName(dummyName)
 		if who == player then
-			local handle = handleOf(char)
 			if handle then
 				local color = if dummyName then Color3.fromRGB(255, 196, 60) else Color3.fromRGB(255, 226, 122)
 				floatText(handle, "+" .. NumberFormat.short(amount), color)
 			end
-			if dummyName then
-				wobbleDummy(dummyName)
-				burst(char, 10)
+			if dummy then
+				wobbleDummy(dummy)
+				burst(dummy:GetPivot().Position + Vector3.new(0, 2, 0), 10)
 			elseif isAuto then
-				burst(char, 5)
+				burst(handle and handle.Position, 4)
 			end
 		else
-			burst(char, 4)
-			if dummyName then
-				wobbleDummy(dummyName)
+			burst(handle and handle.Position, 3)
+			if dummy then
+				wobbleDummy(dummy)
 			end
 		end
 	end)

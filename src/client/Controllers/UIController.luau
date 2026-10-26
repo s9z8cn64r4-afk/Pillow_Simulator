@@ -18,7 +18,7 @@ local C = require(UI.Components)
 
 local player = Players.LocalPlayer
 local UIController = {}
-local State, Swing
+local State, Swing, Sound
 
 local rarityInfo: { [string]: any } = {}
 for _, r in Pillows.rarities do
@@ -37,6 +37,7 @@ local REASONS = {
 function UIController:Init(registry)
 	State = registry.PlayerStateController
 	Swing = registry.SwingController
+	Sound = registry.SoundController
 end
 
 -- ---------- Aufbau ----------
@@ -55,8 +56,13 @@ local function make(className: string, props: { [string]: any }, parent: Instanc
 end
 
 function UIController:toast(text: string, color: Color3?)
-	local f = C.panel(UDim2.fromOffset(360, 44), color or Theme.color.bgSoft)
-	local label = C.text({ text = text, size = Theme.size.sm })
+	-- Dunkler Hintergrund, farbiger Rand + Text: lesbar auch bei hellen Seltenheitsfarben
+	local f = C.panel(UDim2.fromOffset(360, 44), Theme.color.bg)
+	local stroke = f:FindFirstChildOfClass("UIStroke")
+	if stroke and color then
+		stroke.Color = color
+	end
+	local label = C.text({ text = text, size = Theme.size.sm, color = color or Theme.color.surface })
 	label.Parent = f
 	f.BackgroundTransparency = 1
 	f.Parent = toastStack
@@ -108,18 +114,33 @@ end
 function UIController:build()
 	gui = make("ScreenGui", { Name = "HUD", ResetOnSpawn = false, IgnoreGuiInset = true, ZIndexBehavior = Enum.ZIndexBehavior.Sibling })
 	local uiScale = make("UIScale", {}, gui)
+	local root = make("Frame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1 }, gui)
+	-- Touch-Geräte: höhere Mindestskalierung, damit Tippziele ≥ 44 px bleiben
+	local minScale = if UserInputService.TouchEnabled then 0.8 else 0.62
 	local function rescale()
 		local cam = workspace.CurrentCamera
-		local h = cam and cam.ViewportSize.Y or Theme.referenceHeight
+		local vp = cam and cam.ViewportSize or Vector2.new(1280, Theme.referenceHeight)
+		-- Nur Studio: Attribut DebugViewport (Vector2) simuliert eine Bildschirmgröße (z. B. Phone 844x390)
+		local debugVp = gui:GetAttribute("DebugViewport")
+		if typeof(debugVp) == "Vector2" then
+			vp = debugVp
+			root.Size = UDim2.fromOffset(vp.X, vp.Y)
+			minScale = if gui:GetAttribute("DebugTouch") then 0.8 else minScale
+		else
+			root.Size = UDim2.fromScale(1, 1)
+		end
 		local user = State.state and State.state.settings and State.state.settings.uiScale or 1
-		uiScale.Scale = math.clamp(h / Theme.referenceHeight, 0.62, 1.3) * user
+		local s = math.clamp(vp.Y / Theme.referenceHeight, minScale, 1.3) * user
+		uiScale.Scale = s
+		-- Root in Referenz-Pixeln dimensionieren, damit Anker am Rand des (simulierten) Bildschirms liegen
+		root.Size = UDim2.fromOffset(vp.X / s, vp.Y / s)
 	end
-	rescale()
+	gui:GetAttributeChangedSignal("DebugViewport"):Connect(rescale)
+	gui:GetAttributeChangedSignal("DebugTouch"):Connect(rescale)
 	if workspace.CurrentCamera then
 		workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(rescale)
 	end
-
-	local root = make("Frame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1 }, gui)
+	rescale()
 	make("UIPadding", {
 		PaddingTop = UDim.new(0, 16),
 		PaddingLeft = UDim.new(0, 16),
@@ -162,6 +183,7 @@ function UIController:build()
 		size = UDim2.fromOffset(150, 150),
 		color = Theme.color.primary,
 		textSize = Theme.size.lg,
+		silent = true,
 		onPress = function()
 			Swing:setHolding(true)
 		end,
@@ -180,9 +202,9 @@ function UIController:build()
 		swingBtn.instance.Size = UDim2.fromOffset(120, 120)
 	end
 
-	local autoBtn = C.button({ text = "AUTO: OFF", size = UDim2.fromOffset(150, 48), color = Theme.color.locked, textSize = Theme.size.sm })
+	local autoBtn = C.button({ text = "AUTO: OFF", size = UDim2.fromOffset(150, 56), color = Theme.color.locked, textSize = Theme.size.sm })
 	autoBtn.instance.AnchorPoint = Vector2.new(1, 1)
-	autoBtn.instance.Position = UDim2.new(1, 0, 1, -164)
+	autoBtn.instance.Position = UDim2.new(1, 0, 1, -166)
 	autoBtn.instance.Parent = root
 
 	-- Nächstes Ziel (unten Mitte)
@@ -201,6 +223,10 @@ function UIController:build()
 	-- Toasts (oben Mitte, unter Rank)
 	toastStack = make("Frame", { AnchorPoint = Vector2.new(0.5, 0), Position = UDim2.new(0.5, 0, 0, 70), Size = UDim2.fromOffset(360, 200), BackgroundTransparency = 1 }, root)
 	make("UIListLayout", { Padding = UDim.new(0, 6), HorizontalAlignment = Enum.HorizontalAlignment.Center }, toastStack)
+
+	C.onAnyPress = function()
+		Sound:play("click")
+	end
 
 	local shop = self:buildShop(root)
 	shopBtn.button.Activated:Connect(function()
@@ -295,22 +321,22 @@ function UIController:buildShop(root: Frame)
 	local title = C.text({ text = "SHOP", size = Theme.size.lg })
 	title.Size = UDim2.new(1, 0, 0, 48)
 	title.Parent = panel
-	local close = C.button({ text = "X", size = UDim2.fromOffset(44, 44), color = Theme.color.danger, textSize = Theme.size.md })
+	local close = C.button({ text = "X", size = UDim2.fromOffset(52, 52), color = Theme.color.danger, textSize = Theme.size.md })
 	close.instance.AnchorPoint = Vector2.new(1, 0)
 	close.instance.Position = UDim2.new(1, -8, 0, 8)
 	close.instance.Parent = panel
 
-	local tabs = make("Frame", { Position = UDim2.fromOffset(16, 52), Size = UDim2.new(1, -32, 0, 44), BackgroundTransparency = 1 }, panel)
+	local tabs = make("Frame", { Position = UDim2.fromOffset(16, 52), Size = UDim2.new(1, -32, 0, 52), BackgroundTransparency = 1 }, panel)
 	make("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 10) }, tabs)
-	local tabPillows = C.button({ text = "Pillows", size = UDim2.fromOffset(140, 40), color = Theme.color.primary })
+	local tabPillows = C.button({ text = "Pillows", size = UDim2.fromOffset(150, 50), color = Theme.color.primary })
 	tabPillows.instance.Parent = tabs
-	local tabUpgrades = C.button({ text = "Upgrades", size = UDim2.fromOffset(140, 40), color = Theme.color.bgSoft })
+	local tabUpgrades = C.button({ text = "Upgrades", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
 	tabUpgrades.instance.Parent = tabs
 
 	local function list(): ScrollingFrame
 		local sf = make("ScrollingFrame", {
-			Position = UDim2.fromOffset(16, 104),
-			Size = UDim2.new(1, -32, 1, -120),
+			Position = UDim2.fromOffset(16, 112),
+			Size = UDim2.new(1, -32, 1, -128),
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
 			ScrollBarThickness = 8,
@@ -325,17 +351,17 @@ function UIController:buildShop(root: Frame)
 	upgradeList.Visible = false
 
 	local function row(parent: Instance, order: number)
-		local f = make("Frame", { Size = UDim2.new(1, -12, 0, 62), BackgroundColor3 = Theme.color.bgSoft, LayoutOrder = order }, parent)
+		local f = make("Frame", { Size = UDim2.new(1, -12, 0, 70), BackgroundColor3 = Theme.color.bgSoft, LayoutOrder = order }, parent)
 		C.corner(f)
 		local name = C.text({ text = "", size = Theme.size.sm, align = Enum.TextXAlignment.Left })
 		name.Position = UDim2.fromOffset(14, 4)
 		name.Size = UDim2.new(1, -200, 0, 28)
 		name.Parent = f
 		local info = C.text({ text = "", size = Theme.size.xs, color = Theme.color.muted, font = Theme.font.body, align = Enum.TextXAlignment.Left })
-		info.Position = UDim2.fromOffset(14, 32)
+		info.Position = UDim2.fromOffset(14, 36)
 		info.Size = UDim2.new(1, -200, 0, 24)
 		info.Parent = f
-		local btn = C.button({ text = "", size = UDim2.fromOffset(170, 46), color = Theme.color.success })
+		local btn = C.button({ text = "", size = UDim2.fromOffset(170, 54), color = Theme.color.success })
 		btn.instance.AnchorPoint = Vector2.new(1, 0.5)
 		btn.instance.Position = UDim2.new(1, -8, 0.5, 0)
 		btn.instance.Parent = f

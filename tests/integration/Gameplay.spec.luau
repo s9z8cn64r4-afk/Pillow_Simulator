@@ -107,6 +107,28 @@ return function(it, expect, ctx)
 		p2:EndSession()
 	end)
 
+	it("Auto-Swing gesperrt unter Rank 2", function()
+		data.rank = 1
+		expect(Stats:canAutoSwing(player)).toBeFalsy()
+	end)
+
+	it("Auto-Swing ab Rank 2: ~80 % Ertrag im Cooldown-Takt ohne Eingabe", function()
+		data.lifetimeFeathers = 600
+		data.rank = 2
+		local perSwing = Stats:feathersPerSwing(player) * 0.8
+		local cd = Stats:cooldown(player)
+		local before = data.feathers
+		data.autoSwingEnabled = true
+		task.wait(3)
+		data.autoSwingEnabled = false
+		local swings = (data.feathers - before) / perSwing
+		local expectedSwings = 3 / cd
+		-- Heartbeat-Takt erlaubt ±1,5 Schläge Abweichung
+		expect(math.abs(swings - expectedSwings) <= 1.5).toBeTruthy()
+		-- ganzzahlige Anzahl Schläge → Ertrag je Schlag ist exakt 80 %
+		expect(math.abs(swings - math.floor(swings + 0.5)) < 1e-6).toBeTruthy()
+	end)
+
 	-- Stand wiederherstellen
 	for k, v in backup do
 		data[k] = v

@@ -65,13 +65,26 @@ local function animate(cd: number)
 		end)
 		up:Play()
 	end
+	-- Squash & Stretch: SpecialMesh (Platzhalter) oder MeshPart-Größe (generierte Modelle)
 	local tool = char:FindFirstChild("Pillow")
-	local mesh = tool and tool:FindFirstChild("Handle") and tool.Handle:FindFirstChildOfClass("SpecialMesh")
-	if mesh and not reducedMotion() then
-		mesh.Scale = Vector3.new(1.25, 0.7, 1.2)
-		TweenService:Create(mesh, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
-			Scale = Vector3.new(1, 1, 1),
-		}):Play()
+	local handle = tool and tool:FindFirstChild("Handle") :: BasePart?
+	if handle and not reducedMotion() then
+		local mesh = handle:FindFirstChildOfClass("SpecialMesh")
+		local squash = Vector3.new(1.25, 0.7, 1.2)
+		if mesh then
+			mesh.Scale = squash
+			TweenService:Create(mesh, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+				Scale = Vector3.new(1, 1, 1),
+			}):Play()
+		else
+			local base = handle:GetAttribute("BaseSize") :: Vector3?
+			if base then
+				handle.Size = base * squash
+				TweenService:Create(handle, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+					Size = base,
+				}):Play()
+			end
+		end
 	end
 end
 

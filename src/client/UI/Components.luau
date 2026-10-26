@@ -5,6 +5,7 @@ local Theme = require(script.Parent.Theme)
 
 local Components = {}
 Components.reducedMotion = false
+Components.onAnyPress = nil :: (() -> ())? -- globaler Hook (z. B. Klick-Sound)
 
 local function tween(obj: Instance, t: number, props: { [string]: any }, style: Enum.EasingStyle?)
 	local dur = if Components.reducedMotion then t * 0.3 else t
@@ -70,6 +71,7 @@ export type ButtonProps = {
 	onClick: (() -> ())?,
 	onPress: (() -> ())?,
 	onRelease: (() -> ())?,
+	silent: boolean?, -- kein globaler Klick-Hook (z. B. Schlag-Taste mit eigenem Sound)
 }
 
 -- Button mit Hover-Vergrößerung, Press-Squash und Disabled-Zustand
@@ -109,6 +111,9 @@ function Components.button(props: ButtonProps)
 		end
 		if not Components.reducedMotion then
 			tween(scale, 0.06, { Scale = 0.92 })
+		end
+		if Components.onAnyPress and not props.silent then
+			Components.onAnyPress()
 		end
 		if props.onPress then
 			props.onPress()

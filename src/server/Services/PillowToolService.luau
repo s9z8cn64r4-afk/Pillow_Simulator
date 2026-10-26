@@ -5,6 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Pillows = require(Shared.Config.Pillows)
+local Assets = require(Shared.Config.Assets)
 
 local TOOL_NAME = "Pillow"
 
@@ -32,21 +33,31 @@ function PillowToolService.buildTool(pillowId: string): Tool
 	tool:SetAttribute("PillowId", pillow.id)
 	tool.Grip = CFrame.new(0, -0.2, -1.1) * CFrame.Angles(math.rad(90), 0, 0)
 
-	local handle = Instance.new("Part")
-	handle.Name = "Handle"
-	handle.Size = Vector3.new(2.4, 0.9, 1.7)
-	handle.Color = rarityColor[pillow.rarity] or Color3.new(1, 1, 1)
-	handle.Material = Enum.Material.Fabric
+	-- Generiertes Modell, falls vorhanden (ReplicatedStorage.Assets.Pillows.<id>), sonst Platzhalter-Ellipsoid
+	local folder = ReplicatedStorage:FindFirstChild("Assets")
+	local model = folder and folder:FindFirstChild(Assets.models.pillowsFolder)
+	local template = model and model:FindFirstChild(pillow.id)
+	local handle: BasePart
+	if template and template:IsA("MeshPart") then
+		handle = template:Clone()
+		handle.Name = "Handle"
+		-- Kissen quer vor dem Körper halten: Längsachse (X) quer, Fläche nach vorn
+		tool.Grip = CFrame.new(0, 0, -0.9) * CFrame.Angles(0, math.rad(90), 0)
+	else
+		local part = Instance.new("Part")
+		part.Name = "Handle"
+		part.Size = Vector3.new(2.4, 0.9, 1.7)
+		part.Color = rarityColor[pillow.rarity] or Color3.new(1, 1, 1)
+		part.Material = Enum.Material.Fabric
+		local mesh = Instance.new("SpecialMesh")
+		mesh.MeshType = Enum.MeshType.Sphere
+		mesh.Parent = part
+		handle = part
+	end
+	handle.Anchored = false
 	handle.CanCollide = false
 	handle.Massless = true
-	local mesh = Instance.new("SpecialMesh")
-	mesh.MeshType = Enum.MeshType.Sphere
-	mesh.Scale = Vector3.new(1, 1, 1)
-	mesh.Parent = handle
-	if pillow.id == Pillows.starter then
-		-- abgenutzt: matter, leicht gräulich
-		handle.Color = Color3.fromRGB(176, 168, 150)
-	end
+	handle:SetAttribute("BaseSize", handle.Size)
 	handle.Parent = tool
 	return tool
 end
