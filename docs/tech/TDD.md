@@ -17,8 +17,9 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `StatsService` | berechnet Multiplikator-Stack und Cooldown je Spieler (Cache, invalidiert bei Änderungen) |
 | `SwingService` | Schlag-Anfragen, Cooldown, Puppen-Treffer, Auto-Swing-Loop, Federn gutschreiben |
 | `ShopService` | Kissen/Upgrades kaufen, ausrüsten |
-| `ZoneService` | Zonen-Volumen, aktuelle Zone je Spieler, Freischaltung, Barrieren (P2) |
-| `RebirthService`, `RankService` | P2 |
+| `ZoneService` | Zonen-Volumen (Tag `ZoneVolume`), aktuelle Zone je Spieler (alle 0,25 s), Freischaltung per ProximityPrompt an der Barriere (Tag `ZoneBarrier`), Teleport zu `ZoneSpawn` |
+| `RebirthService` | Rebirth synchron ohne Yield (keine Doppel-Ausführung), Reset + Teleport in Startzone |
+| `RankService` | Titel über dem Kopf, Rank-Up-Hinweis an Mitspieler |
 | `RewardService`, `CodeService`, `LeaderboardService`, `SocialService`, `PurchaseService`, `AnalyticsService`, `AntiCheatService` | P2–P3 |
 
 **Client** (`StarterPlayerScripts.Client`): `init.client.luau` lädt `Controllers/`.
@@ -36,8 +37,8 @@ Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` bea
 
 ## 5. Schlag-Ablauf
 1. Client: Eingabe → sofortiges lokales Animations-Feedback → `SwingRequest`.
-2. Server: Rate-Limit → Zustand geladen? → `now - lastSwing >= cooldown - tolerance` sonst verwerfen (Zähler) → Puppe in Reichweite (Position Server-seitig) → Ertrag = `Formulas.feathersPerSwing(...)` → `PlayerData.addFeathers` → `SwingFx` an Spieler in der Nähe.
-3. Auto-Swing: Server-Heartbeat-Schleife pro Spieler mit gemeinsamem Cooldown (füllt Lücken zwischen aktiven Schlägen), 80 % Effizienz, nur wenn Rank ≥ 2 und aktiviert. AFK-Grenze: Robloxs Standard-Idle-Kick (20 Min.); eigene AFK-Logik erst bei Bedarf (Leaderboard-Fairness, M3).
+2. Server: Rate-Limit → Zustand geladen? → `SwingGate.active` (Cooldown mit Toleranz; Verstoß erst bei anhaltendem Spam, BUG-001) → Puppe in Reichweite (Position Server-seitig) → Ertrag = `Formulas.feathersPerSwing(...)` → `PlayerData.addFeathers` → `SwingFx` an Spieler in der Nähe.
+3. Auto-Swing: Server-Heartbeat-Schleife pro Spieler (`SwingGate.auto`), pausiert während aktiver Schläge, 80 % Effizienz, nur wenn Rank ≥ 2 und aktiviert. AFK-Grenze: Robloxs Standard-Idle-Kick (20 Min.); eigene AFK-Logik erst bei Bedarf (Leaderboard-Fairness, M3).
 
 ## 6. Persistenz
 ProfileStore (Vendor, `ServerStorage.Vendor.ProfileStore`, ADR-0002). Join → `StartSessionAsync` (Abbruch bei Leave) → `Reconcile` → Migration → `StateInit`. Leave → `EndSession`. `BindToClose` wartet auf Abschluss. Käufe: `ProcessReceipt` schreibt ReceiptId in `purchaseHistory` und gibt `PurchaseGranted` erst nach Speicherbestätigung zurück (P3).

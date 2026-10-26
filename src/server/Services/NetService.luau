@@ -57,7 +57,7 @@ function NetService:flag(player: Player, reason: string, ctx: { [string]: any }?
 		c.userId = player.UserId
 		Log:warn("Netz-Verstoß", c)
 	end
-	if n >= self.KICK_THRESHOLD then
+	if n == self.KICK_THRESHOLD then -- genau einmal kicken
 		Log:warn("Kick wegen Netz-Spam", { userId = player.UserId })
 		player:Kick("Connection problem detected. Please rejoin.")
 	end

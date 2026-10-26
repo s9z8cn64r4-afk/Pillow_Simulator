@@ -1,0 +1,82 @@
+--!strict
+-- Rebirth-Menü: „Du verlierst / Du behältst / Du bekommst“ + Bestätigung (GDD 4.6).
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Shared = ReplicatedStorage:WaitForChild("Shared")
+local NetClient = require(Shared.Net.NetClient)
+local NumberFormat = require(Shared.Util.NumberFormat)
+local Formulas = require(Shared.Util.Formulas)
+
+local Theme = require(script.Parent.Theme)
+local C = require(script.Parent.Components)
+
+local RebirthPanel = {}
+
+function RebirthPanel.build(root: Instance)
+	local m = C.modal(root, "REBIRTH", UDim2.fromOffset(620, 440))
+	local function column(x: number, heading: string, color: Color3)
+		local f = Instance.new("Frame")
+		f.BackgroundColor3 = Theme.color.bgSoft
+		f.Position = UDim2.new(x, 4, 0, 0)
+		f.Size = UDim2.new(1 / 3, -8, 0, 230)
+		f.Parent = m.body
+		C.corner(f)
+		local h = C.text({ text = heading, size = Theme.size.sm, color = color })
+		h.Size = UDim2.new(1, 0, 0, 34)
+		h.Parent = f
+		local body = C.text({ text = "", size = Theme.size.xs, font = Theme.font.body })
+		body.Position = UDim2.fromOffset(8, 38)
+		body.Size = UDim2.new(1, -16, 1, -46)
+		body.TextYAlignment = Enum.TextYAlignment.Top
+		body.Parent = f
+		return body
+	end
+	local lose = column(0, "You lose", Theme.color.danger)
+	local keep = column(1 / 3, "You keep", Theme.color.secondary)
+	local gain = column(2 / 3, "You get", Theme.color.success)
+	keep.Text = "All pillows\nYour rank\nDaily rewards\nSettings"
+
+	local status = C.text({ text = "", size = Theme.size.sm })
+	status.Position = UDim2.fromOffset(0, 240)
+	status.Size = UDim2.new(1, 0, 0, 30)
+	status.Parent = m.body
+
+	local confirmArmed = false
+	local btn = C.button({ text = "REBIRTH", size = UDim2.fromOffset(260, 60), color = Theme.color.primary, textSize = Theme.size.md })
+	btn.instance.AnchorPoint = Vector2.new(0.5, 1)
+	btn.instance.Position = UDim2.new(0.5, 0, 1, 0)
+	btn.instance.Parent = m.body
+	btn.button.Activated:Connect(function()
+		-- Zweistufige Bestätigung gegen versehentliches Zurücksetzen
+		if not confirmArmed then
+			confirmArmed = true
+			btn.setText("TAP AGAIN TO CONFIRM")
+			btn.setColor(Theme.color.danger)
+			task.delay(3, function()
+				confirmArmed = false
+				btn.setText("REBIRTH")
+				btn.setColor(Theme.color.primary)
+			end)
+		else
+			confirmArmed = false
+			NetClient.fire("Rebirth")
+			m.toggle(false)
+		end
+	end)
+
+	local api = {}
+	api.toggle = m.toggle
+	function api.refresh(s: any)
+		local cost = Formulas.rebirthCost(s.rebirths)
+		local cur = Formulas.rebirthMultiplier(s.rebirths)
+		local nxt = Formulas.rebirthMultiplier(s.rebirths + 1)
+		lose.Text = ("All feathers (%s)\nAll upgrades\nUnlocked zones"):format(NumberFormat.short(s.feathers))
+		gain.Text = ("Feather multiplier\nx%.2f → x%.2f\nRebirth %d"):format(cur, nxt, s.rebirths + 1)
+		local can = s.feathers >= cost
+		status.Text = ("Needs %s feathers%s"):format(NumberFormat.short(cost), if can then " ✔" else "")
+		status.TextColor3 = if can then Theme.color.success else Theme.color.muted
+		btn.setEnabled(can)
+	end
+	return api
+end
+
+return RebirthPanel

@@ -3,6 +3,7 @@
 local Config = script.Parent.Parent.Config
 local Pillows = require(Config.Pillows)
 local Progression = require(Config.Progression)
+local Zones = require(Config.Zones)
 
 local Validate = {}
 
@@ -19,6 +20,9 @@ Validate.validators = {
 	end,
 	upgradeKind = function(v: any): boolean
 		return type(v) == "string" and #v <= 32 and (Progression.upgrades :: any)[v] ~= nil
+	end,
+	zoneId = function(v: any): boolean
+		return type(v) == "string" and #v <= 32 and Zones.byId[v] ~= nil
 	end,
 	finiteNumber = isFiniteNumber,
 	shortString = function(v: any): boolean

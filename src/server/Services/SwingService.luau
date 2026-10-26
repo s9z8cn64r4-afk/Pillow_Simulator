@@ -7,13 +7,14 @@ local CollectionService = game:GetService("CollectionService")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Progression = require(Shared.Config.Progression)
+local SwingGate = require(Shared.Util.SwingGate)
 
 local DUMMY_TAG = "PillowDummy"
 local FX_RADIUS = 80
 
 local SwingService = {}
 local Net, PlayerData, Stats, Log
-local lastSwing: { [Player]: number } = {}
+local gates: { [Player]: SwingGate.State } = {}
 SwingService.rejected = 0 -- Zähler für Tests/Monitoring
 
 function SwingService:Init(registry)
@@ -74,17 +75,20 @@ function SwingService:requestSwing(player: Player, now: number): boolean
 	if not PlayerData:isLoaded(player) then
 		return false
 	end
-	local cd = Stats:cooldown(player)
-	local last = lastSwing[player] or 0
-	if now - last < cd - Progression.swing.latencyTolerance then
+	local gate = gates[player]
+	if not gate then
+		gate = SwingGate.new()
+		gates[player] = gate
+	end
+	local accepted, flagged = SwingGate.active(gate, now, Stats:cooldown(player), Progression.swing.latencyTolerance)
+	if not accepted then
 		self.rejected += 1
-		-- Leicht zu früh ist normal (Latenz/Taktung); nur grobe Abweichungen als Verstoß werten
-		if now - last < cd * 0.5 then
-			Net:flag(player, "swing_too_fast")
+		-- Nur anhaltendes Spammen ist ein Verstoß (BUG-001: Jitter/Auto-Kollision sind normal)
+		if flagged then
+			Net:flag(player, "swing_spam")
 		end
 		return false
 	end
-	lastSwing[player] = now
 	self:performSwing(player, false)
 	return true
 end
@@ -107,15 +111,18 @@ function SwingService:Start()
 		PlayerData:markChanged(player, "autoSwingEnabled")
 	end)
 
-	-- Auto-Swing: füllt Lücken zwischen aktiven Schlägen (gemeinsamer Cooldown)
+	-- Auto-Swing: läuft im Cooldown-Takt und pausiert, solange der Spieler aktiv schlägt
 	RunService.Heartbeat:Connect(function()
 		local now = os.clock()
 		for _, player in Players:GetPlayers() do
 			local data = PlayerData:get(player)
 			if data and data.autoSwingEnabled and Stats:canAutoSwing(player) then
-				local cd = Stats:cooldown(player)
-				if now - (lastSwing[player] or 0) >= cd then
-					lastSwing[player] = now
+				local gate = gates[player]
+				if not gate then
+					gate = SwingGate.new()
+					gates[player] = gate
+				end
+				if SwingGate.auto(gate, now, Stats:cooldown(player)) then
 					self:performSwing(player, true)
 				end
 			end
@@ -123,7 +130,7 @@ function SwingService:Start()
 	end)
 
 	Players.PlayerRemoving:Connect(function(player)
-		lastSwing[player] = nil
+		gates[player] = nil
 	end)
 	Log:debug("SwingService bereit")
 end

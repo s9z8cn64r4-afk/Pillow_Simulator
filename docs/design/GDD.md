@@ -60,10 +60,10 @@ Feather Power (+25 % je Stufe, bis 100) und Swing Speed (−0,05 s je Stufe, 6 S
 | Grand Hotel Suite | ×4 | 4 M | – | Gold, Samt, riesiges Hotelbett |
 | Cloud Kingdom | ×8 | 250 M | Rebirth 1 | Wolkeninseln, Mondlicht |
 
-Barriere mit Preisschild; Kauf → Barriere platzt, kurze überspringbare Kamerafahrt. Server bestimmt die Zone aus der Position (Zonen-Volumen). Teleport-Pads zu bereits offenen Zonen.
+Barriere mit Preisschild; Kauf per Halten der Interaktion (ProximityPrompt) → Barriere öffnet sich (Kamerafahrt folgt in M2/Polish). Zonen-Menü mit Teleport. Server bestimmt die Zone aus der Position (Zonen-Volumen). Teleport-Pads zu bereits offenen Zonen.
 
 ### 4.6 Rebirth
-Kosten 80 M × 6^R Federn. Reset: Federn, Upgrades, Zonen 2–4. Behalten: Kissen, Rank, Daily-Fortschritt, Einstellungen. Gewinn: +50 % dauerhaft (ab R 11 +25 %), Freischaltung Zone 4 bzw. Epic/Legendary-Kissen. Menü zeigt „Du verlierst / Du behältst / Du bekommst“ mit Zahlen.
+Kosten 80 M × 6^R Federn. Reset: Federn, Upgrades, Zonen 2–4. Behalten: Kissen, Rank, Daily-Fortschritt, Einstellungen. Gewinn: +50 % dauerhaft (ab R 11 +25 %), Freischaltung Zone 4 bzw. Epic/Legendary-Kissen. Menü zeigt „Du verlierst / Du behältst / Du bekommst“ mit Zahlen; Bestätigung durch zweites Tippen innerhalb von 3 s.
 
 ### 4.7 Ranks (10)
 Sleepyhead → Pillow Rookie (500) → Feather Fighter (25 K) → Fluff Brawler (500 K) → Cushion Champion (8 M) → Duvet Duke (150 M) → Slumber Knight (2 B) → Dream Warden (30 B) → Night Sovereign (400 B) → Pillow Legend (5 T) lebenslange Federn. Bonus +3 % … +30 %. Rank 2: Auto-Swing; ab Rank 5 kosmetischer Schwung-Trail. Titel über dem Kopf, Rank-Up-Feier mit Toast an den Server.

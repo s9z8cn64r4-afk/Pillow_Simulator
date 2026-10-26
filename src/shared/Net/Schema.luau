@@ -19,6 +19,8 @@ local Schema: { [string]: Entry } = {
 	EquipPillow = { dir = "c2s", args = { "pillowId" }, rate = 4, burst = 6 },
 	BuyUpgrade = { dir = "c2s", args = { "upgradeKind" }, rate = 6, burst = 10 },
 	SetAutoSwing = { dir = "c2s", args = { "boolean" }, rate = 2, burst = 4 },
+	TeleportZone = { dir = "c2s", args = { "zoneId" }, rate = 1, burst = 3 },
+	Rebirth = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
 
 	-- Server -> Client
 	StateInit = { dir = "s2c" }, -- (snapshot)

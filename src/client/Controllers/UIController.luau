@@ -15,6 +15,8 @@ local Progression = require(Shared.Config.Progression)
 local UI = script.Parent.Parent:WaitForChild("UI")
 local Theme = require(UI.Theme)
 local C = require(UI.Components)
+local RebirthPanel = require(UI.RebirthPanel)
+local ZonesPanel = require(UI.ZonesPanel)
 
 local player = Players.LocalPlayer
 local UIController = {}
@@ -32,6 +34,8 @@ local REASONS = {
 	maxLevel = "Already maxed!",
 	owned = "You already own this!",
 	notOwned = "You don't own this pillow.",
+	previousLocked = "Unlock the previous zone first!",
+	busy = "One moment...",
 }
 
 function UIController:Init(registry)
@@ -176,6 +180,10 @@ function UIController:build()
 	make("UIListLayout", { Padding = UDim.new(0, 10) }, menu)
 	local shopBtn = C.button({ text = "🛒 Shop", size = UDim2.fromOffset(110, 56), color = Theme.color.primary, textSize = Theme.size.md })
 	shopBtn.instance.Parent = menu
+	local zonesBtn = C.button({ text = "🗺️ Zones", size = UDim2.fromOffset(110, 56), color = Theme.color.secondary, textSize = Theme.size.sm })
+	zonesBtn.instance.Parent = menu
+	local rebirthBtn = C.button({ text = "🔄 Rebirth", size = UDim2.fromOffset(110, 56), color = Theme.color.feather, textSize = Theme.size.sm })
+	rebirthBtn.instance.Parent = menu
 
 	-- Schlag-Taste + Auto (unten rechts)
 	local swingBtn = C.button({
@@ -229,8 +237,27 @@ function UIController:build()
 	end
 
 	local shop = self:buildShop(root)
+	local rebirth = RebirthPanel.build(root)
+	local zones = ZonesPanel.build(root)
+	-- Immer nur ein Fenster offen
 	shopBtn.button.Activated:Connect(function()
+		rebirth.toggle(false)
+		zones.toggle(false)
 		shop.toggle()
+	end)
+	zonesBtn.button.Activated:Connect(function()
+		if shop.isOpen() then
+			shop.toggle()
+		end
+		rebirth.toggle(false)
+		zones.toggle()
+	end)
+	rebirthBtn.button.Activated:Connect(function()
+		if shop.isOpen() then
+			shop.toggle()
+		end
+		zones.toggle(false)
+		rebirth.toggle()
 	end)
 
 	-- ---------- Binden an Zustand ----------
@@ -271,6 +298,8 @@ function UIController:build()
 			autoBtn.setColor(Theme.color.secondary)
 		end
 		shop.refresh(s)
+		rebirth.refresh(s)
+		zones.refresh(s)
 	end
 	autoBtn.button.Activated:Connect(function()
 		local s = State.state
@@ -292,6 +321,8 @@ function UIController:build()
 					self:toast(("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name), rarityInfo[p.rarity].color)
 				elseif payload.kind == "upgrade" then
 					self:toast("Upgrade bought!", Theme.color.success)
+				elseif payload.kind == "zone" then
+					self:toast(("Zone unlocked: %s!"):format(Zones.byId[payload.id].name), Theme.color.secondary)
 				end
 			else
 				self:toast(REASONS[payload.reason] or "Not possible right now.", Theme.color.danger)
@@ -301,6 +332,10 @@ function UIController:build()
 			if payload.rank == Progression.swing.autoSwingRank then
 				self:toast("Auto-Swing unlocked!", Theme.color.success)
 			end
+		elseif kind == "rebirth" then
+			self:toast(("REBIRTH %d! Feathers x%.2f"):format(payload.rebirths, payload.multiplier), Theme.color.feather)
+		elseif kind == "otherRankUp" then
+			self:toast(("%s reached %s!"):format(payload.name, payload.rank), Theme.color.muted)
 		elseif kind == "error" then
 			self:toast(payload.text, Theme.color.danger)
 		end
@@ -414,6 +449,9 @@ function UIController:buildShop(root: Frame)
 	end)
 
 	local api = {}
+	function api.isOpen(): boolean
+		return panel.Visible
+	end
 	function api.toggle()
 		if panel.Visible then
 			C.tween(pscale, Theme.motion.fast, { Scale = 0.85 })

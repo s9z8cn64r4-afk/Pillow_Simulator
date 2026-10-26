@@ -158,6 +158,55 @@ function Components.panel(size: UDim2, color: Color3?): Frame
 	return f
 end
 
+-- Modales Fenster mit Titel und Schließen-Knopf. Gibt { panel, body, toggle, isOpen } zurück.
+function Components.modal(root: Instance, title: string, size: UDim2)
+	local panel = Components.panel(size)
+	panel.AnchorPoint = Vector2.new(0.5, 0.5)
+	panel.Position = UDim2.fromScale(0.5, 0.5)
+	panel.Visible = false
+	panel.ZIndex = 5
+	panel.Parent = root
+	local scale = Instance.new("UIScale")
+	scale.Scale = 0.85
+	scale.Parent = panel
+	local t = Components.text({ text = title, size = Theme.size.lg })
+	t.Size = UDim2.new(1, 0, 0, 48)
+	t.Parent = panel
+	local close = Components.button({ text = "X", size = UDim2.fromOffset(52, 52), color = Theme.color.danger, textSize = Theme.size.md })
+	close.instance.AnchorPoint = Vector2.new(1, 0)
+	close.instance.Position = UDim2.new(1, -8, 0, 8)
+	close.instance.Parent = panel
+	local body = Instance.new("Frame")
+	body.BackgroundTransparency = 1
+	body.Position = UDim2.fromOffset(16, 64)
+	body.Size = UDim2.new(1, -32, 1, -80)
+	body.Parent = panel
+
+	local api = {}
+	api.panel = panel
+	api.body = body
+	function api.isOpen(): boolean
+		return panel.Visible
+	end
+	function api.toggle(open: boolean?)
+		local want = if open == nil then not panel.Visible else open
+		if not want then
+			tween(scale, Theme.motion.fast, { Scale = 0.85 })
+			task.delay(Theme.motion.fast, function()
+				panel.Visible = false
+			end)
+		else
+			panel.Visible = true
+			scale.Scale = 0.85
+			tween(scale, Theme.motion.base, { Scale = 1 }, Enum.EasingStyle.Back)
+		end
+	end
+	close.button.Activated:Connect(function()
+		api.toggle(false)
+	end)
+	return api
+end
+
 -- Fortschrittsbalken: gibt set(alpha) zurück
 function Components.progressBar(size: UDim2, fillColor: Color3)
 	local bg = Instance.new("Frame")
