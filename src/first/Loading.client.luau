@@ -27,10 +27,10 @@ gui.ResetOnSpawn = false
 
 local bg = Instance.new("Frame")
 bg.Size = UDim2.fromScale(1, 1)
-bg.BackgroundColor3 = C(43, 35, 80)
+bg.BackgroundColor3 = C(255, 255, 255) -- UIGradient multipliziert: Weiß = Verlaufsfarben unverfälscht
 bg.Parent = gui
 local grad = Instance.new("UIGradient")
-grad.Color = ColorSequence.new(C(58, 49, 112), C(43, 35, 80))
+grad.Color = ColorSequence.new(C(92, 78, 168), C(43, 35, 80))
 grad.Rotation = 90
 grad.Parent = bg
 
