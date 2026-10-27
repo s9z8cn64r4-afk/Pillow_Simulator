@@ -5,6 +5,7 @@ local Pillows = require(Shared.Config.Pillows)
 local Zones = require(Shared.Config.Zones)
 local Progression = require(Shared.Config.Progression)
 local PlayerData = require(Shared.Types.PlayerData)
+local Assets = require(Shared.Config.Assets)
 
 return function(it, expect)
 	it("Kissen: aufsteigende Power und Preise, gültige Zonen/Seltenheiten", function()
@@ -35,5 +36,14 @@ return function(it, expect)
 		expect(t.ownedPillows[Pillows.starter]).toBe(true)
 		expect(t.unlockedZones[Zones.start]).toBe(true)
 		expect(t.equippedPillow).toBe(Pillows.starter)
+	end)
+	it("Griff-Drehungen: nur echte Kissen-IDs, je 3 Winkel im Bereich ±180", function()
+		for id, rot in Assets.models.gripRotation do
+			expect(Pillows.byId[id] ~= nil).toBeTruthy()
+			expect(#rot).toBe(3)
+			for _, a in rot do
+				expect(type(a) == "number" and a >= -180 and a <= 180).toBeTruthy()
+			end
+		end
 	end)
 end

@@ -40,6 +40,8 @@ for _, m in workspace:GetChildren() do
 			if s.Z > s.X * 1.15 then -- nur bei deutlich längerer Z-Achse (fast quadratisch = egal)
 				mp:SetAttribute("LongAxisZ", true)
 			end
+			-- Griff-Drehung NICHT aus den Maßen ableiten (unzuverlässig, z. B. cloud): nach dem Import jedes neue
+			-- Modell per Screenshot prüfen und in Config Assets.models.gripRotation eintragen.
 			mp.Name = id
 			mp.Anchored = false
 			mp.CanCollide = false

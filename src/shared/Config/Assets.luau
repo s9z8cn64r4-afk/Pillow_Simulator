@@ -19,5 +19,20 @@ return table.freeze({
 	models = table.freeze({
 		feather = "FeatherMesh", -- ReplicatedStorage.Assets.FeatherMesh
 		pillowsFolder = "Pillows", -- ReplicatedStorage.Assets.Pillows.<pillowId> (MeshPart, X = Längsachse)
+		-- Zusätzliche Griff-Drehung je Modell in Grad (X, Y, Z), geprüft per Screenshot (Frontansicht, 2026-10-27).
+		-- Aufrecht generierte Modelle: Y 90 (Fläche nach vorn); flache Modelle: Fläche aufrichten.
+		-- Nicht aufgeführt = Standardgriff passt (fluffy, royal, memoryfoam, striped).
+		gripRotation = table.freeze({
+			worn = { 0, 90, 0 },
+			cotton = { 0, 90, 0 },
+			sleepover = { 0, 90, 0 },
+			satin = { 0, 90, 0 },
+			hotel = { 0, 90, 0 },
+			thunder = { 0, 90, 0 },
+			dream = { 0, 90, 0 },
+			cloud = { 0, 90, 0 },
+			heart = { 90, 0, 90 },
+			starlight = { 55, 0, 90 }, -- 90 würde den Kopf verdecken
+		}),
 	}),
 })
