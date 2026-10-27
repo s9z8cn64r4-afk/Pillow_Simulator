@@ -10,7 +10,7 @@ local Progression = require(Shared.Config.Progression)
 local Rewards = require(Shared.Config.Rewards)
 
 local StatsService = {}
-local PlayerData, Social
+local PlayerData, Social, Monetization
 
 -- Aktuelle Zone je Spieler (ZoneService setzt sie ab M2 anhand der Position)
 StatsService.currentZone = {} :: { [Player]: string }
@@ -18,6 +18,7 @@ StatsService.currentZone = {} :: { [Player]: string }
 function StatsService:Init(registry)
 	PlayerData = registry.PlayerDataService
 	Social = registry.SocialService
+	Monetization = registry.MonetizationService
 end
 
 function StatsService:zoneOf(player: Player): string
@@ -47,7 +48,8 @@ function StatsService:refreshBoostAttributes(player: Player)
 end
 
 -- Fügt Sekunden zu einem Boost hinzu (verlängert einen laufenden). Gibt die neue Ablaufzeit zurück.
-function StatsService:addBoost(player: Player, boostId: string, seconds: number): number?
+-- paid = true (Robux-Kauf): kein Deckel, gekaufte Zeit geht nie verloren.
+function StatsService:addBoost(player: Player, boostId: string, seconds: number, paid: boolean?): number?
 	local data = PlayerData:get(player)
 	local def = Rewards.boosts[boostId]
 	if not data or not def or seconds <= 0 then
@@ -55,7 +57,7 @@ function StatsService:addBoost(player: Player, boostId: string, seconds: number)
 	end
 	local t = now()
 	local current = math.max(data.activeBoosts[boostId] or 0, t)
-	local endsAt = math.min(current + seconds, t + def.maxStackMinutes * 60)
+	local endsAt = if paid then current + seconds else math.min(current + seconds, t + def.maxStackMinutes * 60)
 	data.activeBoosts[boostId] = endsAt
 	PlayerData:markChanged(player, "activeBoosts")
 	self:refreshBoostAttributes(player)
@@ -77,7 +79,8 @@ function StatsService:extraMultiplier(player: Player): number
 	if not data then
 		return 1
 	end
-	local m = if Social then Social:multiplier(player) else 1
+	local m = (if Social then Social:multiplier(player) else 1)
+		* (if Monetization then Monetization:passMultiplier(player) else 1)
 	local expired = false
 	for id, endsAt in data.activeBoosts do
 		local def = Rewards.boosts[id]

@@ -14,7 +14,7 @@ local DUMMY_TAG = "PillowDummy"
 local FX_RADIUS = 80
 
 local SwingService = {}
-local Net, PlayerData, Stats, Log
+local Net, PlayerData, Stats, Log, Monetization
 local gates: { [Player]: SwingGate.State } = {}
 SwingService.rejected = 0 -- Zähler für Tests/Monitoring
 SwingService.Swung = Signal.new() -- (player, isAuto, dummy)
@@ -24,6 +24,7 @@ function SwingService:Init(registry)
 	PlayerData = registry.PlayerDataService
 	Stats = registry.StatsService
 	Log = registry.LogService
+	Monetization = registry.MonetizationService
 end
 
 local function rootOf(player: Player): BasePart?
@@ -49,7 +50,7 @@ local function dummyInRange(root: BasePart): Instance?
 	return best
 end
 
--- Führt einen Schlag aus und schreibt Federn gut. isAuto = Auto-Swing (kein Puppen-Bonus, 80 %).
+-- Führt einen Schlag aus und schreibt Federn gut. isAuto = Auto-Swing (kein Puppen-Bonus, 80 %, mit Gamepass 100 %).
 function SwingService:performSwing(player: Player, isAuto: boolean): number
 	local data = PlayerData:get(player)
 	local root = rootOf(player)
@@ -59,7 +60,9 @@ function SwingService:performSwing(player: Player, isAuto: boolean): number
 	local amount = Stats:feathersPerSwing(player)
 	local dummy: Instance? = nil
 	if isAuto then
-		amount *= Progression.swing.autoSwingEfficiency
+		amount *= if Monetization
+			then Monetization:autoSwingEfficiency(player)
+			else Progression.swing.autoSwingEfficiency
 	else
 		dummy = dummyInRange(root)
 		if dummy then

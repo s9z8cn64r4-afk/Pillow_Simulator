@@ -11,6 +11,7 @@ local Formulas = require(Shared.Util.Formulas)
 local Pillows = require(Shared.Config.Pillows)
 local Zones = require(Shared.Config.Zones)
 local Progression = require(Shared.Config.Progression)
+local Products = require(Shared.Config.Products)
 
 local UI = script.Parent.Parent:WaitForChild("UI")
 local Theme = require(UI.Theme)
@@ -479,7 +480,9 @@ function UIController:build()
 			setRank(1)
 		end
 		local text, have, need = nextGoal(s)
-		goalLabel.Text = ("%s  (%s / %s)"):format(text, NumberFormat.short(have), NumberFormat.short(need))
+		goalLabel.Text = if have >= need
+			then ("%s  –  ready! (%s)"):format(text, NumberFormat.short(need))
+			else ("%s  (%s / %s)"):format(text, NumberFormat.short(have), NumberFormat.short(need))
 		setGoal(if need > 0 then have / need else 1)
 		local canAuto = s.rank >= Progression.swing.autoSwingRank
 		if not canAuto then
@@ -597,6 +600,16 @@ function UIController:build()
 				})[payload.reason] or "Code not possible right now."
 				self:toast(msg, Theme.color.danger)
 			end
+		elseif kind == "storeResult" then
+			if payload.ok then
+				celebrate("THANK YOU!", "Your purchase is active.", Theme.color.robux)
+			else
+				local msg = ({
+					notAvailable = "Coming soon!",
+					owned = "You already own this.",
+				})[payload.reason] or "Purchase not possible right now."
+				self:toast(msg, Theme.color.muted)
+			end
 		elseif kind == "feedbackResult" then
 			feedback.sent(payload.ok)
 			if payload.ok then
@@ -672,6 +685,8 @@ function UIController:buildShop(root: Frame)
 	local tabUpgrades =
 		C.button({ text = "Upgrades", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
 	tabUpgrades.instance.Parent = tabs
+	local tabStore = C.button({ text = "⭐ Extras", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
+	tabStore.instance.Parent = tabs
 
 	local function list(): ScrollingFrame
 		local sf = make("ScrollingFrame", {
@@ -689,6 +704,8 @@ function UIController:buildShop(root: Frame)
 	local pillowList = list()
 	local upgradeList = list()
 	upgradeList.Visible = false
+	local storeList = list()
+	storeList.Visible = false
 
 	local function row(parent: Instance, order: number)
 		local f = make(
@@ -750,12 +767,64 @@ function UIController:buildShop(root: Frame)
 		upgradeRows[kind] = { name = name, info = info, btn = btn, def = def }
 	end
 
+	-- Robux-Artikel (PS-34): klar als Robux gekennzeichnet; ohne Owner-Preis/ID „SOON“ und nicht kaufbar
+	local storeRows = {}
+	local localPlayer = game:GetService("Players").LocalPlayer
+	local function storeEntry(kind: string, def: any, order2: number, effect: string)
+		local name, info, btn = row(storeList, order2)
+		name.Text = def.name
+		info.Text = effect
+		btn.button.Activated:Connect(function()
+			NetClient.fire("PromptPurchase", kind, def.id)
+		end)
+		storeRows[def.id] = { kind = kind, def = def, btn = btn }
+	end
+	for i, def in Products.gamepasses do
+		local effect = if def.multiplier
+			then ("Forever: x%g feathers"):format(def.multiplier)
+			else ("Forever: Auto-Swing at %d%%"):format(math.floor((def.autoSwingEfficiency or 1) * 100 + 0.5))
+		storeEntry("pass", def, i, effect)
+	end
+	for i, def in Products.devProducts do
+		storeEntry("product", def, 100 + i, ("2x feathers for %d min (stacks)"):format(def.minutes or 0))
+	end
+	local function refreshStore()
+		for id, r in storeRows do
+			local def = r.def
+			local available = def.robux ~= nil and (def.assetId or def.productId or 0) > 0
+			if r.kind == "pass" and localPlayer:GetAttribute("Pass_" .. id) then
+				r.btn.setText("OWNED")
+				r.btn.setColor(Theme.color.locked)
+				r.btn.setEnabled(false)
+			elseif not available then
+				r.btn.setText("SOON")
+				r.btn.setColor(Theme.color.locked)
+				r.btn.setEnabled(false)
+			else
+				r.btn.setText(("R$ %d"):format(def.robux))
+				r.btn.setColor(Theme.color.robux)
+				r.btn.setEnabled(true)
+			end
+		end
+	end
+	refreshStore()
+	localPlayer.AttributeChanged:Connect(function(attr)
+		if string.sub(attr, 1, 5) == "Pass_" then
+			refreshStore()
+		end
+	end)
+
 	local function show(which: string)
 		pillowList.Visible = which == "pillows"
 		upgradeList.Visible = which == "upgrades"
+		storeList.Visible = which == "store"
 		tabPillows.setColor(if which == "pillows" then Theme.color.primary else Theme.color.bgSoft)
 		tabUpgrades.setColor(if which == "upgrades" then Theme.color.primary else Theme.color.bgSoft)
+		tabStore.setColor(if which == "store" then Theme.color.robux else Theme.color.bgSoft)
 	end
+	tabStore.button.Activated:Connect(function()
+		show("store")
+	end)
 	tabPillows.button.Activated:Connect(function()
 		show("pillows")
 	end)

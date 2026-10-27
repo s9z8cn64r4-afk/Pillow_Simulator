@@ -209,6 +209,26 @@ function PlayerDataService:spendFeathers(player: Player, amount: number, sink: s
 	return true
 end
 
+-- Speichert sofort und wartet auf die Bestätigung (Käufe: PurchaseGranted erst nach Speicherung).
+-- Gibt true zurück, wenn innerhalb von timeout Sekunden gespeichert wurde.
+function PlayerDataService:saveAndWait(player: Player, timeout: number?): boolean
+	local profile = profiles[player]
+	if not profile or not profile:IsActive() then
+		return false
+	end
+	local saved = false
+	local conn = profile.OnAfterSave:Connect(function()
+		saved = true
+	end)
+	profile:Save()
+	local deadline = os.clock() + (timeout or 15)
+	while not saved and os.clock() < deadline and profile:IsActive() do
+		task.wait(0.1)
+	end
+	conn:Disconnect()
+	return saved
+end
+
 -- Nur für Tests in Studio: Zugriff auf den ProfileStore (eigene Test-Schlüssel, nie Spieler-Schlüssel)
 function PlayerDataService:_storeForTest(): any
 	assert(RunService:IsStudio(), "nur in Studio")

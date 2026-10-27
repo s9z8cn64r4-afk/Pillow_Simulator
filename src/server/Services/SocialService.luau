@@ -1,12 +1,18 @@
 --!strict
--- Freunde-/Gruppen-Bonus (PS-33). Zählt Freunde im selben Server (max. Social.maxFriends) und prüft die
+-- Freunde-/Gruppen-Bonus (PS-33). Zählt Freunde im selben Server (max. Rewards.social.friendBonusMax) und prüft die
 -- Gruppenmitgliedschaft. Ergebnis als Attribute am Spieler (FriendsInServer, GroupMember) und als
 -- Multiplikator für StatsService:extraMultiplier. Web-Aufrufe (IsFriendsWith/IsInGroup) laufen in pcall
 -- und werden je Spielerpaar gecacht; Fehler zählen als „kein Freund“.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Social = require(ReplicatedStorage:WaitForChild("Shared").Config.Social)
+local Shared = ReplicatedStorage:WaitForChild("Shared")
+local Social = require(Shared.Config.Social)
+local Rewards = require(Shared.Config.Rewards)
+
+local PER_FRIEND = Rewards.social.friendBonusPerFriend
+local MAX_FRIENDS = math.floor(Rewards.social.friendBonusMax / PER_FRIEND + 0.5)
+local GROUP_BONUS = Rewards.social.groupBonus
 
 local SocialService = {}
 local Log
@@ -32,8 +38,8 @@ end
 
 -- reine Berechnung (auch in Unit-Tests nutzbar)
 function SocialService.multiplierFor(friends: number, inGroup: boolean): number
-	local f = math.clamp(friends, 0, Social.maxFriends)
-	return (1 + Social.friendBonusPer * f) * (if inGroup then 1 + Social.groupBonus else 1)
+	local f = math.clamp(friends, 0, MAX_FRIENDS)
+	return (1 + PER_FRIEND * f) * (if inGroup then 1 + GROUP_BONUS else 1)
 end
 
 function SocialService:multiplier(player: Player): number
@@ -42,7 +48,7 @@ function SocialService:multiplier(player: Player): number
 end
 
 function SocialService:apply(player: Player, friends: number, inGroup: boolean)
-	local f = math.clamp(friends, 0, Social.maxFriends)
+	local f = math.clamp(friends, 0, MAX_FRIENDS)
 	state[player] = { friends = f, group = inGroup }
 	player:SetAttribute("FriendsInServer", f)
 	player:SetAttribute("GroupMember", inGroup)

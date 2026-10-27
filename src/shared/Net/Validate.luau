@@ -4,6 +4,15 @@ local Config = script.Parent.Parent.Config
 local Pillows = require(Config.Pillows)
 local Progression = require(Config.Progression)
 local Zones = require(Config.Zones)
+local Products = require(Config.Products)
+
+local storeIds: { [string]: boolean } = {}
+for _, p in Products.gamepasses do
+	storeIds[p.id] = true
+end
+for _, p in Products.devProducts do
+	storeIds[p.id] = true
+end
 
 local Validate = {}
 
@@ -34,6 +43,12 @@ Validate.validators = {
 	-- Codes: nur Buchstaben/Ziffern, 1–20 Zeichen (Groß-/Kleinschreibung egal)
 	codeText = function(v: any): boolean
 		return type(v) == "string" and #v >= 1 and #v <= 20 and string.match(v, "^%w+$") ~= nil
+	end,
+	storeKind = function(v: any): boolean
+		return v == "pass" or v == "product"
+	end,
+	storeItemId = function(v: any): boolean
+		return type(v) == "string" and #v <= 32 and storeIds[v] == true
 	end,
 	feedbackCategory = function(v: any): boolean
 		return v == "bug" or v == "idea" or v == "other"
