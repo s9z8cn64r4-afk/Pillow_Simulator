@@ -68,13 +68,22 @@ local function burst(origin: Vector3?, count: number)
 		end
 		local dir = Vector3.new(math.random() - 0.5, math.random() * 0.8 + 0.2, math.random() - 0.5).Unit
 		local dist = (if rm then 1.5 else 3) + math.random() * 2.5
-		local start = CFrame.new(origin) * CFrame.Angles(math.random() * 6.28, math.random() * 6.28, math.random() * 6.28)
+		local start = CFrame.new(origin)
+			* CFrame.Angles(math.random() * 6.28, math.random() * 6.28, math.random() * 6.28)
 		f.CFrame = start
 		local life = 0.7 + math.random() * 0.5
 		local target = CFrame.new(origin + dir * dist + Vector3.new(0, -1.2, 0))
 			* CFrame.Angles(math.random() * 6.28, math.random() * 6.28, math.random() * 6.28)
-		local t1 = TweenService:Create(f, TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { CFrame = target })
-		local t2 = TweenService:Create(f, TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Transparency = 1 })
+		local t1 = TweenService:Create(
+			f,
+			TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+			{ CFrame = target }
+		)
+		local t2 = TweenService:Create(
+			f,
+			TweenInfo.new(life, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+			{ Transparency = 1 }
+		)
 		t1:Play()
 		t2:Play()
 		task.delay(life, releaseFeather, f)
@@ -130,9 +139,13 @@ local function wobbleDummy(d: Model)
 		base = body.CFrame
 		body:SetAttribute("BaseCFrame", base)
 	end
-	local t = TweenService:Create(body, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 1, true), {
-		CFrame = (base :: CFrame) * CFrame.Angles(math.rad(12), 0, 0),
-	})
+	local t = TweenService:Create(
+		body,
+		TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 1, true),
+		{
+			CFrame = (base :: CFrame) * CFrame.Angles(math.rad(12), 0, 0),
+		}
+	)
 	t:Play()
 	t.Completed:Once(function()
 		body.CFrame = base :: CFrame
@@ -164,7 +177,9 @@ function FxController:Start()
 		local dummy = dummyName and dummyByName(dummyName)
 		if who == player then
 			if handle then
-				local color = if dummyName then Color3.fromRGB(255, 196, 60) else Color3.fromRGB(255, 226, 122)
+				local color = if dummyName
+					then Color3.fromRGB(255, 196, 60)
+					else Color3.fromRGB(255, 226, 122)
 				floatText(handle, "+" .. NumberFormat.short(amount), color)
 			end
 			if dummy then

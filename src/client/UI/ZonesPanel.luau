@@ -30,7 +30,13 @@ function ZonesPanel.build(root: Instance)
 		name.Position = UDim2.fromOffset(14, 6)
 		name.Size = UDim2.new(1, -200, 0, 30)
 		name.Parent = f
-		local info = C.text({ text = ("x%d feathers"):format(z.multiplier), size = Theme.size.xs, color = Theme.color.muted, font = Theme.font.body, align = Enum.TextXAlignment.Left })
+		local info = C.text({
+			text = ("x%d feathers"):format(z.multiplier),
+			size = Theme.size.xs,
+			color = Theme.color.muted,
+			font = Theme.font.body,
+			align = Enum.TextXAlignment.Left,
+		})
 		info.Position = UDim2.fromOffset(14, 40)
 		info.Size = UDim2.new(1, -200, 0, 24)
 		info.Parent = f
@@ -55,7 +61,9 @@ function ZonesPanel.build(root: Instance)
 				r.btn.setColor(Theme.color.secondary)
 				r.btn.setEnabled(true)
 			else
-				local need = if s.rebirths < z.rebirths then ("Rebirth %d"):format(z.rebirths) else "🕊️ " .. NumberFormat.short(z.cost)
+				local need = if s.rebirths < z.rebirths
+					then ("Rebirth %d"):format(z.rebirths)
+					else "🕊️ " .. NumberFormat.short(z.cost)
 				r.btn.setText("🔒 " .. need)
 				r.btn.setColor(Theme.color.locked)
 				r.btn.setEnabled(false)

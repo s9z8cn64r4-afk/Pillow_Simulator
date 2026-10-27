@@ -69,7 +69,12 @@ function RankService:Start()
 		if newRank > oldRank then
 			for _, other in Players:GetPlayers() do
 				if other ~= player then
-					Net:fire("Notify", other, "otherRankUp", { name = player.DisplayName, rank = Progression.ranks[newRank].name })
+					Net:fire(
+						"Notify",
+						other,
+						"otherRankUp",
+						{ name = player.DisplayName, rank = Progression.ranks[newRank].name }
+					)
 				end
 			end
 		end

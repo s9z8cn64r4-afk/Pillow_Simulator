@@ -118,7 +118,15 @@ local function nextGoal(s: any): (string, number, number)
 end
 
 function UIController:build()
-	gui = make("ScreenGui", { Name = "HUD", ResetOnSpawn = false, IgnoreGuiInset = true, ZIndexBehavior = Enum.ZIndexBehavior.Sibling })
+	gui = make(
+		"ScreenGui",
+		{
+			Name = "HUD",
+			ResetOnSpawn = false,
+			IgnoreGuiInset = true,
+			ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		}
+	)
 	local uiScale = make("UIScale", {}, gui)
 	local root = make("Frame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1 }, gui)
 	-- Touch-Geräte: höhere Mindestskalierung, damit Tippziele ≥ 44 px bleiben
@@ -161,7 +169,12 @@ function UIController:build()
 	local icon = C.text({ text = "🕊️", size = 34 })
 	icon.Size = UDim2.fromOffset(56, 64)
 	icon.Parent = featherBox
-	local featherLabel = C.text({ text = "0", size = Theme.size.lg, color = Theme.color.feather, align = Enum.TextXAlignment.Left })
+	local featherLabel = C.text({
+		text = "0",
+		size = Theme.size.lg,
+		color = Theme.color.feather,
+		align = Enum.TextXAlignment.Left,
+	})
 	featherLabel.Position = UDim2.fromOffset(58, 0)
 	featherLabel.Size = UDim2.new(1, -66, 1, 0)
 	featherLabel.Parent = featherBox
@@ -169,7 +182,16 @@ function UIController:build()
 	local featherScale = make("UIScale", {}, featherBox)
 
 	-- Rank (oben Mitte)
-	local rankBox = make("Frame", { AnchorPoint = Vector2.new(0.5, 0), Position = UDim2.fromScale(0.5, 0), Size = UDim2.fromOffset(360, 58), BackgroundTransparency = 1 }, root)
+	local rankBox = make(
+		"Frame",
+		{
+			AnchorPoint = Vector2.new(0.5, 0),
+			Position = UDim2.fromScale(0.5, 0),
+			Size = UDim2.fromOffset(360, 58),
+			BackgroundTransparency = 1,
+		},
+		root
+	)
 	local rankLabel = C.text({ text = "Sleepyhead", size = Theme.size.md })
 	rankLabel.Size = UDim2.new(1, 0, 0, 30)
 	rankLabel.Parent = rankBox
@@ -178,16 +200,45 @@ function UIController:build()
 	bar.Parent = rankBox
 
 	-- Linke Menüleiste
-	local menu = make("Frame", { Position = UDim2.fromOffset(0, 130), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 }, root)
+	local menu = make(
+		"Frame",
+		{ Position = UDim2.fromOffset(0, 130), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 },
+		root
+	)
 	make("UIListLayout", { Padding = UDim.new(0, 10) }, menu)
-	local shopBtn = C.button({ text = "🛒 Shop", size = UDim2.fromOffset(110, 56), color = Theme.color.primary, textSize = Theme.size.md })
+	local shopBtn = C.button({
+		text = "🛒 Shop",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.primary,
+		textSize = Theme.size.md,
+	})
 	shopBtn.instance.Parent = menu
-	local zonesBtn = C.button({ text = "🗺️ Zones", size = UDim2.fromOffset(110, 56), color = Theme.color.secondary, textSize = Theme.size.sm })
+	local zonesBtn = C.button({
+		text = "🗺️ Zones",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.secondary,
+		textSize = Theme.size.sm,
+	})
 	zonesBtn.instance.Parent = menu
-	local rebirthBtn = C.button({ text = "🔄 Rebirth", size = UDim2.fromOffset(110, 56), color = Theme.color.feather, textSize = Theme.size.sm })
+	local rebirthBtn = C.button({
+		text = "🔄 Rebirth",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.feather,
+		textSize = Theme.size.sm,
+	})
 	rebirthBtn.instance.Parent = menu
-	local settingsBtn = C.button({ text = "⚙️ Settings", size = UDim2.fromOffset(110, 56), color = Theme.color.bgSoft, textSize = Theme.size.sm })
-	local indexBtn = C.button({ text = "📖 Index", size = UDim2.fromOffset(110, 56), color = Theme.color.primary, textSize = Theme.size.sm })
+	local settingsBtn = C.button({
+		text = "⚙️ Settings",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.bgSoft,
+		textSize = Theme.size.sm,
+	})
+	local indexBtn = C.button({
+		text = "📖 Index",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.primary,
+		textSize = Theme.size.sm,
+	})
 	indexBtn.instance.Parent = menu
 	settingsBtn.instance.Parent = menu
 
@@ -216,7 +267,12 @@ function UIController:build()
 		swingBtn.instance.Size = UDim2.fromOffset(120, 120)
 	end
 
-	local autoBtn = C.button({ text = "AUTO: OFF", size = UDim2.fromOffset(150, 56), color = Theme.color.locked, textSize = Theme.size.sm })
+	local autoBtn = C.button({
+		text = "AUTO: OFF",
+		size = UDim2.fromOffset(150, 56),
+		color = Theme.color.locked,
+		textSize = Theme.size.sm,
+	})
 	autoBtn.instance.AnchorPoint = Vector2.new(1, 1)
 	autoBtn.instance.Position = UDim2.new(1, 0, 1, -166)
 	autoBtn.instance.Parent = root
@@ -235,8 +291,21 @@ function UIController:build()
 	goalBar.Parent = goal
 
 	-- Toasts (oben Mitte, unter Rank)
-	toastStack = make("Frame", { AnchorPoint = Vector2.new(0.5, 0), Position = UDim2.new(0.5, 0, 0, 70), Size = UDim2.fromOffset(360, 200), BackgroundTransparency = 1 }, root)
-	make("UIListLayout", { Padding = UDim.new(0, 6), HorizontalAlignment = Enum.HorizontalAlignment.Center }, toastStack)
+	toastStack = make(
+		"Frame",
+		{
+			AnchorPoint = Vector2.new(0.5, 0),
+			Position = UDim2.new(0.5, 0, 0, 70),
+			Size = UDim2.fromOffset(360, 200),
+			BackgroundTransparency = 1,
+		},
+		root
+	)
+	make(
+		"UIListLayout",
+		{ Padding = UDim.new(0, 6), HorizontalAlignment = Enum.HorizontalAlignment.Center },
+		toastStack
+	)
 
 	C.onAnyPress = function()
 		Sound:play("click")
@@ -297,7 +366,9 @@ function UIController:build()
 		local nxt = Progression.ranks[rank + 1]
 		rankLabel.Text = ("Rank %d · %s"):format(rank, cur.name)
 		if nxt then
-			setRank((s.lifetimeFeathers - cur.lifetimeFeathers) / (nxt.lifetimeFeathers - cur.lifetimeFeathers))
+			setRank(
+				(s.lifetimeFeathers - cur.lifetimeFeathers) / (nxt.lifetimeFeathers - cur.lifetimeFeathers)
+			)
 		else
 			setRank(1)
 		end
@@ -338,11 +409,17 @@ function UIController:build()
 			if payload.ok then
 				if payload.kind == "pillow" then
 					local p = Pillows.byId[payload.id]
-					self:toast(("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name), rarityInfo[p.rarity].color)
+					self:toast(
+						("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name),
+						rarityInfo[p.rarity].color
+					)
 				elseif payload.kind == "upgrade" then
 					self:toast("Upgrade bought!", Theme.color.success)
 				elseif payload.kind == "zone" then
-					self:toast(("Zone unlocked: %s!"):format(Zones.byId[payload.id].name), Theme.color.secondary)
+					self:toast(
+						("Zone unlocked: %s!"):format(Zones.byId[payload.id].name),
+						Theme.color.secondary
+					)
 				end
 			else
 				self:toast(REASONS[payload.reason] or "Not possible right now.", Theme.color.danger)
@@ -353,7 +430,10 @@ function UIController:build()
 				self:toast("Auto-Swing unlocked!", Theme.color.success)
 			end
 		elseif kind == "rebirth" then
-			self:toast(("REBIRTH %d! Feathers x%.2f"):format(payload.rebirths, payload.multiplier), Theme.color.feather)
+			self:toast(
+				("REBIRTH %d! Feathers x%.2f"):format(payload.rebirths, payload.multiplier),
+				Theme.color.feather
+			)
 		elseif kind == "otherRankUp" then
 			self:toast(("%s reached %s!"):format(payload.name, payload.rank), Theme.color.muted)
 		elseif kind == "error" then
@@ -376,16 +456,27 @@ function UIController:buildShop(root: Frame)
 	local title = C.text({ text = "SHOP", size = Theme.size.lg })
 	title.Size = UDim2.new(1, 0, 0, 48)
 	title.Parent = panel
-	local close = C.button({ text = "X", size = UDim2.fromOffset(52, 52), color = Theme.color.danger, textSize = Theme.size.md })
+	local close = C.button({
+		text = "X",
+		size = UDim2.fromOffset(52, 52),
+		color = Theme.color.danger,
+		textSize = Theme.size.md,
+	})
 	close.instance.AnchorPoint = Vector2.new(1, 0)
 	close.instance.Position = UDim2.new(1, -8, 0, 8)
 	close.instance.Parent = panel
 
-	local tabs = make("Frame", { Position = UDim2.fromOffset(16, 52), Size = UDim2.new(1, -32, 0, 52), BackgroundTransparency = 1 }, panel)
+	local tabs = make(
+		"Frame",
+		{ Position = UDim2.fromOffset(16, 52), Size = UDim2.new(1, -32, 0, 52), BackgroundTransparency = 1 },
+		panel
+	)
 	make("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 10) }, tabs)
-	local tabPillows = C.button({ text = "Pillows", size = UDim2.fromOffset(150, 50), color = Theme.color.primary })
+	local tabPillows =
+		C.button({ text = "Pillows", size = UDim2.fromOffset(150, 50), color = Theme.color.primary })
 	tabPillows.instance.Parent = tabs
-	local tabUpgrades = C.button({ text = "Upgrades", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
+	local tabUpgrades =
+		C.button({ text = "Upgrades", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
 	tabUpgrades.instance.Parent = tabs
 
 	local function list(): ScrollingFrame
@@ -406,13 +497,23 @@ function UIController:buildShop(root: Frame)
 	upgradeList.Visible = false
 
 	local function row(parent: Instance, order: number)
-		local f = make("Frame", { Size = UDim2.new(1, -12, 0, 70), BackgroundColor3 = Theme.color.bgSoft, LayoutOrder = order }, parent)
+		local f = make(
+			"Frame",
+			{ Size = UDim2.new(1, -12, 0, 70), BackgroundColor3 = Theme.color.bgSoft, LayoutOrder = order },
+			parent
+		)
 		C.corner(f)
 		local name = C.text({ text = "", size = Theme.size.sm, align = Enum.TextXAlignment.Left })
 		name.Position = UDim2.fromOffset(14, 4)
 		name.Size = UDim2.new(1, -200, 0, 28)
 		name.Parent = f
-		local info = C.text({ text = "", size = Theme.size.xs, color = Theme.color.muted, font = Theme.font.body, align = Enum.TextXAlignment.Left })
+		local info = C.text({
+			text = "",
+			size = Theme.size.xs,
+			color = Theme.color.muted,
+			font = Theme.font.body,
+			align = Enum.TextXAlignment.Left,
+		})
 		info.Position = UDim2.fromOffset(14, 36)
 		info.Size = UDim2.new(1, -200, 0, 24)
 		info.Parent = f
@@ -517,7 +618,12 @@ function UIController:buildShop(root: Frame)
 			local def = r.def
 			local effect = if kind == "featherPower"
 				then ("+%d%% feathers per swing"):format(math.floor(def.bonusPerLevel * level * 100 + 0.5))
-				else ("%.2fs per swing"):format(Formulas.cooldown(level, (Pillows.byId[s.equippedPillow] or Pillows.byId[Pillows.starter]).speed))
+				else ("%.2fs per swing"):format(
+					Formulas.cooldown(
+						level,
+						(Pillows.byId[s.equippedPillow] or Pillows.byId[Pillows.starter]).speed
+					)
+				)
 			r.name.Text = ("%s  Lv %d"):format(def.name, level)
 			r.info.Text = effect
 			if level >= def.maxLevel then

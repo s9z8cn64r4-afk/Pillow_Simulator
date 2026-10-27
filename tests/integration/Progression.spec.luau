@@ -97,6 +97,14 @@ return function(it, expect, ctx)
 	for k, v in backup do
 		data[k] = v
 	end
-	PD:markChanged(player, "feathers", "rebirths", "upgrades", "unlockedZones", "ownedPillows", "autoSwingEnabled")
+	PD:markChanged(
+		player,
+		"feathers",
+		"rebirths",
+		"upgrades",
+		"unlockedZones",
+		"ownedPillows",
+		"autoSwingEnabled"
+	)
 	ZoneSvc:teleport(player, "bedroom")
 end

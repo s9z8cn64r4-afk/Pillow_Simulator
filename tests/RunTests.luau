@@ -42,7 +42,11 @@ function RunTests.run(registry: any?): TestLib.Results
 			task.wait(0.25)
 		end
 		if player then
-			runFolder(script.Parent:WaitForChild("integration"), results, { registry = registry, player = player })
+			runFolder(
+				script.Parent:WaitForChild("integration"),
+				results,
+				{ registry = registry, player = player }
+			)
 		else
 			print("[TEST] SKIP integration (kein geladener Spieler)")
 		end

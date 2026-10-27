@@ -97,7 +97,11 @@ function SettingsPanel.build(root: Instance)
 		local controls = row("UI size")
 		local buttons = {}
 		for i, v in { 0.9, 1, 1.15 } do
-			local b = C.button({ text = ("%d%%"):format(math.floor(v * 100 + 0.5)), size = UDim2.fromOffset(72, 52), color = Theme.color.bg })
+			local b = C.button({
+				text = ("%d%%"):format(math.floor(v * 100 + 0.5)),
+				size = UDim2.fromOffset(72, 52),
+				color = Theme.color.bg,
+			})
 			b.instance.LayoutOrder = i
 			b.instance.Parent = controls
 			b.button.Activated:Connect(function()

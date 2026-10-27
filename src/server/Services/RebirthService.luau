@@ -53,7 +53,12 @@ function RebirthService:Start()
 	Net:on("Rebirth", function(player)
 		local ok, why = self:rebirth(player)
 		if not ok then
-			Net:fire("Notify", player, "purchaseResult", { ok = false, kind = "rebirth", id = "rebirth", reason = why })
+			Net:fire(
+				"Notify",
+				player,
+				"purchaseResult",
+				{ ok = false, kind = "rebirth", id = "rebirth", reason = why }
+			)
 		end
 	end)
 end

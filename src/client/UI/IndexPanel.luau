@@ -45,14 +45,16 @@ function IndexPanel.build(root: Instance)
 		f.Parent = grid
 		C.corner(f)
 		local stroke = C.stroke(f, 3, rarity[p.rarity].color)
-		local sym = C.text({ text = rarity[p.rarity].symbol, size = Theme.size.lg, color = rarity[p.rarity].color })
+		local sym =
+			C.text({ text = rarity[p.rarity].symbol, size = Theme.size.lg, color = rarity[p.rarity].color })
 		sym.Size = UDim2.new(1, 0, 0, 40)
 		sym.Parent = f
 		local name = C.text({ text = p.name, size = Theme.size.xs })
 		name.Position = UDim2.fromOffset(4, 40)
 		name.Size = UDim2.new(1, -8, 0, 34)
 		name.Parent = f
-		local state = C.text({ text = "", size = Theme.size.xs, font = Theme.font.body, color = Theme.color.muted })
+		local state =
+			C.text({ text = "", size = Theme.size.xs, font = Theme.font.body, color = Theme.color.muted })
 		state.Position = UDim2.fromOffset(4, 76)
 		state.Size = UDim2.new(1, -8, 0, 28)
 		state.Parent = f

@@ -44,8 +44,9 @@ local function animate(cd: number)
 	if not char then
 		return
 	end
-	local shoulder = (char:FindFirstChild("RightUpperArm") and char.RightUpperArm:FindFirstChild("RightShoulder"))
-		or (char:FindFirstChild("Torso") and char.Torso:FindFirstChild("Right Shoulder"))
+	local shoulder = (
+		char:FindFirstChild("RightUpperArm") and char.RightUpperArm:FindFirstChild("RightShoulder")
+	) or (char:FindFirstChild("Torso") and char.Torso:FindFirstChild("Right Shoulder"))
 	local dur = math.clamp(cd * 0.45, 0.08, 0.2)
 	if shoulder and shoulder:IsA("Motor6D") then
 		local base = shoulder:GetAttribute("BaseC0") :: CFrame?
@@ -54,12 +55,20 @@ local function animate(cd: number)
 			shoulder:SetAttribute("BaseC0", base)
 		end
 		local angle = if reducedMotion() then 45 else 110
-		local up = TweenService:Create(shoulder, TweenInfo.new(dur * 0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-			C0 = (base :: CFrame) * CFrame.Angles(math.rad(angle), 0, math.rad(-20)),
-		})
-		local down = TweenService:Create(shoulder, TweenInfo.new(dur * 0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-			C0 = base :: CFrame,
-		})
+		local up = TweenService:Create(
+			shoulder,
+			TweenInfo.new(dur * 0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+			{
+				C0 = (base :: CFrame) * CFrame.Angles(math.rad(angle), 0, math.rad(-20)),
+			}
+		)
+		local down = TweenService:Create(
+			shoulder,
+			TweenInfo.new(dur * 0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+			{
+				C0 = base :: CFrame,
+			}
+		)
 		up.Completed:Once(function()
 			down:Play()
 		end)
@@ -73,16 +82,20 @@ local function animate(cd: number)
 		local squash = Vector3.new(1.25, 0.7, 1.2)
 		if mesh then
 			mesh.Scale = squash
-			TweenService:Create(mesh, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
-				Scale = Vector3.new(1, 1, 1),
-			}):Play()
+			TweenService
+				:Create(mesh, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+					Scale = Vector3.new(1, 1, 1),
+				})
+				:Play()
 		else
 			local base = handle:GetAttribute("BaseSize") :: Vector3?
 			if base then
 				handle.Size = base * squash
-				TweenService:Create(handle, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
-					Size = base,
-				}):Play()
+				TweenService
+					:Create(handle, TweenInfo.new(0.25, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+						Size = base,
+					})
+					:Play()
 			end
 		end
 	end

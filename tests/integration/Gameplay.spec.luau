@@ -92,16 +92,20 @@ return function(it, expect, ctx)
 		local store = PD:_storeForTest()
 		local key = "Test_RoundTrip"
 		local stamp = os.time() + math.random()
-		local p1 = store:StartSessionAsync(key, { Cancel = function()
-			return false
-		end })
+		local p1 = store:StartSessionAsync(key, {
+			Cancel = function()
+				return false
+			end,
+		})
 		expect(p1 ~= nil).toBeTruthy()
 		p1.Data.feathers = stamp
 		p1:EndSession()
 		task.wait(1)
-		local p2 = store:StartSessionAsync(key, { Cancel = function()
-			return false
-		end })
+		local p2 = store:StartSessionAsync(key, {
+			Cancel = function()
+				return false
+			end,
+		})
 		expect(p2 ~= nil).toBeTruthy()
 		expect(p2.Data.feathers).toBeNear(stamp)
 		p2:EndSession()
@@ -133,6 +137,15 @@ return function(it, expect, ctx)
 	for k, v in backup do
 		data[k] = v
 	end
-	PD:markChanged(player, "feathers", "lifetimeFeathers", "ownedPillows", "equippedPillow", "upgrades", "rank", "autoSwingEnabled")
+	PD:markChanged(
+		player,
+		"feathers",
+		"lifetimeFeathers",
+		"ownedPillows",
+		"equippedPillow",
+		"upgrades",
+		"rank",
+		"autoSwingEnabled"
+	)
 	reg.PillowToolService:give(player) -- Werkzeug passend zum wiederhergestellten Kissen
 end

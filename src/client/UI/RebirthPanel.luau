@@ -41,7 +41,12 @@ function RebirthPanel.build(root: Instance)
 	status.Parent = m.body
 
 	local confirmArmed = false
-	local btn = C.button({ text = "REBIRTH", size = UDim2.fromOffset(260, 60), color = Theme.color.primary, textSize = Theme.size.md })
+	local btn = C.button({
+		text = "REBIRTH",
+		size = UDim2.fromOffset(260, 60),
+		color = Theme.color.primary,
+		textSize = Theme.size.md,
+	})
 	btn.instance.AnchorPoint = Vector2.new(0.5, 1)
 	btn.instance.Position = UDim2.new(0.5, 0, 1, 0)
 	btn.instance.Parent = m.body

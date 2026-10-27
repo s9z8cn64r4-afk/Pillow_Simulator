@@ -121,7 +121,12 @@ function ZoneService:Start()
 	Net:on("TeleportZone", function(player, zoneId: string)
 		local ok, why = self:teleport(player, zoneId)
 		if not ok then
-			Net:fire("Notify", player, "purchaseResult", { ok = false, kind = "teleport", id = zoneId, reason = why })
+			Net:fire(
+				"Notify",
+				player,
+				"purchaseResult",
+				{ ok = false, kind = "teleport", id = zoneId, reason = why }
+			)
 		end
 	end)
 

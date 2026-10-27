@@ -32,7 +32,7 @@ return function(it, expect)
 		local s = SwingGate.new()
 		local accepted = 0
 		for i = 1, 100 do -- 2 Sekunden Spam
-			if (SwingGate.active(s, i * 0.02, CD, TOL)) then
+			if SwingGate.active(s, i * 0.02, CD, TOL) then
 				accepted += 1
 			end
 		end

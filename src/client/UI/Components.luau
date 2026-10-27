@@ -9,7 +9,11 @@ Components.onAnyPress = nil :: (() -> ())? -- globaler Hook (z. B. Klick-Sound)
 
 local function tween(obj: Instance, t: number, props: { [string]: any }, style: Enum.EasingStyle?)
 	local dur = if Components.reducedMotion then t * 0.3 else t
-	local tw = TweenService:Create(obj, TweenInfo.new(dur, style or Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props)
+	local tw = TweenService:Create(
+		obj,
+		TweenInfo.new(dur, style or Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		props
+	)
 	tw:Play()
 	return tw
 end
@@ -172,7 +176,12 @@ function Components.modal(root: Instance, title: string, size: UDim2)
 	local t = Components.text({ text = title, size = Theme.size.lg })
 	t.Size = UDim2.new(1, 0, 0, 48)
 	t.Parent = panel
-	local close = Components.button({ text = "X", size = UDim2.fromOffset(52, 52), color = Theme.color.danger, textSize = Theme.size.md })
+	local close = Components.button({
+		text = "X",
+		size = UDim2.fromOffset(52, 52),
+		color = Theme.color.danger,
+		textSize = Theme.size.md,
+	})
 	close.instance.AnchorPoint = Vector2.new(1, 0)
 	close.instance.Position = UDim2.new(1, -8, 0, 8)
 	close.instance.Parent = panel
@@ -219,9 +228,10 @@ function Components.progressBar(size: UDim2, fillColor: Color3)
 	fill.BackgroundColor3 = fillColor
 	fill.Parent = bg
 	Components.corner(fill, 999)
-	return bg, function(alpha: number)
-		tween(fill, Theme.motion.slow, { Size = UDim2.fromScale(math.clamp(alpha, 0, 1), 1) })
-	end
+	return bg,
+		function(alpha: number)
+			tween(fill, Theme.motion.slow, { Size = UDim2.fromScale(math.clamp(alpha, 0, 1), 1) })
+		end
 end
 
 return Components

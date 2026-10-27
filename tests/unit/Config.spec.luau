@@ -25,7 +25,9 @@ return function(it, expect)
 	it("Ranks aufsteigend, Rank 1 bei 0", function()
 		expect(Progression.ranks[1].lifetimeFeathers).toBe(0)
 		for i = 2, #Progression.ranks do
-			expect(Progression.ranks[i].lifetimeFeathers).toBeGreaterThan(Progression.ranks[i - 1].lifetimeFeathers)
+			expect(Progression.ranks[i].lifetimeFeathers).toBeGreaterThan(
+				Progression.ranks[i - 1].lifetimeFeathers
+			)
 		end
 	end)
 	it("Template: Startkissen besessen, Startzone offen", function()

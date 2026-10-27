@@ -66,7 +66,15 @@ function SwingService:performSwing(player: Player, isAuto: boolean): number
 	end
 	PlayerData:addFeathers(player, amount, if isAuto then "auto_swing" else "swing")
 	data.stats.totalSwings += 1
-	Net:fireNear("SwingFx", root.Position, FX_RADIUS, player.UserId, amount, dummy and dummy.Name or nil, isAuto)
+	Net:fireNear(
+		"SwingFx",
+		root.Position,
+		FX_RADIUS,
+		player.UserId,
+		amount,
+		dummy and dummy.Name or nil,
+		isAuto
+	)
 	return amount
 end
 
@@ -80,7 +88,8 @@ function SwingService:requestSwing(player: Player, now: number): boolean
 		gate = SwingGate.new()
 		gates[player] = gate
 	end
-	local accepted, flagged = SwingGate.active(gate, now, Stats:cooldown(player), Progression.swing.latencyTolerance)
+	local accepted, flagged =
+		SwingGate.active(gate, now, Stats:cooldown(player), Progression.swing.latencyTolerance)
 	if not accepted then
 		self.rejected += 1
 		-- Nur anhaltendes Spammen ist ein Verstoß (BUG-001: Jitter/Auto-Kollision sind normal)
