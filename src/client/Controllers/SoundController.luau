@@ -70,7 +70,8 @@ local function runPlaylist()
 		if s.IsLoaded and s.TimeLength > MUSIC_FADE * 2 then
 			s.TimePosition = 0
 			s:Play()
-			TweenService:Create(s, TweenInfo.new(MUSIC_FADE), { Volume = s:GetAttribute("TargetVolume") }):Play()
+			TweenService:Create(s, TweenInfo.new(MUSIC_FADE), { Volume = s:GetAttribute("TargetVolume") })
+				:Play()
 			task.wait(s.TimeLength - MUSIC_FADE)
 			TweenService:Create(s, TweenInfo.new(MUSIC_FADE), { Volume = 0 }):Play()
 			task.wait(MUSIC_FADE)
