@@ -26,13 +26,15 @@
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
-| PS-16 Map, PS-21–23 | offen |
+| PS-16 Map | Zonen 2–4 dekoriert nach Art Bible (`tools/studio/build_zone_decor.luau`, 245 Teile, 13 Lichter) `[VERIFIZIERT]` per Screenshots; Bedroom noch Graybox-Stand |
+| PS-21–23 | offen |
 
 ## Nächste konkrete Aktion
 Siehe `NEXT_ACTIONS.md`.
 
 ## Wichtige Hinweise für die nächste Sitzung
 - **Code nach Studio:** nach Push `python3 tools/scripts/studio_sync.py OUT drift.txt --github <SHA>` → `OUT/sync_helper.luau` per `execute_luau` (Edit) ausführen (nutzt `ServerStorage.DevTools.SyncFromGitHub`; fehlt der Helfer, `sync_github.luau` nehmen); Studio lädt per HttpService von raw.githubusercontent.com (geht nur, solange das Repo öffentlich ist). Danach Drift-Check (`studio_hash.luau` + `source_hash.py`).
+- **Studio-DevTools** (`ServerStorage.DevTools`, nicht im Repo-Mapping, nur im Place): `SyncFromGitHub(sha, list)`, `RunToolScript(sha, "tools/…")` (führt Builder vom Commit aus), `ImportPillows`.
 - **CI formatiert selbst:** Push auf `main` → StyLua-Auto-Fix-Commit möglich → vor dem nächsten Push `git pull --rebase`, vor dem Studio-Sync den neuesten SHA nehmen. Generierte Config ist per `.styluaignore` ausgenommen.
 - Actions-Logs nicht abrufbar → Fehler über Check-Run-Annotations (`gh api repos/.../check-runs/<id>/annotations`).
 - Studio-Änderungen (Map, Modelle, Vendor) existieren nur im Place → Owner muss speichern (Owner-Anfrage #2).

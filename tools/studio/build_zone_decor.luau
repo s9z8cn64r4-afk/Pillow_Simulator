@@ -1,5 +1,5 @@
--- PS-16: Dekor für Zone 2–4 nach Art Bible (prozedural + generierte Kissenmodelle als Requisiten).
--- In Studio (Edit) per execute_luau ausführen, NACH build_graybox_zones.luau. Idempotent: ersetzt
+-- PS-16: Dekor für alle 4 Zonen nach Art Bible (prozedural + generierte Kissenmodelle als Requisiten).
+-- In Studio (Edit) ausführen (DevTools.RunToolScript), NACH build_graybox_bedroom/zones.luau. Idempotent: ersetzt
 -- Map.Zones.<Zone>.Decor und färbt Boden/Wände um. Mittelgang (|x| < 30) bleibt frei für Puppen und Laufwege.
 local map = workspace:WaitForChild("Map")
 local zones = map:WaitForChild("Zones")
@@ -117,6 +117,59 @@ local function makeDecor(roomName)
 	decor.Name = "Decor"
 	decor.Parent = room
 	return room, decor
+end
+
+-- ---------- Cozy Bedroom (Pastellblau, Holz, Sternchen) – Startzone, erster Eindruck ----------
+do
+	local room, decor = makeDecor("Bedroom")
+	recolor(room, C(214, 180, 140), C(170, 196, 232), Enum.Material.WoodPlanks)
+	local wood = C(214, 170, 120)
+	-- Nachtfenster an der Rückwand mit Mond und Sternen
+	local win = Instance.new("Model")
+	win.Name = "NightWindow"
+	win.Parent = decor
+	part({ Size = Vector3.new(26, 16, 0.8), Position = Vector3.new(25, 12, -68.7), Color = wood, Material = Enum.Material.Wood }, win)
+	part({ Size = Vector3.new(23, 13, 0.3), Position = Vector3.new(25, 12, -68.2), Color = C(40, 50, 110), Material = Enum.Material.SmoothPlastic }, win)
+	part({ Size = Vector3.new(0.6, 13, 0.4), Position = Vector3.new(25, 12, -68), Color = wood, Material = Enum.Material.Wood }, win)
+	part({ Size = Vector3.new(23, 0.6, 0.4), Position = Vector3.new(25, 12, -68), Color = wood, Material = Enum.Material.Wood }, win)
+	local moon = ball(Vector3.new(30, 15.5, -68), 3, C(255, 245, 210), win, Enum.Material.Neon)
+	moon.Size = Vector3.new(3, 3, 0.4)
+	for _ = 1, 9 do
+		local st = ball(Vector3.new(rng:NextNumber(14.5, 35.5), rng:NextNumber(6.5, 17.5), -68), 0.5, C(255, 236, 160), win, Enum.Material.Neon)
+		st.Size = Vector3.new(0.5, 0.5, 0.3)
+	end
+	-- Leucht-Sternchen an den Seitenwänden
+	for _ = 1, 22 do
+		local x = if rng:NextNumber() < 0.5 then -68.7 else 68.7
+		local st = ball(Vector3.new(x, rng:NextNumber(11, 21), rng:NextNumber(-62, 62)), rng:NextNumber(0.6, 1.1), C(255, 236, 160), decor, Enum.Material.Neon)
+		st.CanCollide = false
+	end
+	-- Bücherregal an der rechten Wand
+	local shelf = Instance.new("Model")
+	shelf.Name = "Bookshelf"
+	shelf.Parent = decor
+	part({ Size = Vector3.new(4, 14, 18), Position = Vector3.new(66, 7, 22), Color = wood, Material = Enum.Material.Wood }, shelf)
+	local bookColors = { C(255, 143, 177), C(127, 216, 255), C(126, 224, 138), C(255, 226, 122), C(196, 140, 255) }
+	for row = 0, 2 do
+		local z = 14
+		local i = 0
+		while z < 30 do
+			i += 1
+			local w = rng:NextNumber(0.9, 1.6)
+			local h = rng:NextNumber(2.6, 3.6)
+			part({ Size = Vector3.new(3, h, w), Position = Vector3.new(63.4, 1.2 + row * 4.4 + h / 2, z + w / 2), Color = bookColors[(i + row) % #bookColors + 1] }, shelf)
+			z += w + 0.15
+		end
+	end
+	-- Kissenhaufen neben dem Bett (Hinweis aufs Spielthema)
+	for i = 1, 7 do
+		local id = if i % 2 == 0 then "worn" else "cotton"
+		local pos = Vector3.new(rng:NextNumber(-62, -48), 1.2 + (i // 4) * 1.8, rng:NextNumber(-28, -18))
+		pillowProp(id, CFrame.new(pos) * CFrame.Angles(rng:NextNumber(-0.3, 0.3), rng:NextNumber(0, 6.28), rng:NextNumber(-0.3, 0.3)), 2.2, decor)
+	end
+	-- Spielteppich-Wege (Rennbahn) vor dem Spawn, flach
+	part({ Size = Vector3.new(0.25, 18, 18), CFrame = CFrame.new(-40, 0.12, 30) * CFrame.Angles(0, 0, math.rad(90)), Color = C(126, 224, 138), Material = Enum.Material.Fabric, CanCollide = false }, decor, Enum.PartType.Cylinder)
+	part({ Size = Vector3.new(0.25, 14, 14), CFrame = CFrame.new(45, 0.12, 40) * CFrame.Angles(0, 0, math.rad(90)), Color = C(255, 226, 122), Material = Enum.Material.Fabric, CanCollide = false }, decor, Enum.PartType.Cylinder)
 end
 
 -- ---------- Lounge (Pfirsich, Lichterketten-Gelb) ----------
