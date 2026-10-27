@@ -51,8 +51,14 @@
 | 2026-10-27 | fc8a49a | Arm-Schwung (AnimationConstraint-Rig): Messung Oberarm relativ zum Rumpf während Auto-Schlägen | **bestanden**: 8 Auto-Schläge/3 s, Winkel 69°–162° (vorher 0° – Arm bewegte sich nie) | Konsole Play-Test |
 | 2026-10-27 | 3533e71 | Mehrspieler-Check (automatisch, `RunMultiplayerCheck`) | `[IMPLEMENTIERT, UNGETESTET]` – braucht Studio-Test mit 2 Spielern (Owner #3) | – |
 
+| 2026-10-27 | e3a01a4 | Relay-Worker (node --test, CI-Job `relay`): Validierung, Datenschutzfilter, Deduplizierung, Discord-Grenzen, Token, 429-Retry | **12/12 PASS** | CI-Run 40578150820 |
+| 2026-10-27 | e3a01a4 | Studio-Runner inkl. Relay.spec (7) | **115/115 PASS** | `[TEST] SUMMARY 115/115 passed` |
+| 2026-10-27 | e3a01a4 | Schnittstelle Spiel ↔ Relay: echter Batch aus `RelayService` (Studio) durch den Worker (lokal, simuliertes Discord) | **bestanden**: 5 Kanäle, keine UserId im Batch, `@everyone` entschärft, Rollen-Ping nur in `#alerts-critical` | Konsolen-Ausgabe |
+| 2026-10-27 | e3a01a4 | Repo ↔ Studio Drift (87 Skripte) | **0 Abweichungen** (Studio-Stand war gespeichert) | `source_hash.py` |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
+- Relay live (Cloudflare + Discord + Roblox-Secrets, Owner #6)
 - Echte Robux-Käufe (brauchen Owner-IDs/Preise, OWNER_REQUESTS #4) und Sitzungsübernahme zwischen zwei Servern (nur live nachstellbar)
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear, **Freunde-Bonus mit echten Freunden**)
 - ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)

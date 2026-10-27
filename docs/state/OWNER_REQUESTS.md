@@ -10,7 +10,7 @@
 - Robux-Preise
 - Werbebudget (Standard 0 €)
 
-## #2 (2026-10-27) – offen
+## #2 (2026-10-27) – erledigt (Studio-Stand am 27.10. abends gespeichert, Drift 0 geprüft)
 1. Studio-Stand speichern: Datei → Auf Roblox speichern (Map, ProfileStore-Vendor, Skripte)
 
 ## #3 (2026-10-27) – offen

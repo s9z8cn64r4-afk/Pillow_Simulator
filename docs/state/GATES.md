@@ -57,7 +57,7 @@ Ergebnisse (Masterprompt F.2, Phase 3):
 | Monetarisierung im Testmodus | `[VERIFIZIERT]` (Testgerüst) | Monetization.spec; echte IDs/Preise → Owner #4 |
 | Analytics live | `[IMPLEMENTIERT]` – Events verifiziert in Studio | Telemetry.spec; Dashboard-Daten erst mit echten Spielern |
 | Feedback/Bug-Report | `[VERIFIZIERT]` | Feedback.spec + echter Klick mit Filter |
-| Logging-Relay + Discord Logs | **offen** (PS-36) | braucht Owner: Discord-Server/Webhook bzw. Relay-Hosting-Entscheidung |
+| Logging-Relay + Discord Logs | `[VERIFIZIERT]` bis Deployment (Worker 12 Tests, Relay.spec 7, Schnittstellentest); live `[BLOCKIERT]` | Owner #6: Discord-Server + Cloudflare-Deploy + Roblox-Secrets (`relay/README.md`) |
 | Mobile-Optimierung | `[VERIFIZIERT]` (Phone 844×390 mit Touch-Skalierung, alle Fenster) | Screenshots; echtes Gerät in Beta |
 | Tester-Rolle im Community-Discord | **offen** (PS-38) | Owner-Aktion |
 | 10–30 Tester | **offen** | Beta-Place + Einladung (Owner #5), `docs/qa/beta-plan.md`, `docs/community/tester-guide.md` |
