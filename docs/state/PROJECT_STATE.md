@@ -26,7 +26,7 @@
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
-| PS-16 Map | alle 4 Zonen dekoriert nach Art Bible (`tools/studio/build_zone_decor.luau`, 329 Dekor-Teile, 13 Lichter) `[VERIFIZIERT]` per Screenshots + 60/60 Tests; offen: Barrieren-Optik, Licht-Profile je Zone |
+| PS-16 Map | alle 4 Zonen dekoriert (`tools/studio/build_zone_decor.luau`, 362 Dekor-Teile), Vorhang-Durchgänge mit lesbarem Preisschild (BUG-003 behoben), Licht-Profile je Zone (`LightingController`) `[VERIFIZIERT]` (Freischalten + Zonenwechsel im Play-Test) |
 | PS-21–23 | offen |
 
 ## Nächste konkrete Aktion

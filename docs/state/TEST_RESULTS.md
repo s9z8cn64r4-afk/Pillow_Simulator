@@ -24,7 +24,10 @@
 
 | 2026-10-27 | 5c52050 | Map-Dekor aller Zonen: Sichtprüfung je Zone + Testlauf | bestanden (60/60, Teile gesamt ~420, 13 Lichter) | Screenshots, Konsole |
 
+| 2026-10-27 | 9e77dc5 | Play-Test Zone 2 freischalten (Prompt-Hold über Client-API) → Vorhang lokal offen, 75 K abgezogen, Lichtprofil Lounge aktiv (ClockTime 16,8, Atmosphäre Pfirsich) | bestanden; BUG-003 (Schild falsche Seite) gefunden + behoben | Konsole, Screenshots |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)
+- ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)
 - Hörprobe der Sounds durch Owner
