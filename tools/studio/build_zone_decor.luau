@@ -123,7 +123,7 @@ end
 do
 	local room, decor = makeDecor("Lounge")
 	local cz = 140
-	recolor(room, C(255, 214, 190), C(255, 196, 170), Enum.Material.Fabric)
+	recolor(room, C(222, 168, 128), C(255, 196, 170), Enum.Material.WoodPlanks)
 	part({
 		Name = "Rug",
 		Size = Vector3.new(0.3, 46, 46),
@@ -145,7 +145,7 @@ do
 			part({ Size = Vector3.new(9, 5, 2.5), Position = Vector3.new(-62, 2.5, z + dz), Color = C(240, 120, 115), Material = Enum.Material.Fabric }, sofa)
 		end
 		for k, id in { "fluffy", "heart", "sleepover" } do
-			pillowProp(id, CFrame.new(-63.5, 4.2, z - 7 + (k - 1) * 7) * CFrame.Angles(0, math.rad(90), math.rad(-15)), 1.1, sofa)
+			pillowProp(id, CFrame.new(-63, 4.8, z - 7 + (k - 1) * 7) * CFrame.Angles(0, math.rad(90), math.rad(-15)), 1.7, sofa)
 		end
 	end
 	-- Sitzsäcke rechts
@@ -157,10 +157,33 @@ do
 	end
 	-- Kissenberg (Pillow Fight!) in der hinteren rechten Ecke
 	local ids = { "cotton", "striped", "fluffy", "heart", "sleepover", "worn" }
-	for i = 1, 14 do
-		local pos = Vector3.new(rng:NextNumber(48, 64), 0.8 + (i // 5) * 1.1, rng:NextNumber(cz + 46, cz + 62))
+	for i = 1, 16 do
+		local pos = Vector3.new(rng:NextNumber(46, 64), 1.2 + (i // 5) * 1.8, rng:NextNumber(cz + 44, cz + 62))
 		local cf = CFrame.new(pos) * CFrame.Angles(rng:NextNumber(-0.4, 0.4), rng:NextNumber(0, 6.28), rng:NextNumber(-0.4, 0.4))
-		pillowProp(ids[(i % #ids) + 1], cf, 1.3, decor)
+		pillowProp(ids[(i % #ids) + 1], cf, 2.2, decor)
+	end
+	-- Deckenburg (Zelt aus zwei Keilen) mit Kissen davor
+	local fort = Instance.new("Model")
+	fort.Name = "BlanketFort"
+	fort.Parent = decor
+	local blanket = C(130, 190, 255)
+	for _, side in { -1, 1 } do
+		local w = Instance.new("WedgePart")
+		w.Anchored = true
+		w.Size = Vector3.new(16, 10, 7)
+		w.Color = blanket
+		w.Material = Enum.Material.Fabric
+		w.CFrame = CFrame.new(52, 5, cz - 4 + side * 3.5) * CFrame.Angles(0, if side == 1 then math.rad(180) else 0, 0)
+		w.Parent = fort
+	end
+	for k, id in { "striped", "cotton", "fluffy" } do
+		pillowProp(id, CFrame.new(42.5, 1.3, cz - 9 + (k - 1) * 5) * CFrame.Angles(0, rng:NextNumber(0, 6.28), 0), 2, fort)
+	end
+	-- verstreute Bodenkissen
+	for i = 1, 8 do
+		local side = if i % 2 == 0 then 1 else -1
+		local pos = Vector3.new(side * rng:NextNumber(32, 44), 0.9, rng:NextNumber(cz - 60, cz + 60))
+		pillowProp(ids[(i % #ids) + 1], CFrame.new(pos) * CFrame.Angles(0, rng:NextNumber(0, 6.28), 0), 1.8, decor)
 	end
 	-- Pizza-Karton + Snack-Tisch links vorne
 	part({ Size = Vector3.new(8, 2.5, 8), Position = Vector3.new(-48, 1.25, cz - 58), Color = C(205, 160, 120), Material = Enum.Material.Wood }, decor)
