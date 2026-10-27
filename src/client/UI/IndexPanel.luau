@@ -12,7 +12,7 @@ local C = require(script.Parent.Components)
 local IndexPanel = {}
 
 function IndexPanel.build(root: Instance)
-	local m = C.modal(root, "PILLOW INDEX", UDim2.fromOffset(640, 440))
+	local m = C.modal(root, "PILLOW INDEX", UDim2.fromOffset(640, 400)) -- Raster scrollt; passt ungeschrumpft auf Phone
 	local progress = C.text({ text = "", size = Theme.size.sm, color = Theme.color.feather })
 	progress.Size = UDim2.new(1, 0, 0, 26)
 	progress.Parent = m.body

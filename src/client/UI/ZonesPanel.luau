@@ -12,7 +12,7 @@ local C = require(script.Parent.Components)
 local ZonesPanel = {}
 
 function ZonesPanel.build(root: Instance)
-	local m = C.modal(root, "ZONES", UDim2.fromOffset(560, 440))
+	local m = C.modal(root, "ZONES", UDim2.fromOffset(560, 400)) -- 4 Zeilen à 74 + Abstände; passt ungeschrumpft auf Phone
 	local list = Instance.new("UIListLayout")
 	list.Padding = UDim.new(0, 8)
 	list.SortOrder = Enum.SortOrder.LayoutOrder

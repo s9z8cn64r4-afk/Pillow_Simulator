@@ -23,10 +23,13 @@ function RebirthPanel.build(root: Instance)
 		local h = C.text({ text = heading, size = Theme.size.sm, color = color })
 		h.Size = UDim2.new(1, 0, 0, 34)
 		h.Parent = f
-		local body = C.text({ text = "", size = Theme.size.xs, font = Theme.font.body })
-		body.Position = UDim2.fromOffset(8, 38)
-		body.Size = UDim2.new(1, -16, 1, -46)
+		-- größere Schrift (Phone): Karten haben genug Platz
+		local body = C.text({ text = "", size = Theme.size.sm, font = Theme.font.body })
+		body.Position = UDim2.fromOffset(8, 40)
+		body.Size = UDim2.new(1, -16, 1, -48)
 		body.TextYAlignment = Enum.TextYAlignment.Top
+		body.TextWrapped = true
+		body.LineHeight = 1.25
 		body.Parent = f
 		return body
 	end
