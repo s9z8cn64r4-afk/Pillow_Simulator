@@ -5,10 +5,10 @@
 
 | Feld | Wert |
 |---|---|
-| Aktuelle Phase | **Phase 2 – Vertical Slice (M2)**, Gate M0 + **Gate M1 bestanden** (2026-10-27) |
-| Version | 0.2.0-dev |
-| Sprint-Ziel | M2: alle 14 Kissen als Modelle, Map final-nah, Tutorial, Rank-Up-Feedback, Bot-Durchlauf, Gate M2 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, 14 Kissenmodelle + Effekte, Rank-Up-Feier, Tutorial, Map-Dekor aller Zonen |
+| Aktuelle Phase | **Übergang zu Phase 3 – Closed Beta (M3)**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
+| Version | 0.2.0-dev (Alpha) |
+| Sprint-Ziel | M3: Daily Reward, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Analytics, Feedback-Knopf; Restpunkte M2 (Mehrspielertest, manueller Durchlauf) |
+| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, Kissenmodelle, Tutorial, Map, Licht, Musik, Ladebildschirm, Gamepad, Bot-Durchlauf, Gate M2 (vorläufig) |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,8 +18,8 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | 60/60 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | per GitHub-Sync aktuell (Drift-Check zuletzt 0 bei 0aff1bf) |
+| Tests | 62/62 grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Repo ↔ Studio | 0 Abweichungen (60 Skripte, inkl. ReplicatedFirst) `[VERIFIZIERT]` |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
 | PS-15 Ranks | Titel, Banner + Konfetti, Trail ab Rank 5 `[VERIFIZIERT]` (Tests + Screenshot); Mehrspieler-Sichtbarkeit `[IMPLEMENTIERT, UNGETESTET]` |
@@ -27,7 +27,8 @@
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
 | PS-16 Map | alle 4 Zonen dekoriert (`tools/studio/build_zone_decor.luau`, 362 Dekor-Teile), Vorhang-Durchgänge mit lesbarem Preisschild (BUG-003 behoben), Licht-Profile je Zone (`LightingController`) `[VERIFIZIERT]` (Freischalten + Zonenwechsel im Play-Test) |
-| PS-21–23 | offen |
+| PS-22/23 | Bot bis Rebirth 3 + Performance `[VERIFIZIERT]`; PS-21 Mehrspielertest → Owner (#3) |
+| Musik, Ladebildschirm, Tooltips, Gamepad | `[VERIFIZIERT]` (Musik spielt, Screenshots, simulierte Gamepad-Eingaben) |
 
 ## Nächste konkrete Aktion
 Siehe `NEXT_ACTIONS.md`.

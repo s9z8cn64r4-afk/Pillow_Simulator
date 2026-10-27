@@ -12,6 +12,8 @@
 - PS-15: Feier-Banner + Konfetti (Rank-Up, Rebirth, Epic/Legendary), Trail ab Rank 5, Rank.spec → 52/52.
 - PS-16: Dekor-Builder für alle 4 Zonen (Art-Bible-Paletten, prozedurale Möbel, generierte Kissen als Requisiten, Lichterketten/Kronleuchter/Mond), 329 Teile, Tests weiter grün.
 - PS-16 Rest: Vorhang-Durchgänge, Licht-Profile je Zone (LightingController), BUG-003 (Preisschild falsche Seite) gefunden und behoben.
+- PS-22/23: Bot-Durchlauf (BotRun.spec) bis Rebirth 3 ohne Sackgasse, Performance gemessen; Musik (Playlist), Ladebildschirm, Tooltips, Gamepad (R2/Y/X/B); Test-Isolation Gameplay.spec; ProfileStore-Lizenz (Apache-2.0) geklärt.
+- **Gate M2 vorläufig bestanden** (Restpunkte: Mehrspielertest, manueller Volldurchlauf).
 - PS-18: Tutorial (TutorialService, Hinweis-UI mit Markierung, Skip, 2×-Boost, Funnel-Events), Tutorial.spec → 60/60; Sync-Helfer `DevTools.SyncFromGitHub` in Studio.
 **Probleme:** StyLua-Binary-Download in der Cloud-Umgebung nicht erlaubt (→ CI formatiert); Actions-Logs nicht abrufbar (→ Annotations).
 

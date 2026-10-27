@@ -31,3 +31,19 @@ Format: Kriterium · Status · Beleg · Ausnahme
 | Phone-Layout | erfüllt `[VERIFIZIERT]` | Debug-Viewport 844×390 + Touch-Mindestskalierung 0,8 | echtes Gerät steht aus (Closed Beta) |
 
 **Ergebnis:** Gate M1 bestanden. Phase 2 (M2 Vertical Slice) läuft.
+
+## Gate M2 – Alpha / Vertical Slice (2026-10-27) – **vorläufig bestanden**
+| Kriterium | Status | Beleg | Ausnahme |
+|---|---|---|---|
+| Alle Kissen/Zonen, Puppen, Rebirth, Ranks | erfüllt `[VERIFIZIERT]` | 14 Modelle, 4 Zonen, Integrationstests Progression/Rank/BotRun | – |
+| Map final-nah, Animationen/VFX | erfüllt `[VERIFIZIERT]` | Dekor aller Zonen, Vorhänge, Licht-Profile, Federburst, Aura/Trail, Feier-Banner (Screenshots) | Arm-Animation teils vom Standard-Animator überdeckt (P3) |
+| UI-Design-System, Tutorial, Settings, Musik, Ladebildschirm, Tooltips | erfüllt `[VERIFIZIERT]` | Klick-/Hover-Tests, Screenshots Desktop + Phone 844×390, Musik spielt | – |
+| Gamepad-Grundbedienung | erfüllt `[VERIFIZIERT]` | R2 = Schlag (5 Schläge/2 s), Y = Shop, B = Schließen, X = Auto (simulierte Eingaben) | echtes Gamepad nicht getestet |
+| Pfad Start → Rebirth 3 per Bot | erfüllt `[VERIFIZIERT]` | BotRun.spec (echte Services): keine Sackgasse, Rebirth 3 nach 214 Sim-Min. | – |
+| Pfad Start → Rebirth 3 manuell | **offen** | Zone 2 manuell freigeschaltet (Play-Test) | voller manueller Durchlauf (≈ 2–3 h) → Closed Beta |
+| Keine offenen P0/P1 | erfüllt | KNOWN_BUGS: BUG-001/003 behoben, nur P2/P3 offen | – |
+| Performance-Budgets (G.6) | erfüllt (1 Spieler) `[VERIFIZIERT]` | 59,9 FPS, Heartbeat 59,9, 9/60 Partikel, 0,08 KB/s, StreamingEnabled | Server-Skriptzeit + Gerätespeicher nicht automatisiert messbar; Last mit 12 Spielern → M3 |
+| Tests/CI/Drift | erfüllt `[VERIFIZIERT]` | Studio-Runner grün, CI grün, Drift 0 (60 Skripte) | – |
+| Mehrspieler-Sichtbarkeit (Titel, Effekte anderer) | **offen** | – | Owner-Test mit 2 Clients (Owner-Aktion, ~5 Min.) |
+
+**Ergebnis:** Gate M2 vorläufig bestanden – zwei Restpunkte (manueller Volldurchlauf, Mehrspielertest) werden in M3 / Closed Beta nachgeholt. Phase 3 (M3 Beta: Retention, Monetarisierung, Analytics/Relay) kann beginnen; Owner-Freigabe des MVP-Scopes wird vor Closed Beta benötigt.
