@@ -7,7 +7,12 @@
 - Testrunner: Auto-Swing je Spec aus (Restore-Wächter-Fehlalarm bei Leaderboard.spec behoben).
 - PS-33 Freunde-/Gruppen-Bonus (SocialService, HUD-Badge) und PS-37 Feedback (FeedbackService, Feedback-Fenster) → 93/93 Tests, Feedback per echtem Klick mit echtem Filter `[VERIFIZIERT]`.
 - Trello: PS-30/35/31+32 → Review, PS-33+37 → Review.
-**Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID vom Owner.
+- PS-34 Monetarisierung (Testgerüst): MonetizationService, Shop-Reiter „Extras“ (SOON bis Owner-IDs/Preise), idempotente Quittungen mit Speicherbestätigung → Monetization.spec 7/7.
+- PS-39 Persistenz-Stresstest: Persistence.spec 4/4 gegen echten DataStore; Annahme „Sitzungsübernahme im selben Server“ war falsch (ProfileStore verweigert Doppel-Laden – gewollt) → Test angepasst.
+- PS-40 (Teil): Phone mit Touch-Skalierung geprüft, Fehler gefunden (Settings höher als Bildschirm) und behoben: Fenster passen sich an, Settings scrollt.
+- Doppelte Bonus-Werte entfernt (SocialService nutzt generiertes `Rewards.social`).
+- Gesamt **104/104 Tests**, Drift 0 (81 Skripte).
+**Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID, Robux-Preise/IDs (Owner #4).
 
 ## Sitzung 3 – 2026-10-27
 **Ziele:** CI-Fehler (rote Commits) beheben, M2-Stand in Studio verifizieren, Gate M1, PS-11.

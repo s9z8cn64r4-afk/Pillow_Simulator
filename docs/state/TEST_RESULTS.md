@@ -37,8 +37,15 @@
 | 2026-10-27 | e9e2d2e | Freunde-Badge im HUD (Attribut gesetzt) | bestanden: „👥 +20%“ unter den Federn | Screenshot; echter Freunde-Fall braucht Mehrspielertest |
 | 2026-10-27 | e9e2d2e | Repo ↔ Studio Drift (78 Skripte) | 78/78 Pfade vorhanden, alle geänderten Hashes identisch | `studio_hash.luau` / `source_hash.py` |
 
+| 2026-10-27 | bf510ba | Studio-Runner inkl. Monetization.spec (7: Pass-Wirkung, Kaufsperre ohne ID, idempotente Quittung, NotProcessedYet ohne Speicherbestätigung, Boost ohne Deckel, fremde Produkte/Spieler) | **100/100 PASS** | `[TEST] SUMMARY 100/100 passed` |
+| 2026-10-27 | 76fce79 | **Persistenz-Stresstest** (Persistence.spec, echter DataStore DEV, Test-Schlüssel): 8 schnelle Sitzungswechsel, Doppel-Laden im selben Server, 1000 Quittungen, `saveAndWait` | **bestanden**: 0 Datenverlust (6,6 s für 8 Wechsel), Doppel-Laden verweigert, 1000/1000 geladen, Speicherbestätigung 0,6 s; Gesamt **104/104 PASS** | Konsole `[PERSIST]`, `SUMMARY 104/104` |
+| 2026-10-27 | 76fce79 | Shop-Reiter „Extras“ (Desktop + Phone 844×390): 4 Artikel „SOON“, nicht kaufbar; Ziel-Leiste „ready!“ | bestanden | Screenshots |
+| 2026-10-27 | aaf7b16 | Phone 844×390 mit Touch-Skalierung (0,8): Settings war höher als der Bildschirm (Titel/Schließen abgeschnitten) → Fenster passen sich an, Settings scrollt; Feedback-Fenster passt; Feedback-Knopf vergrößert | bestanden nach Korrektur (Scrollen bis „Code“ geprüft) | Screenshots |
+| 2026-10-27 | aaf7b16 | Repo ↔ Studio Drift (81 Skripte) | **0 Abweichungen** | `source_hash.py` |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
+- Echte Robux-Käufe (brauchen Owner-IDs/Preise, OWNER_REQUESTS #4) und Sitzungsübernahme zwischen zwei Servern (nur live nachstellbar)
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear, **Freunde-Bonus mit echten Freunden**)
 - ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)
 - Hörprobe der Sounds durch Owner

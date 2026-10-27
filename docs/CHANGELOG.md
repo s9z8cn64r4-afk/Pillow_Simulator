@@ -12,6 +12,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Feedback-Fenster (Bug/Idee/Sonstiges) aus den Einstellungen; Text wird gefiltert gespeichert.
 - Shop-Reiter „Extras“ mit Gamepässen und 2×-Boost (noch nicht kaufbar, „SOON“ bis Owner-Preise/IDs); sichere Kaufabwicklung.
 - Ziel-Leiste zeigt „ready!“, sobald das Ziel bezahlbar ist.
+### Fixed
+- Kleine Touch-Bildschirme: Fenster passen sich an den Bildschirm an (unter der Roblox-Leiste), Einstellungen scrollen statt abgeschnitten zu werden; größerer Feedback-Knopf.
 
 ## 0.2.0-dev (M2 Vertical Slice) – Gate M2 vorläufig bestanden 2026-10-27
 ### Added
