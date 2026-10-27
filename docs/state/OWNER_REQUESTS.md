@@ -14,10 +14,8 @@
 1. Studio-Stand speichern: Datei → Auf Roblox speichern (Map, ProfileStore-Vendor, Skripte)
 
 ## #3 (2026-10-27) – offen
-1. **Mehrspielertest (~3 Min.)**: In Studio oben „Test“ → bei „Clients and Servers“ **2** Spieler wählen → „Start“. Es öffnen sich 3 Fenster (Server + 2 Spieler). Dann entweder:
-   - **a)** mir „läuft“ schreiben und die Fenster offen lassen – ich versuche, die Prüfungen selbst auszuführen; **oder**
-   - **b)** selbst prüfen: in **beiden Spieler-Fenstern** (Befehlsleiste unten, „View → Command Bar“) kurz nacheinander `print(require(game.ReplicatedStorage.DevToolsClient.MpCheckClient)())` eingeben, danach im **Server-Fenster** `print(require(game.ServerStorage.DevTools.MpCheckServer)())`. Die Ausgabe (Output-Fenster) mit „OK“/„FEHLT“ an mich schicken.
-   Geprüft wird: Kissen in der Hand und Rang-Titel beim anderen Spieler sichtbar, Schlag-Effekte kommen an, getrennte Spielstände, Freunde-Bonus berechnet.
+1. **Mehrspielertest (~3 Min., jetzt automatisch)**: In Studio oben „Test“ → bei „Clients and Servers“ **2** Spieler wählen → „Start“. Es öffnen sich 3 Fenster (Server + 2 Spieler). **Nichts eintippen** – nach ca. 20 s läuft der Check von selbst (Attribut `RunMultiplayerCheck` am Server-Skript ist gesetzt). Ergebnis: im Server-Fenster `[MP] SUMMARY …`, in den Spieler-Fenstern `[MP-CLIENT] PASS/FAIL …`. Schreib mir „läuft“ und lass die Fenster offen – ich lese die Ausgabe dann selbst, sonst schick mir die Zeilen mit `[MP`.
+   Geprüft wird: getrennte Spielstände, Kissen in der Hand und Rang-Titel beim anderen Spieler sichtbar, Schlag-Effekte kommen beim Mitspieler an, Rang-Hinweis an Mitspieler, Freunde-Bonus, Leaderboard, Sitzungsberichte.
 2. **Hörprobe** der Sounds und der 3 Musiktitel (Einstellungen → Musik/Sound) – passt die Stimmung?
 3. **Studio speichern** (Datei → Auf Roblox speichern) – weiterhin wichtig (Kissenmodelle, Map, DevTools nur im Place).
 4. **Codes freigeben** (Entwurf in `src/shared/Config/Codes.luau`): PILLOWFIGHT (5 Min. Produktion), FLUFFY (2× für 15 Min.), BETATESTER (10 Min., bis 01.01.2027). Funktionieren bereits im Spiel; öffentlich genannt werden sie erst nach deinem OK.

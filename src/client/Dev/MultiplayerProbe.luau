@@ -34,7 +34,7 @@ function MultiplayerProbe.start()
 			counting = true
 		elseif state == "done" and counting then
 			counting = false
-			local tags, others = 0, 0
+			local tags, pillows, others = 0, 0, 0
 			for _, p in Players:GetPlayers() do
 				if p ~= me then
 					others += 1
@@ -43,12 +43,17 @@ function MultiplayerProbe.start()
 					if tag and tag:IsA("BillboardGui") and tag.Enabled then
 						tags += 1
 					end
+					local tool = p.Character and p.Character:FindFirstChild("Pillow")
+					if tool and tool:FindFirstChild("Handle", true) then
+						pillows += 1
+					end
 				end
 			end
 			local function line(ok: boolean, text: string)
 				print(("[MP-CLIENT] %s %s (%s)"):format(if ok then "PASS" else "FAIL", text, me.Name))
 			end
 			line(others > 0 and tags == others, ("Rang-Titel anderer sichtbar %d/%d"):format(tags, others))
+			line(others > 0 and pillows == others, ("Kissen anderer sichtbar %d/%d"):format(pillows, others))
 			line(fxFromOthers > 0, ("Schlag-Effekte des Mitspielers empfangen: %d"):format(fxFromOthers))
 			line(rankNotes > 0, ("Rang-Hinweis des Mitspielers empfangen: %d"):format(rankNotes))
 		end

@@ -86,8 +86,11 @@ function MultiplayerCheck.run(registry: any)
 	-- 1) Getrennte Spielstände
 	check("Getrennte Spielstände", dA ~= dB and A.UserId ~= B.UserId)
 
-	-- 2) Rang-Titel an beiden Köpfen (repliziert automatisch zu allen Clients)
+	-- 2) Profil (leaderstats), Kissen in der Hand und Rang-Titel an beiden Spielern (repliziert zu allen Clients)
 	for _, p in { A, B } do
+		local tool = (p.Character :: Model):FindFirstChild("Pillow")
+		check("Profil geladen (leaderstats) – " .. p.Name, p:FindFirstChild("leaderstats") ~= nil)
+		check("Kissen in der Hand – " .. p.Name, tool ~= nil and tool:FindFirstChild("Handle", true) ~= nil)
 		local head = (p.Character :: Model):FindFirstChild("Head")
 		local tag = head and head:FindFirstChild("RankTag")
 		local title = tag and tag:FindFirstChild("Title") :: TextLabel?
