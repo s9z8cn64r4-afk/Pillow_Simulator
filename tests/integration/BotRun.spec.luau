@@ -151,7 +151,14 @@ return function(it, expect, ctx)
 			local t = milestones[key]
 			expect(t ~= nil).toBeTruthy()
 			local ratio = (t :: number) / 60 / refMinutes
-			print(("[BOT] %s: %.1f Min. (Sim %.0f, Faktor %.2f)"):format(key, (t :: number) / 60, refMinutes, ratio))
+			print(
+				("[BOT] %s: %.1f Min. (Sim %.0f, Faktor %.2f)"):format(
+					key,
+					(t :: number) / 60,
+					refMinutes,
+					ratio
+				)
+			)
 			expect(ratio >= 0.4 and ratio <= 2.5).toBeTruthy()
 		end
 		within("zone:livingroom:r0", 9.1)
