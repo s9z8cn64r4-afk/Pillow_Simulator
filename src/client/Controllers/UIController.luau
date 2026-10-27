@@ -685,7 +685,8 @@ function UIController:buildShop(root: Frame)
 	local tabUpgrades =
 		C.button({ text = "Upgrades", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
 	tabUpgrades.instance.Parent = tabs
-	local tabStore = C.button({ text = "⭐ Extras", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
+	local tabStore =
+		C.button({ text = "⭐ Extras", size = UDim2.fromOffset(150, 50), color = Theme.color.bgSoft })
 	tabStore.instance.Parent = tabs
 
 	local function list(): ScrollingFrame
@@ -782,7 +783,9 @@ function UIController:buildShop(root: Frame)
 	for i, def in Products.gamepasses do
 		local effect = if def.multiplier
 			then ("Forever: x%g feathers"):format(def.multiplier)
-			else ("Forever: Auto-Swing at %d%%"):format(math.floor((def.autoSwingEfficiency or 1) * 100 + 0.5))
+			else ("Forever: Auto-Swing at %d%%"):format(
+				math.floor((def.autoSwingEfficiency or 1) * 100 + 0.5)
+			)
 		storeEntry("pass", def, i, effect)
 	end
 	for i, def in Products.devProducts do

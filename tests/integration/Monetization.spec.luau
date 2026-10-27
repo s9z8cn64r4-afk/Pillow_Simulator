@@ -11,7 +11,11 @@ return function(it, expect, ctx)
 	local data = PD:get(player)
 	local savedBoosts = table.clone(data.activeBoosts)
 	local savedHistory = table.clone(data.purchaseHistory)
-	local savedOwned = { doubleFeathers = M:owns(player, "doubleFeathers"), fasterAutoSwing = M:owns(player, "fasterAutoSwing"), vip = M:owns(player, "vip") }
+	local savedOwned = {
+		doubleFeathers = M:owns(player, "doubleFeathers"),
+		fasterAutoSwing = M:owns(player, "fasterAutoSwing"),
+		vip = M:owns(player, "vip"),
+	}
 	local origSave = M.saveCheck
 	table.clear(data.activeBoosts)
 	M:setOwned(player, "doubleFeathers", false)
@@ -56,7 +60,12 @@ return function(it, expect, ctx)
 		M.saveCheck = function()
 			return true
 		end
-		local receipt = { PlayerId = player.UserId, ProductId = TEST_PRODUCT_ID, PurchaseId = "TEST-RECEIPT-1", CurrencySpent = 0 }
+		local receipt = {
+			PlayerId = player.UserId,
+			ProductId = TEST_PRODUCT_ID,
+			PurchaseId = "TEST-RECEIPT-1",
+			CurrencySpent = 0,
+		}
 		expect(M:processReceipt(receipt)).toBe(Enum.ProductPurchaseDecision.PurchaseGranted)
 		local endsAt = data.activeBoosts.feathers2x
 		expect(endsAt ~= nil).toBeTruthy()
@@ -68,7 +77,12 @@ return function(it, expect, ctx)
 		M.saveCheck = function()
 			return false
 		end
-		local receipt = { PlayerId = player.UserId, ProductId = TEST_PRODUCT_ID, PurchaseId = "TEST-RECEIPT-2", CurrencySpent = 0 }
+		local receipt = {
+			PlayerId = player.UserId,
+			ProductId = TEST_PRODUCT_ID,
+			PurchaseId = "TEST-RECEIPT-2",
+			CurrencySpent = 0,
+		}
 		local before = data.activeBoosts.feathers2x
 		expect(M:processReceipt(receipt)).toBe(Enum.ProductPurchaseDecision.NotProcessedYet)
 		local after1 = data.activeBoosts.feathers2x
@@ -83,7 +97,11 @@ return function(it, expect, ctx)
 	it("Gekaufte Boost-Zeit ist nicht gedeckelt", function()
 		table.clear(data.activeBoosts)
 		for i = 1, 6 do -- 6 × 30 Min. = 180 Min. > Deckel 120 Min.
-			M:processReceipt({ PlayerId = player.UserId, ProductId = TEST_PRODUCT_ID, PurchaseId = "TEST-STACK-" .. i })
+			M:processReceipt({
+				PlayerId = player.UserId,
+				ProductId = TEST_PRODUCT_ID,
+				PurchaseId = "TEST-STACK-" .. i,
+			})
 		end
 		local left = data.activeBoosts.feathers2x - workspace:GetServerTimeNow()
 		expect(left > 175 * 60).toBeTruthy()

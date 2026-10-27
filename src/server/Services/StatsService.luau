@@ -57,7 +57,9 @@ function StatsService:addBoost(player: Player, boostId: string, seconds: number,
 	end
 	local t = now()
 	local current = math.max(data.activeBoosts[boostId] or 0, t)
-	local endsAt = if paid then current + seconds else math.min(current + seconds, t + def.maxStackMinutes * 60)
+	local endsAt = if paid
+		then current + seconds
+		else math.min(current + seconds, t + def.maxStackMinutes * 60)
 	data.activeBoosts[boostId] = endsAt
 	PlayerData:markChanged(player, "activeBoosts")
 	self:refreshBoostAttributes(player)

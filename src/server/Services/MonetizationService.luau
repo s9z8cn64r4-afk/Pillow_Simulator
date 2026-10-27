@@ -147,7 +147,10 @@ function MonetizationService:processReceipt(info: any): Enum.ProductPurchaseDeci
 	if not data.purchaseHistory[receiptKey] then
 		data.purchaseHistory[receiptKey] = true -- zuerst markieren: Wiederholung schreibt nie doppelt gut
 		grantProduct(player, product)
-		Log:info("Kauf gutgeschrieben", { userId = player.UserId, product = product.id, receipt = receiptKey })
+		Log:info(
+			"Kauf gutgeschrieben",
+			{ userId = player.UserId, product = product.id, receipt = receiptKey }
+		)
 		pcall(function()
 			AnalyticsService:LogCustomEvent(
 				player,
