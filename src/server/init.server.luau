@@ -53,8 +53,20 @@ end
 
 registry.LogService:info("Server gestartet", { services = #ORDER })
 
+-- Mehrspieler-Check nur in Studio (Attribut RunMultiplayerCheck), ersetzt dann den normalen Testlauf
+local mpCheck = RunService:IsStudio() and script:GetAttribute("RunMultiplayerCheck")
+if mpCheck then
+	local tests = ServerStorage:FindFirstChild("Tests")
+	local folder = tests and tests:FindFirstChild("multiplayer")
+	if folder and folder:FindFirstChild("MultiplayerCheck") then
+		task.defer(function()
+			require(folder.MultiplayerCheck :: any).run(registry)
+		end)
+	end
+end
+
 -- Tests nur in Studio und nur wenn ausdrücklich angefordert (Attribut RunTestsOnStart am Server-Skript)
-if RunService:IsStudio() and script:GetAttribute("RunTestsOnStart") then
+if RunService:IsStudio() and not mpCheck and script:GetAttribute("RunTestsOnStart") then
 	local tests = ServerStorage:FindFirstChild("Tests")
 	if tests and tests:FindFirstChild("RunTests") then
 		task.defer(function()

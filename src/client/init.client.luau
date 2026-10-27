@@ -27,3 +27,12 @@ for _, name in ORDER do
 		end)
 	end
 end
+
+-- Nur Studio: Mehrspieler-Check (zählt, was dieser Client vom Mitspieler sieht)
+if game:GetService("RunService"):IsStudio() then
+	local dev = script:FindFirstChild("Dev")
+	local probe = dev and dev:FindFirstChild("MultiplayerProbe")
+	if probe then
+		(require(probe :: any) :: any).start()
+	end
+end
