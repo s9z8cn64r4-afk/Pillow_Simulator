@@ -45,6 +45,12 @@ function PillowToolService.buildTool(pillowId: string): Tool
 		-- Längsachse X (Standard) wird um 90° gedreht; Modelle mit Längsachse Z (Attribut vom Import) nicht
 		local longZ = handle:GetAttribute("LongAxisZ") == true
 		tool.Grip = CFrame.new(0, 0, -0.9) * CFrame.Angles(0, if longZ then 0 else math.rad(90), 0)
+		-- Feinjustierung je Modell (Attribut GripRotation, Grad): z. B. aufrecht generierte Modelle,
+		-- deren Fläche sonst seitlich zeigt
+		local extra = handle:GetAttribute("GripRotation")
+		if typeof(extra) == "Vector3" then
+			tool.Grip *= CFrame.Angles(math.rad(extra.X), math.rad(extra.Y), math.rad(extra.Z))
+		end
 	else
 		local part = Instance.new("Part")
 		part.Name = "Handle"

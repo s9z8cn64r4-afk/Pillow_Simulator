@@ -14,7 +14,10 @@
 1. Studio-Stand speichern: Datei → Auf Roblox speichern (Map, ProfileStore-Vendor, Skripte)
 
 ## #3 (2026-10-27) – offen
-1. **Mehrspielertest (~5 Min.)**: In Studio oben „Test“ → bei „Clients and Servers“ 2 Spieler wählen → „Start“. In einem Fenster schlagen, im anderen prüfen: Kissen in der Hand sichtbar, Federn fliegen, Rang-Titel über dem Kopf. Rückmeldung „ok“ oder was fehlt.
+1. **Mehrspielertest (~3 Min.)**: In Studio oben „Test“ → bei „Clients and Servers“ **2** Spieler wählen → „Start“. Es öffnen sich 3 Fenster (Server + 2 Spieler). Dann entweder:
+   - **a)** mir „läuft“ schreiben und die Fenster offen lassen – ich versuche, die Prüfungen selbst auszuführen; **oder**
+   - **b)** selbst prüfen: in **beiden Spieler-Fenstern** (Befehlsleiste unten, „View → Command Bar“) kurz nacheinander `print(require(game.ReplicatedStorage.DevToolsClient.MpCheckClient)())` eingeben, danach im **Server-Fenster** `print(require(game.ServerStorage.DevTools.MpCheckServer)())`. Die Ausgabe (Output-Fenster) mit „OK“/„FEHLT“ an mich schicken.
+   Geprüft wird: Kissen in der Hand und Rang-Titel beim anderen Spieler sichtbar, Schlag-Effekte kommen an, getrennte Spielstände, Freunde-Bonus berechnet.
 2. **Hörprobe** der Sounds und der 3 Musiktitel (Einstellungen → Musik/Sound) – passt die Stimmung?
 3. **Studio speichern** (Datei → Auf Roblox speichern) – weiterhin wichtig (Kissenmodelle, Map, DevTools nur im Place).
 4. **Codes freigeben** (Entwurf in `src/shared/Config/Codes.luau`): PILLOWFIGHT (5 Min. Produktion), FLUFFY (2× für 15 Min.), BETATESTER (10 Min., bis 01.01.2027). Funktionieren bereits im Spiel; öffentlich genannt werden sie erst nach deinem OK.
