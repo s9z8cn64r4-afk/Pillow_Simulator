@@ -17,7 +17,8 @@ Fehlt ein Webhook, wird der Kanal einfach übersprungen.
 
 ## Einrichtung (Owner, einmalig ~15 Min.)
 1. **Discord:** privaten Server „Pillow Logs“ anlegen, die Kanäle oben erstellen, je Kanal *Integrationen → Webhook erstellen → URL kopieren*.
-2. **Cloudflare:** kostenloses Konto, dann in diesem Ordner:
+2. **Cloudflare (ohne Terminal):** Workers & Pages → Create Worker → *Edit code* → Inhalt von `dist/worker.js` einfügen → Deploy; Secrets unter *Settings → Variables and Secrets* (Typ Secret).
+   **Oder mit Terminal**, in diesem Ordner:
    ```
    cp wrangler.toml.example wrangler.toml
    npx wrangler login
@@ -34,4 +35,4 @@ Fehlt ein Webhook, wird der Kanal einfach übersprungen.
 Secrets nie in Chat, Code oder Repo – nur in Cloudflare bzw. Roblox eintragen.
 
 ## Entwicklung
-`npm test` (Node ≥ 20, keine Abhängigkeiten). Läuft auch im CI.
+`npm test` (Node ≥ 20, keine Abhängigkeiten), `npm run build` erzeugt `dist/worker.js` (Einzeldatei fürs Dashboard). Beides läuft im CI; CI schlägt fehl, wenn `dist/` nicht zum Quellcode passt.

@@ -1,5 +1,7 @@
 # OWNER_REQUESTS
 
+> Schritt-für-Schritt-Anleitung für alle offenen Punkte (Doc): https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
+
 ## #1 (2026-10-27) – erledigt
 1. Dev-Place „Pillow Simulator [DEV]“ privat veröffentlichen + „Studio-Zugriff auf API-Dienste“ aktivieren → löst B-1 ✅
 2. Privates GitHub-Repo `pillow-simulator` anlegen, Namen nennen → löst B-2 ✅ (inkl. Claude-GitHub-App)
