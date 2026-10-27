@@ -23,6 +23,7 @@ local Schema: { [string]: Entry } = {
 	Rebirth = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
 	TutorialSkip = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
 	ClaimDaily = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
+	RedeemCode = { dir = "c2s", args = { "codeText" }, rate = 0.2, burst = 3 },
 	SetSetting = { dir = "c2s", args = { "settingKey", "settingValue" }, rate = 4, burst = 8 },
 
 	-- Server -> Client

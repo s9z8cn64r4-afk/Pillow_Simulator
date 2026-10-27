@@ -31,6 +31,10 @@ Validate.validators = {
 		return type(v) == "boolean" or isFiniteNumber(v)
 	end,
 	finiteNumber = isFiniteNumber,
+	-- Codes: nur Buchstaben/Ziffern, 1–20 Zeichen (Groß-/Kleinschreibung egal)
+	codeText = function(v: any): boolean
+		return type(v) == "string" and #v >= 1 and #v <= 20 and string.match(v, "^%w+$") ~= nil
+	end,
 	shortString = function(v: any): boolean
 		return type(v) == "string" and #v <= 64
 	end,

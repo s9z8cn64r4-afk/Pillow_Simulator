@@ -551,6 +551,21 @@ function UIController:build()
 				("Feathers x%.2f forever"):format(payload.multiplier),
 				Theme.color.feather
 			)
+		elseif kind == "codeResult" then
+			if payload.ok then
+				local info = payload.info
+				local sub = if info.kind == "boost"
+					then ("2x Feathers for %d min"):format(info.minutes)
+					else ("+%s feathers"):format(NumberFormat.short(info.amount))
+				celebrate("CODE REDEEMED!", sub, Theme.color.success)
+			else
+				local msg = ({
+					unknown = "That code doesn't exist.",
+					expired = "That code has expired.",
+					used = "You already used that code.",
+				})[payload.reason] or "Code not possible right now."
+				self:toast(msg, Theme.color.danger)
+			end
 		elseif kind == "dailyResult" then
 			if payload.ok then
 				local info = payload.info

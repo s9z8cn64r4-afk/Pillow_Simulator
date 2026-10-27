@@ -10,7 +10,7 @@ local C = require(script.Parent.Components)
 local SettingsPanel = {}
 
 function SettingsPanel.build(root: Instance)
-	local m = C.modal(root, "SETTINGS", UDim2.fromOffset(560, 440))
+	local m = C.modal(root, "SETTINGS", UDim2.fromOffset(560, 510))
 	local list = Instance.new("UIListLayout")
 	list.Padding = UDim.new(0, 8)
 	list.SortOrder = Enum.SortOrder.LayoutOrder
@@ -112,6 +112,40 @@ function SettingsPanel.build(root: Instance)
 		table.insert(refreshers, function(st)
 			for v, b in buttons do
 				b.setColor(if st.uiScale == v then Theme.color.primary else Theme.color.bg)
+			end
+		end)
+	end
+
+	-- Codes einlösen (Server prüft; Rückmeldung als Toast über UIController)
+	do
+		local controls = row("Code")
+		local box = Instance.new("TextBox")
+		box.Size = UDim2.fromOffset(150, 52)
+		box.BackgroundColor3 = Theme.color.bg
+		box.TextColor3 = Theme.color.surface
+		box.PlaceholderText = "ENTER CODE"
+		box.PlaceholderColor3 = Theme.color.muted
+		box.Font = Theme.font.body
+		box.TextSize = Theme.size.sm
+		box.ClearTextOnFocus = false
+		box.Text = ""
+		box.LayoutOrder = 1
+		box.Parent = controls
+		C.corner(box)
+		local redeem = C.button({ text = "REDEEM", size = UDim2.fromOffset(110, 52), color = Theme.color.success })
+		redeem.instance.LayoutOrder = 2
+		redeem.instance.Parent = controls
+		local function send()
+			local text = string.gsub(box.Text, "%s", "")
+			if #text > 0 and #text <= 20 and string.match(text, "^%w+$") then
+				NetClient.fire("RedeemCode", text)
+				box.Text = ""
+			end
+		end
+		redeem.button.Activated:Connect(send)
+		box.FocusLost:Connect(function(enter)
+			if enter then
+				send()
 			end
 		end)
 	end
