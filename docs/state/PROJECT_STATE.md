@@ -5,10 +5,10 @@
 
 | Feld | Wert |
 |---|---|
-| Aktuelle Phase | **Übergang zu Phase 3 – Closed Beta (M3)**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
-| Version | 0.2.0-dev (Alpha) |
-| Sprint-Ziel | M3: Daily Reward, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Analytics, Feedback-Knopf; Restpunkte M2 (Mehrspielertest, manueller Durchlauf) |
-| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, Kissenmodelle, Tutorial, Map, Licht, Musik, Ladebildschirm, Gamepad, Bot-Durchlauf, Gate M2 (vorläufig) |
+| Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
+| Version | 0.3.0-dev (M3 in Arbeit) |
+| Sprint-Ziel | M3 Rest: Monetarisierung (Test, Platzhalter-IDs), Persistenz-Stresstest, Mobile-Feinschliff; Restpunkte M2 (Mehrspielertest, manueller Durchlauf) |
+| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback – 93/93 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,8 +18,11 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | 62/62 grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | 0 Abweichungen (60 Skripte, inkl. ReplicatedFirst) `[VERIFIZIERT]` |
+| Tests | **93/93** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Repo ↔ Studio | 78 Skripte, synchron mit Commit e9e2d2e (geänderte Hashes identisch) `[VERIFIZIERT]` |
+| PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
+| PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus `[BLOCKIERT]` (Gruppen-ID vom Owner) |
+| PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
 | PS-15 Ranks | Titel, Banner + Konfetti, Trail ab Rank 5 `[VERIFIZIERT]` (Tests + Screenshot); Mehrspieler-Sichtbarkeit `[IMPLEMENTIERT, UNGETESTET]` |
@@ -43,7 +46,7 @@ Siehe `NEXT_ACTIONS.md`.
 - GUI-Klicks: `user_mouse_input` mit Mittelpunkt aus `AbsolutePosition + AbsoluteSize/2`.
 
 ## Offene Owner-Entscheidungen / -Aktionen
-Studio speichern (#2) · Hörprobe Sounds · Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Studio speichern (#2) · Mehrspielertest (#3) · Hörprobe Sounds + Musik · Codes freigeben · Gruppen-ID ·  Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

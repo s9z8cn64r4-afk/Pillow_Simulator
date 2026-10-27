@@ -8,6 +8,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Menü wird auf niedrigen Bildschirmen zweispaltig.
 - Analytics: Economy-, Progression- und Rank-Events (gebündelt, gedrosselt).
 - Codes (Eingabe in den Einstellungen) und Leaderboards (Top 10 Federn/Rebirths im Kinderzimmer).
+- Freunde-Bonus (+10 % je Freund im Server, max. +30 %) mit HUD-Anzeige; Gruppen-Bonus vorbereitet (wartet auf Gruppen-ID).
+- Feedback-Fenster (Bug/Idee/Sonstiges) aus den Einstellungen; Text wird gefiltert gespeichert.
 
 ## 0.2.0-dev (M2 Vertical Slice) – Gate M2 vorläufig bestanden 2026-10-27
 ### Added

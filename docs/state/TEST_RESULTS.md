@@ -30,9 +30,16 @@
 | 2026-10-27 | 2daf0a7 | Studio-Runner gesamt | **62/62 PASS** (Gameplay.spec gegen DEV-Spielstand isoliert) | `[TEST] SUMMARY 62/62 passed` |
 | 2026-10-27 | 2daf0a7 | **Performance** (Play, 1 Spieler, Auto-Swing an, alle 4 Zonen dekoriert) | Client 59,9 FPS (Frame-Max 21 ms) · Server-Heartbeat 59,9 (Max 30 ms) · 483 Teile / 879 Instanzen im Workspace · aktive Federn 9 (Budget 60) · Senden 0,63 kbit/s (Budget 5 KB/s) · StreamingEnabled an | Konsole; Speicherwert (2,7 GB) = gesamter Studio-Prozess, nicht aussagekräftig → Mikroprofiler/Gerät in Beta |
 
+| 2026-10-27 | 994fbf8 | Studio-Runner inkl. M3 (Daily 7, Codes 5, Telemetry 5, Leaderboard 2; Runner schaltet Auto-Swing je Spec ab) | **86/86 PASS** | `[TEST] SUMMARY 86/86 passed` |
+| 2026-10-27 | 994fbf8 | Daily per echtem Klick, Phone-Menü zweispaltig, Musik, Leaderboard-Tafeln mit echten DataStore-Einträgen | bestanden | Screenshots, Konsole |
+| 2026-10-27 | e9e2d2e | Studio-Runner inkl. Social.spec (3) + Feedback.spec (4) | **93/93 PASS** | `[TEST] SUMMARY 93/93 passed` |
+| 2026-10-27 | e9e2d2e | Feedback per echtem Klick (Settings → Feedback → Idee → Text → Senden) mit echtem TextService-Filter + DataStore | bestanden: Toast „Thanks for your feedback!“, Log `Feedback {category=idea, saved=true}` | Screenshots, Konsole |
+| 2026-10-27 | e9e2d2e | Freunde-Badge im HUD (Attribut gesetzt) | bestanden: „👥 +20%“ unter den Federn | Screenshot; echter Freunde-Fall braucht Mehrspielertest |
+| 2026-10-27 | e9e2d2e | Repo ↔ Studio Drift (78 Skripte) | 78/78 Pfade vorhanden, alle geänderten Hashes identisch | `studio_hash.luau` / `source_hash.py` |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
-- Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)
+- Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear, **Freunde-Bonus mit echten Freunden**)
 - ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)
 - Hörprobe der Sounds durch Owner
 - Server-Skriptzeit je Frame (Budget < 2 ms) – Mikroprofiler nicht automatisierbar, Owner-/Beta-Messung

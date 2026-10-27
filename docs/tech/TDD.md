@@ -25,6 +25,8 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `DailyRewardService` | 7-Tage-Kette (UTC-Tage, Lücke pausiert; Logik in `Util/Daily`), Federn = Minuten Produktion, Boost-Tage über `StatsService:addBoost`; Remote `ClaimDaily` |
 | `TelemetryService` | AnalyticsService: Economy-Quellen und Upgrade-Ausgaben je Minute gebündelt, seltene Senken (Kissen/Zone/Rebirth) sofort, Progression (Zonen, Rebirth), Custom (RankUp); Signale `PlayerDataService.FeathersAdded/FeathersSpent` |
 | `CodeService` | Codes aus `Config/Codes` (einmal je Spieler, Ablauf), Remote `RedeemCode(codeText)` (alnum ≤ 20, 0,2/s) |
+| `SocialService` | Freunde im Server (`IsFriendsWith`, gecacht, pcall) + Gruppe (`Config/Social.groupId`, 0 = aus) → Multiplikator in `StatsService:extraMultiplier`, Attribute `FriendsInServer`/`GroupMember` |
+| `FeedbackService` | Remote `SendFeedback(category, text)` (3–300 Zeichen, 1 je 20 s), TextService-Filter, nur gefilterter Text in DataStore `Feedback_<ENV>`, max. 5 je Sitzung |
 | `LeaderboardService` | OrderedDataStore `LB_<board>_<ENV>` (lifetimeFeathers, rebirths), alle 60 s schreiben/lesen, Tafeln zur Laufzeit im Kinderzimmer |
 | `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
 
@@ -39,7 +41,7 @@ DataStore-Name: `PlayerData_<ENV>`, ENV aus Attribut `Environment` am `ServerScr
 
 ## 4. Netzwerk
 Schema-Einträge: `name`, `kind` (`event`/`unreliable`), `dir` (`c2s`/`s2c`), `args` (Validierer-Liste), `rate` (Tokens/s, Burst).
-Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`, `RedeemCode(text)`.
+Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`, `RedeemCode(text)`, `SendFeedback(category, text)`.
 Server → Client: `StateInit(snapshot)`, `StateDelta(changes)`, `SwingFx(userId, amount, hitDummy)` (unreliable), `Notify(kind, payload)`.
 Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` beantwortet.
 

@@ -1,5 +1,14 @@
 # SESSION_LOG (neueste oben)
 
+## Sitzung 4 – 2026-10-27
+**Ziele:** M3 Closed Beta: Daily, Analytics, Codes, Leaderboards, Freunde-Bonus, Feedback.
+**Erledigt:**
+- PS-30 Daily Reward, PS-35 Analytics, PS-31 Codes, PS-32 Leaderboards (Tafeln vergrößert) `[VERIFIZIERT]`.
+- Testrunner: Auto-Swing je Spec aus (Restore-Wächter-Fehlalarm bei Leaderboard.spec behoben).
+- PS-33 Freunde-/Gruppen-Bonus (SocialService, HUD-Badge) und PS-37 Feedback (FeedbackService, Feedback-Fenster) → 93/93 Tests, Feedback per echtem Klick mit echtem Filter `[VERIFIZIERT]`.
+- Trello: PS-30/35/31+32 → Review, PS-33+37 → Review.
+**Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID vom Owner.
+
 ## Sitzung 3 – 2026-10-27
 **Ziele:** CI-Fehler (rote Commits) beheben, M2-Stand in Studio verifizieren, Gate M1, PS-11.
 **Erledigt:**
