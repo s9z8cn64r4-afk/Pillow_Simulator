@@ -2,7 +2,12 @@
 
 Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
-## [Unreleased] – 0.2.0-dev (M2 Vertical Slice, in Arbeit)
+## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
+### Added
+- Daily Reward (7 Tage, Pause statt Reset) mit Willkommen-zurück-Karte, Menü-Badge und automatischem Öffnen; Boosts werden gespeichert und stapeln.
+- Menü wird auf niedrigen Bildschirmen zweispaltig.
+
+## 0.2.0-dev (M2 Vertical Slice) – Gate M2 vorläufig bestanden 2026-10-27
 ### Added
 - Zonen 2–4 (Graybox), Zonen-Erkennung, Freischaltung per ProximityPrompt, Teleport-Menü.
 - Rebirth (Doppel-Bestätigung, dauerhafter Multiplikator), Rank-Titel über dem Kopf, Rank-Up-Hinweis an Mitspieler.

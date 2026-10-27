@@ -22,7 +22,8 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `RankService` | Titel über dem Kopf, Trail ab Rank 5, Rank-Up-Hinweis an Mitspieler |
 | `SettingsService` | Einstellungen validieren/runden/speichern (`SetSetting`) |
 | `TutorialService` | 6 Onboarding-Aufgaben, ausgewertet über Signale (`SwingService.Swung`, `ShopService.Purchased`, `RankChanged`); `data.tutorial.step` = erledigte Aufgaben; Funnel über `AnalyticsService:LogOnboardingFunnelStepEvent`; Skip (`TutorialSkip`); Profile ab Rank 3 still beendet; Belohnung 2×-Boost 120 s über `StatsService:addBoost` (nicht gespeichert, Attribute `BoostMult`/`BoostEndsAt`) |
-| `RewardService`, `CodeService`, `LeaderboardService`, `SocialService`, `PurchaseService`, `AnalyticsService`, `AntiCheatService` | P2–P3 |
+| `DailyRewardService` | 7-Tage-Kette (UTC-Tage, Lücke pausiert; Logik in `Util/Daily`), Federn = Minuten Produktion, Boost-Tage über `StatsService:addBoost`; Remote `ClaimDaily` |
+| `CodeService`, `LeaderboardService`, `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
 
 **Client** (`StarterPlayerScripts.Client`): `init.client.luau` lädt `Controllers/`.
 `PlayerStateController` (hält replizierten Zustand, Signal `Changed`), `SwingController` (Eingabe → Remote, lokales Sofort-Feedback), `FxController` (Partikel, Zahlen, Sounds), `UI/` (HUD, Menüs).
@@ -31,9 +32,11 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 `Shared/Types/PlayerData.luau` (Schema-Version 1) – Felder wie Masterprompt E.9, plus `feathers` als Kommazahl. Migrationen `Migrations.luau`: Liste von Funktionen `[n] = (data) -> data` für n → n+1; Test pro Migration.
 DataStore-Name: `PlayerData_<ENV>`, ENV aus Attribut `Environment` am `ServerScriptService` (DEV/STG/PROD; Studio = DEV).
 
+**Boosts:** `data.activeBoosts[boostId] = Ablaufzeit (Unix)` – laufen in Echtzeit ab, überstehen Rejoins, stapeln bis `Rewards.boosts[id].maxStackMinutes`; `StatsService:extraMultiplier` multipliziert aktive Boosts und räumt abgelaufene auf; HUD liest Attribute `BoostMult`/`BoostEndsAt`.
+
 ## 4. Netzwerk
 Schema-Einträge: `name`, `kind` (`event`/`unreliable`), `dir` (`c2s`/`s2c`), `args` (Validierer-Liste), `rate` (Tokens/s, Burst).
-Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`.
+Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`.
 Server → Client: `StateInit(snapshot)`, `StateDelta(changes)`, `SwingFx(userId, amount, hitDummy)` (unreliable), `Notify(kind, payload)`.
 Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` beantwortet.
 
