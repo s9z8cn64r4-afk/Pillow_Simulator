@@ -8,6 +8,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Rebirth (Doppel-Bestätigung, dauerhafter Multiplikator), Rank-Titel über dem Kopf, Rank-Up-Hinweis an Mitspieler.
 - Einstellungen (Musik/SFX in 25-%-Schritten, Reduced Motion, Low Effects, UI-Größe), serverseitig validiert und gespeichert.
 - Pillow Index (Sammlung x/14 mit Sperrgrund).
+- Alle 14 Kissen als generierte 3D-Modelle; Aura ab Epic, Trail bei Legendary (Low Effects schaltet ab).
+- Feier-Banner mit Konfetti für Rank-Up, Rebirth und Epic/Legendary-Kissen; Feder-Trail ab Rank 5.
 - CI: StyLua-Auto-Fix auf `main`, Selene-Diagnosen als Annotations; Restore-Wächter für Integrations-Tests; `studio_sync.py` (Studio lädt gepinnten Commit).
 ### Fixed
 - BUG-001 (P0): Fehl-Kick legitimer Spieler bei Halten + Auto-Swing (SwingGate).

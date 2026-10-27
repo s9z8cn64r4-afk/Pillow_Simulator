@@ -1,7 +1,7 @@
 # NEXT_ACTIONS (geordnet, erste ist sofort ausführbar)
 
-1. **PS-11 abschließen**: generierte Kissen nach `ReplicatedStorage.Assets.Pillows.<id>` (MeshPart, Name = Config-ID), Größe/Griff prüfen (Screenshot im Shop-Ausrüsten), Asset-Log; danach Seltenheits-Visuals (Aura ab Epic, Trail ab Legendary).
-2. **PS-15 Rest**: Rank-Up-Banner/Konfetti (Reduced Motion beachten), Trail ab Rank 5.
-3. **PS-18 Tutorial** (6 Schritte, GDD 4.9) + Funnel-Events vorbereiten.
-4. **PS-16 Map final-nah**: Lounge, Hotel Suite, Cloud Kingdom nach Art Bible (Builder-Skripte), Screenshots.
-5. **PS-21–23**: Mehrspielertest (2 Clients), Bot-Durchlauf bis Rebirth 3 (Debug-Multiplikator nur DEV), Performance-Messung, Gate M2.
+1. **PS-18 Tutorial** (6 Schritte, GDD 4.9): Pfeil/Hinweis → erster Schlag → erste Federn → Shop öffnen → erstes Upgrade → Auto-Swing-Hinweis; Fortschritt im Profil (`tutorialStep`), überspringbar; Funnel-Events vorbereiten.
+2. **PS-16 Map final-nah**: Lounge, Hotel Suite, Cloud Kingdom nach Art Bible (Builder-Skripte erweitern), Screenshots je Zone.
+3. **PS-21 Mehrspielertest** (2 Clients im Studio-Server-Test): Rank-Titel/Trail/Aura für andere sichtbar, `otherRankUp`, `fireNear`-Effekte.
+4. **PS-22/23**: Bot-Durchlauf bis Rebirth 3 (Debug-Multiplikator nur DEV), Performance-Messung (FPS, Speicher, Partikel), Gate M2.
+5. P3: `GripRotation` je Kissenmodell (aufrechte Modelle zeigen Vorderseite seitlich).

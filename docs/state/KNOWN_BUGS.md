@@ -8,4 +8,4 @@ Keine offenen P0/P1.
 ## Offen (P2/P3)
 - BUG-002 (P2, nur DEV-Daten): Nach einem Testlauf stand der DEV-Spielstand einmalig bei 4,8 M statt ~27 K Federn. In drei Folgeläufen nicht reproduzierbar. Restore-Code der Specs korrekt; Gegenmaßnahme: Restore-Wächter im Runner (Spec schlägt fehl, wenn Federn nach der Spec abweichen). Integrations-Tests laufen nur in Studio/DEV.
 - P3: Schwung-Animation des Arms wird teilweise vom Standard-Animator überdeckt (Arm-Tween kaum sichtbar). Lösung in M2 mit echter Animation.
-- P3: Generierte Kissenmodelle fehlen noch für 13 von 14 Kissen (Platzhalter-Ellipsoid) – PS-11.
+- P3: Griff je Kissenmodell nicht einzeln justiert – aufrecht generierte Modelle (dünne Z-Achse, z. B. Dream/Satin/Thunder) zeigen ihre Vorderseite seitlich. Lösung: optionales Attribut `GripRotation` je Modell.

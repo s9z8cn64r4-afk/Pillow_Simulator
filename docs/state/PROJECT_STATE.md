@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 2 – Vertical Slice (M2)**, Gate M0 + **Gate M1 bestanden** (2026-10-27) |
 | Version | 0.2.0-dev |
 | Sprint-Ziel | M2: alle 14 Kissen als Modelle, Map final-nah, Tutorial, Rank-Up-Feedback, Bot-Durchlauf, Gate M2 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert (seit Phase 0 rot), Settings/Index in Studio verifiziert, Gate M1, PS-11 begonnen |
+| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, alle 14 Kissenmodelle + Seltenheits-Effekte, Rank-Up-Feier + Trail |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,13 +18,13 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | 49/49 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | 0 Abweichungen (53 Skripte) `[VERIFIZIERT]` |
+| Tests | 52/52 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Repo ↔ Studio | Stand fefe31f per GitHub-Sync übertragen (Drift-Check zuletzt 0 bei 0aff1bf) |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
-| PS-15 Ranks | Titel über Kopf `[IMPLEMENTIERT, UNGETESTET]` (Mehrspieler); Banner/Trail offen |
+| PS-15 Ranks | Titel, Banner + Konfetti, Trail ab Rank 5 `[VERIFIZIERT]` (Tests + Screenshot); Mehrspieler-Sichtbarkeit `[IMPLEMENTIERT, UNGETESTET]` |
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
-| PS-11 Kissenmodelle | in Arbeit: 13 Generierungen gestartet |
+| PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-16 Map, PS-18 Tutorial, PS-21–23 | offen |
 
 ## Nächste konkrete Aktion

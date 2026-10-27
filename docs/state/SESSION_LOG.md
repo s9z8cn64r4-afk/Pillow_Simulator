@@ -8,7 +8,8 @@
 - `studio_sync.py --github`: Studio lädt gepinnten Commit (22 Dateien in einem Aufruf); Drift 0.
 - Restore-Wächter im Testrunner (BUG-002, einmaliger Federsprung in DEV, nicht reproduzierbar).
 - **Gate M1 bestanden**; Trello: PS-04/05/07/08/10, PS-19/20 → Done, PS-11 → In Progress, Owner-Karte Hörprobe.
-- PS-11: 13 Kissenmodelle in Generierung.
+- PS-11: 13 Kissenmodelle generiert (sequenziell; parallel scheitert), 2 nach Sichtprüfung neu; Import-/Lineup-Skripte; Aura ab Epic, Trail bei Legendary.
+- PS-15: Feier-Banner + Konfetti (Rank-Up, Rebirth, Epic/Legendary), Trail ab Rank 5, Rank.spec → 52/52.
 **Probleme:** StyLua-Binary-Download in der Cloud-Umgebung nicht erlaubt (→ CI formatiert); Actions-Logs nicht abrufbar (→ Annotations).
 
 ## Sitzung 2 – 2026-10-27

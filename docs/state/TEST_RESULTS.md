@@ -16,6 +16,9 @@
 | 2026-10-27 | 0aff1bf | Repo ↔ Studio Drift (53 Skripte) | **0 Abweichungen** | `source_hash.py` |
 | 2026-10-27 | f0d3c68 | GitHub Actions CI (StyLua, Selene, Economy-Sim) | **grün** (vorher rot seit Phase 0: Format + 1 Lint-Fehler) | Actions-Run 40445001694 |
 
+| 2026-10-27 | fefe31f | Studio-Runner inkl. Rank.spec (Titel, Trail ab Rank 5) | **52/52 PASS** (2 Läufe) | `[TEST] SUMMARY 52/52 passed` |
+| 2026-10-27 | fefe31f | Sichtprüfung 14 Kissenmodelle (Lineup), gehaltenes Fluffy/Dream, Aura + Trail vorhanden, Rank-Up-Banner + Konfetti | bestanden (2 Modelle neu generiert) | Screenshots Sitzung 3 |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)
