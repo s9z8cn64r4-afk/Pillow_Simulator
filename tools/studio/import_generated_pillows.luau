@@ -37,7 +37,7 @@ for _, m in workspace:GetChildren() do
 			local scaled = s * (TARGET_LENGTH / math.max(s.X, s.Z))
 			-- Höhe begrenzen, damit würfelige Generierungen als Kissen lesbar bleiben
 			mp.Size = Vector3.new(scaled.X, math.clamp(scaled.Y, 0.9, 1.3), scaled.Z)
-			if s.Z > s.X then
+			if s.Z > s.X * 1.15 then -- nur bei deutlich längerer Z-Achse (fast quadratisch = egal)
 				mp:SetAttribute("LongAxisZ", true)
 			end
 			mp.Name = id
