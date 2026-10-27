@@ -1,4 +1,6 @@
-# Pillow Simulator
+# Pillow Legends
+
+(Repo-Name `pillow-simulator` bleibt; Arbeitstitel bis 2026-10-27 „Pillow Simulator“.)
 
 Roblox-Progression-Simulator: Mit einem zerfledderten Kissen Federn herausschlagen, bessere Kissen kaufen, Zonen freischalten, Rebirth.
 

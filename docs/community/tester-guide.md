@@ -1,4 +1,4 @@
-# Pillow Simulator – Anleitung für Beta-Tester
+# Pillow Legends – Anleitung für Beta-Tester
 
 Danke, dass du hilfst! Du spielst eine frühe Version. Es kann Fehler geben – genau die wollen wir finden.
 

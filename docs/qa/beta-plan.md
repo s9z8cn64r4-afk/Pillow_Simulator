@@ -5,7 +5,7 @@ Gate M3 (Masterprompt F.2) belegen: ≥ 20 Tester-Sitzungen ausgewertet · Tutor
 
 ## Umgebung
 - **Eigener Beta-Place** (Kopie des Dev-Place) mit Workspace-Attribut `Environment = "BETA"` → getrennte DataStores (`PlayerData_BETA`, `Sessions_BETA`, `Feedback_BETA`, `LB_*_BETA`). Dev-Testdaten mischen sich so nicht mit Tester-Daten.
-- Zugang nur für eingeladene Tester (Weg legt der Owner fest, z. B. Gruppe mit Tester-Rolle). 10–30 Tester.
+- Zugang nur für eingeladene Tester (Weg legt der Owner fest; keine Roblox-Gruppe – z. B. Einladung über den Community-Discord mit Tester-Rolle und Freundesliste/Privatserver). 10–30 Tester.
 - Testläufe (`RunTestsOnStart`) im Beta-Place **aus**.
 
 ## Ablauf

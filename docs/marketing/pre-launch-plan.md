@@ -1,7 +1,7 @@
 # Pre-Launch-Marketing (ab Alpha, Masterprompt I.2/I.3)
 
 > Status `[ENTWURF]` · Veröffentlichen/Posten macht der Owner (keine Konten, keine Freigabe bei Claude). Kein Budget (Werbung erst nach Budget-Freigabe).
-> Spielname noch offen → in allen Texten steht `[GAME NAME]`; nach der Entscheidung ersetze ich ihn überall.
+> Spielname: **Pillow Legends** (Owner-Entscheidung 2026-10-27). Keine Roblox-Gruppe – Community läuft über Discord.
 
 ## Ziel bis zur Open Beta
 Eine kleine, aktive Gruppe, die das Spiel zum Start mitbringt: **10–30 Closed-Beta-Tester** und **100+ Community-Discord-Mitglieder**, ohne bezahlte Werbung. Begründung: Roblox verteilt 2026 vor allem Spiele mit guter D8–28-Bindung und Co-Play; Freunde, die gemeinsam starten, zählen mehr als ein lauter Start (`docs/research/competitor-analysis.md`).
@@ -13,7 +13,7 @@ Eine kleine, aktive Gruppe, die das Spiel zum Start mitbringt: **10–30 Closed-
 Nur zeigen, was es im Spiel wirklich gibt (14 Kissen, 4 Zonen, Rebirth, Ranks, Daily, Codes, Leaderboards). Keine Versprechen zu Pets/Events, solange sie nicht gebaut sind.
 
 ## Ablauf (Wochen relativ zum Closed-Beta-Start = W0)
-| Woche | Discord / Roblox-Gruppe | Kurzvideo (TikTok / YouTube Shorts) | Ziel |
+| Woche | Discord | Kurzvideo (TikTok / YouTube Shorts) | Ziel |
 |---|---|---|---|
 | W-1 | Community-Discord einrichten (Owner #7), Devlog #1 | Short 1 „Federn explodieren“ | erste Mitglieder |
 | W0 | Tester-Aufruf (Post B), Tester-Rolle vergeben | Short 2 „Von Common zu Legendary“ | 10–30 Tester |

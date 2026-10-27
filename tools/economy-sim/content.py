@@ -107,14 +107,14 @@ BOOSTS = {
     "feathers2x": {"name": "2x Feathers", "multiplier": 2.0, "maxStackMinutes": 120},
 }
 
-# --- Monetarisierung (Preise legt der Owner fest; Robux = None bis Freigabe) ---
+# --- Monetarisierung (Preise: vom Owner an Claude delegiert, 2026-10-27; echter Preis wird im Creator Hub gesetzt und muss hier gleich sein) ---
 PRODUCTS = {
     "gamepasses": [
-        {"id": "doubleFeathers", "name": "2x Feathers", "multiplier": 2.0, "robux": None, "assetId": 0},
-        {"id": "vip", "name": "VIP", "multiplier": 1.10, "robux": None, "assetId": 0},
-        {"id": "fasterAutoSwing", "name": "Better Auto-Swing", "autoSwingEfficiency": 1.0, "robux": None, "assetId": 0},
+        {"id": "doubleFeathers", "name": "2x Feathers", "multiplier": 2.0, "robux": 149, "assetId": 0},
+        {"id": "vip", "name": "VIP", "multiplier": 1.10, "robux": 99, "assetId": 0},
+        {"id": "fasterAutoSwing", "name": "Better Auto-Swing", "autoSwingEfficiency": 1.0, "robux": 79, "assetId": 0},
     ],
     "devProducts": [
-        {"id": "boost2x30", "name": "2x Feathers (30 min)", "boost": "feathers2x", "minutes": 30, "robux": None, "productId": 0},
+        {"id": "boost2x30", "name": "2x Feathers (30 min)", "boost": "feathers2x", "minutes": 30, "robux": 25, "productId": 0},
     ],
 }

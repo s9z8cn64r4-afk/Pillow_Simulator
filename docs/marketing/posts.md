@@ -1,9 +1,9 @@
 # Posts zum Kopieren (Englisch, wie das Spiel)
 
-> `[GAME NAME]` nach der Namensentscheidung ersetzen. `[LINK]` = Link zur Experience bzw. Tester-Anmeldung. Alle Aussagen entsprechen dem Stand 0.3.0-dev.
+> Spielname: **Pillow Legends** (Owner-Entscheidung 2026-10-27). Keine Roblox-Gruppe – Posts gehen in den Community-Discord. `[LINK]` = Link zur Experience bzw. Tester-Anmeldung. Alle Aussagen entsprechen dem Stand 0.3.0-dev.
 
-## A) Devlog #1 – #announcements / Roblox-Gruppe
-**🛏️ Devlog #1 – Meet [GAME NAME]!**
+## A) Devlog #1 – #announcements
+**🛏️ Devlog #1 – Meet Pillow Legends!**
 
 We're building a cozy, slightly chaotic pillow-fight simulator – and we want you in it early.
 
@@ -17,8 +17,8 @@ We're building a cozy, slightly chaotic pillow-fight simulator – and we want y
 
 🧪 Closed beta testers wanted soon – watch #announcements!
 
-## B) Tester-Aufruf – #announcements / Roblox-Gruppe
-**🧪 We need testers for [GAME NAME]!**
+## B) Tester-Aufruf – #announcements
+**🧪 We need testers for Pillow Legends!**
 
 Help us make the game better before launch:
 • Play 20–30 minutes on 2–3 different days

@@ -50,7 +50,7 @@ local function label(text: string, size: number, color: Color3, y: number, font:
 end
 
 local feather = label("🕊️", 72, C(255, 255, 255), 0.36, Enum.Font.FredokaOne)
-label("PILLOW SIMULATOR", 54, C(255, 226, 122), 0.5, Enum.Font.FredokaOne)
+label("PILLOW LEGENDS", 54, C(255, 226, 122), 0.5, Enum.Font.FredokaOne)
 local status = label("Fluffing the pillows...", 22, C(255, 246, 236), 0.6, Enum.Font.GothamBold)
 local tip = label("Tip: " .. TIPS[math.random(1, #TIPS)], 18, C(156, 147, 201), 0.88, Enum.Font.GothamBold)
 

@@ -1,4 +1,4 @@
-# 🛏️ Welcome to Pillow Simulator!
+# 🛏️ Welcome to Pillow Legends!
 
 Swing pillows, collect feathers, unlock cozy new rooms and become the ultimate **Pillow Legend**.
 

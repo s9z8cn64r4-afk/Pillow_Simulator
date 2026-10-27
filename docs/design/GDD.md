@@ -1,4 +1,4 @@
-# Game Design Document – Pillow Simulator (Arbeitstitel) v1
+# Game Design Document – Pillow Legends v1
 
 > Stand 2026-10-27 · Rolle: Design & Economy · Status: `[ENTWURF]`, gilt nach MVP-Freigabe als verbindlich.
 > Grundlage: Masterprompt B/E, Recherche `docs/research/competitor-analysis.md`, Werte `docs/design/economy.md`.
@@ -6,7 +6,7 @@
 ## 1. Vision
 Weicher, humorvoller Kissenschlacht-Simulator: mit einem zerfledderten Kissen Federn herausschlagen, immer prächtigere Kissen sammeln, gemütlich-verrückte Schlafwelten freischalten und per Rebirth zur Legende werden. **USP:** Jeder Schlag fühlt sich gut an (Game Feel), faire Wirtschaft ohne Kaufdruck, aufgeräumtes Mobile-UI.
 
-**Titel:** „Pillow Simulator“ ist nah an dem existierenden *Pillow Fighting Simulator*. Vorschläge: *Pillow Smash Simulator*, *Feather Frenzy*, *Pillow Legends* – Owner entscheidet.
+**Titel:** „Pillow Simulator“ ist nah an dem existierenden *Pillow Fighting Simulator*. Vorschläge: *Pillow Smash Simulator*, *Feather Frenzy*, *Pillow Legends* – **Entschieden (Owner, 2026-10-27): Pillow Legends.**
 
 ## 2. Zielgruppe
 9–15 Jahre, überwiegend Mobile; sekundär ältere Simulator-Fans. Spielertypen: Achiever (Ranks, Rebirths), Collector (Pillow Index), Socializer (Freunde-Bonus, Leaderboards), Explorer (Zonen-Details, Codes).

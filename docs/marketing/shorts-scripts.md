@@ -8,7 +8,7 @@
 | 0–2 s | Nahaufnahme: Spieler mit Worn-Out Pillow vor einer Puppe | „one swing…“ |
 | 2–6 s | Schneller Schnitt durch 3 Schläge, Federburst, rollender Zähler | – |
 | 6–11 s | Gleiche Szene mit Thunder Pillow (Epic, Aura), Zähler steht in M | „…vs THIS“ |
-| 11–15 s | Rang-Aufstieg-Banner mit Konfetti | „play [GAME NAME] 🛏️“ |
+| 11–15 s | Rang-Aufstieg-Banner mit Konfetti | „play Pillow Legends 🛏️“ |
 Vorbereitung durch Claude: Spielstand mit Thunder Pillow im Dev-Place, Puppe im Bild, Kamera-Position.
 
 ## Short 2 – „Von Common zu Legendary“ (25 s)
