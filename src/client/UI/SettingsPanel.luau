@@ -9,8 +9,20 @@ local C = require(script.Parent.Components)
 
 local SettingsPanel = {}
 
-function SettingsPanel.build(root: Instance)
+function SettingsPanel.build(root: Instance, opts: { onFeedback: (() -> ())? }?)
 	local m = C.modal(root, "SETTINGS", UDim2.fromOffset(560, 510))
+	-- Feedback-Knopf oben links in der Titelzeile (keine zusätzliche Höhe nötig)
+	if opts and opts.onFeedback then
+		local fb = C.button({
+			text = "💬 FEEDBACK",
+			size = UDim2.fromOffset(150, 44),
+			color = Theme.color.secondary,
+			textSize = Theme.size.xs,
+		})
+		fb.instance.Position = UDim2.fromOffset(10, 10)
+		fb.instance.Parent = m.panel
+		fb.button.Activated:Connect(opts.onFeedback)
+	end
 	local list = Instance.new("UIListLayout")
 	list.Padding = UDim.new(0, 8)
 	list.SortOrder = Enum.SortOrder.LayoutOrder

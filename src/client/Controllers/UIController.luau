@@ -18,6 +18,7 @@ local C = require(UI.Components)
 local RebirthPanel = require(UI.RebirthPanel)
 local ZonesPanel = require(UI.ZonesPanel)
 local SettingsPanel = require(UI.SettingsPanel)
+local FeedbackPanel = require(UI.FeedbackPanel)
 local IndexPanel = require(UI.IndexPanel)
 local Celebration = require(UI.Celebration)
 local TutorialHint = require(UI.TutorialHint)
@@ -189,6 +190,25 @@ function UIController:build()
 	local boostLabel = C.text({ text = "", size = Theme.size.sm, color = Theme.color.stroke })
 	boostLabel.Size = UDim2.fromScale(1, 1)
 	boostLabel.Parent = boostBox
+	-- Freunde-/Gruppen-Bonus (Server setzt FriendsInServer/GroupMember), neben bzw. statt Boost-Anzeige
+	local socialBox = C.panel(UDim2.fromOffset(150, 30), Theme.color.secondary)
+	socialBox.Visible = false
+	socialBox.Parent = root
+	local socialLabel = C.text({ text = "", size = Theme.size.sm })
+	socialLabel.Size = UDim2.fromScale(1, 1)
+	socialLabel.Parent = socialBox
+	C.tooltip(socialBox, "Play with friends: +10% feathers per friend (max +30%)")
+	task.spawn(function()
+		while gui do
+			local friends = player:GetAttribute("FriendsInServer")
+			local pct = (if typeof(friends) == "number" then friends * 10 else 0)
+				+ (if player:GetAttribute("GroupMember") then 10 else 0)
+			socialBox.Visible = pct > 0
+			socialLabel.Text = ("👥 +%d%%"):format(pct)
+			socialBox.Position = UDim2.fromOffset(if boostBox.Visible then 260 else 0, 110)
+			task.wait(1)
+		end
+	end)
 	task.spawn(function()
 		while gui do
 			local mult = player:GetAttribute("BoostMult")
@@ -367,7 +387,15 @@ function UIController:build()
 	local shop = self:buildShop(root)
 	local rebirth = RebirthPanel.build(root)
 	local zones = ZonesPanel.build(root)
-	local settingsPanel = SettingsPanel.build(root)
+	local feedback = FeedbackPanel.build(root)
+	local openFeedback -- gesetzt, sobald openOnly existiert
+	local settingsPanel = SettingsPanel.build(root, {
+		onFeedback = function()
+			if openFeedback then
+				openFeedback()
+			end
+		end,
+	})
 	local index = IndexPanel.build(root)
 	local celebration = Celebration.build(root)
 	local tutorialHint = TutorialHint.build(root, {
@@ -388,7 +416,7 @@ function UIController:build()
 	end
 	-- Immer nur ein Fenster offen
 	local daily = DailyPanel.build(root)
-	local modals = { rebirth, zones, settingsPanel, index, daily }
+	local modals = { rebirth, zones, settingsPanel, index, daily, feedback }
 	local function openOnly(target: any?)
 		if target ~= shop and shop.isOpen() then
 			shop.toggle()
@@ -420,6 +448,9 @@ function UIController:build()
 	dailyBtn.button.Activated:Connect(function()
 		openOnly(daily)
 	end)
+	openFeedback = function()
+		openOnly(feedback)
+	end
 
 	-- ---------- Binden an Zustand ----------
 	local lastFeathers = 0
@@ -564,6 +595,18 @@ function UIController:build()
 					expired = "That code has expired.",
 					used = "You already used that code.",
 				})[payload.reason] or "Code not possible right now."
+				self:toast(msg, Theme.color.danger)
+			end
+		elseif kind == "feedbackResult" then
+			feedback.sent(payload.ok)
+			if payload.ok then
+				self:toast("Thanks for your feedback!", Theme.color.success)
+			else
+				local msg = ({
+					limit = "That's enough feedback for now. Thank you!",
+					filterFailed = "Couldn't send right now. Please try again later.",
+					saveFailed = "Couldn't send right now. Please try again later.",
+				})[payload.reason] or "Couldn't send feedback."
 				self:toast(msg, Theme.color.danger)
 			end
 		elseif kind == "dailyResult" then

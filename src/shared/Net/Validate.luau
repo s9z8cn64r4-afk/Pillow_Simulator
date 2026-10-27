@@ -35,6 +35,17 @@ Validate.validators = {
 	codeText = function(v: any): boolean
 		return type(v) == "string" and #v >= 1 and #v <= 20 and string.match(v, "^%w+$") ~= nil
 	end,
+	feedbackCategory = function(v: any): boolean
+		return v == "bug" or v == "idea" or v == "other"
+	end,
+	-- Feedback: 3–300 Zeichen, gültiges UTF-8 (Filterung erst auf dem Server)
+	feedbackText = function(v: any): boolean
+		if type(v) ~= "string" or #v > 1200 then
+			return false
+		end
+		local len = utf8.len(v)
+		return len ~= nil and len >= 3 and len <= 300
+	end,
 	shortString = function(v: any): boolean
 		return type(v) == "string" and #v <= 64
 	end,

@@ -10,13 +10,14 @@ local Progression = require(Shared.Config.Progression)
 local Rewards = require(Shared.Config.Rewards)
 
 local StatsService = {}
-local PlayerData
+local PlayerData, Social
 
 -- Aktuelle Zone je Spieler (ZoneService setzt sie ab M2 anhand der Position)
 StatsService.currentZone = {} :: { [Player]: string }
 
 function StatsService:Init(registry)
 	PlayerData = registry.PlayerDataService
+	Social = registry.SocialService
 end
 
 function StatsService:zoneOf(player: Player): string
@@ -70,13 +71,13 @@ function StatsService:clearBoost(player: Player)
 	self:refreshBoostAttributes(player)
 end
 
--- Zusätzliche Multiplikatoren: aktive Boosts multiplizieren sich (Gamepass/Freunde/Gruppe ab M3)
+-- Zusätzliche Multiplikatoren: aktive Boosts und Freunde-/Gruppen-Bonus multiplizieren sich
 function StatsService:extraMultiplier(player: Player): number
 	local data = PlayerData:get(player)
 	if not data then
 		return 1
 	end
-	local m = 1
+	local m = if Social then Social:multiplier(player) else 1
 	local expired = false
 	for id, endsAt in data.activeBoosts do
 		local def = Rewards.boosts[id]

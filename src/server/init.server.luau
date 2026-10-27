@@ -8,6 +8,7 @@ local ORDER = {
 	"NetService",
 	"PlayerDataService",
 	"StatsService",
+	"SocialService",
 	"PillowToolService",
 	"ShopService",
 	"SwingService",
@@ -20,6 +21,7 @@ local ORDER = {
 	"TelemetryService",
 	"CodeService",
 	"LeaderboardService",
+	"FeedbackService",
 }
 
 local servicesFolder = script:WaitForChild("Services")

@@ -25,6 +25,7 @@ local Schema: { [string]: Entry } = {
 	ClaimDaily = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
 	RedeemCode = { dir = "c2s", args = { "codeText" }, rate = 0.2, burst = 3 },
 	SetSetting = { dir = "c2s", args = { "settingKey", "settingValue" }, rate = 4, burst = 8 },
+	SendFeedback = { dir = "c2s", args = { "feedbackCategory", "feedbackText" }, rate = 0.05, burst = 2 },
 
 	-- Server -> Client
 	StateInit = { dir = "s2c" }, -- (snapshot)
