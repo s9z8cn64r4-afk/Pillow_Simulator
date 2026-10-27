@@ -59,6 +59,9 @@
 | 2026-10-27 | 5312931 | Relay-Einzeldatei fürs Dashboard (`dist/worker.js`): gleiches Verhalten wie Quelle + CI-Aktualitätsprüfung | **13/13 PASS** (Relay gesamt) | CI-Job `relay` |
 | 2026-10-27 | 5312931 | Discord-Setup gegen simulierten Discord: Erstlauf, Idempotenz, Dry-Run, Berechtigungen Tester/Staff/Info, Community-Fallback, keine Pings, AutoMod-Formate, Rate-Limit | **9/9 PASS** | CI-Job `relay`, `node --test tools/discord-setup/` |
 
+| 2026-10-27 | 37965ab | **Exploit-Suite v2** über die echten Remotes (Client, `tools/studio/exploit_suite.luau`): 37 Angriffe auf alle 13 Client-Remotes (falsche Typen, NaN/∞, 100-KB-Strings, 50-fach verschachtelte Tabellen, Zusatzargumente, Pfad-/SQL-Muster, gesperrte/fremde IDs) + 60× Schlag-Spam | **bestanden**: 0 geschützte Änderungen, 33/33 Validierungsangriffe als Verstoß gezählt (4 formal gültige von der Logik abgelehnt), Spam 45/60 gedrosselt, Server danach normal, Einstellungen im Bereich, 0 Handler-/Skriptfehler | Suite-Ausgabe, Server-Log |
+| 2026-10-27 | 37965ab | Kick-Schwelle: weitere 140 Müll-Anfragen | **bestanden**: Server kickt bei genau 200 Verstößen (Log `Kick wegen Netz-Spam`, 0 Spieler danach) | Server-Log |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Relay live (Cloudflare + Discord + Roblox-Secrets, Owner #6)
