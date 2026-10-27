@@ -31,6 +31,7 @@ function RebirthService:rebirth(player: Player): (boolean, string?)
 		return false, "notEnough"
 	end
 	busy[player] = true
+	PlayerData.FeathersSpent:Fire(player, data.feathers, "rebirth") -- alle Federn sind die Senke (Analytics)
 	data.feathers = 0
 	data.upgrades = { featherPower = 0, swingSpeed = 0 }
 	data.unlockedZones = { [Zones.start] = true }

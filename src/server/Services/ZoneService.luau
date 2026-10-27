@@ -58,7 +58,7 @@ function ZoneService:unlock(player: Player, zoneId: string): (boolean, string?)
 	if data.rebirths < zone.rebirths then
 		return false, "rebirthLocked"
 	end
-	if not PlayerData:spendFeathers(player, zone.cost) then
+	if not PlayerData:spendFeathers(player, zone.cost, "zone:" .. zoneId) then
 		return false, "notEnough"
 	end
 	data.unlockedZones[zoneId] = true

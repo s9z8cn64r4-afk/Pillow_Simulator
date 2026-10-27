@@ -40,7 +40,7 @@ function ShopService:buyPillow(player: Player, id: string): (boolean, string?)
 	if data.rebirths < pillow.rebirths then
 		return false, "rebirthLocked"
 	end
-	if not PlayerData:spendFeathers(player, pillow.cost) then
+	if not PlayerData:spendFeathers(player, pillow.cost, "pillow:" .. id) then
 		return false, "notEnough"
 	end
 	data.ownedPillows[id] = true
@@ -72,7 +72,7 @@ function ShopService:buyUpgrade(player: Player, kind: string): (boolean, string?
 	if level >= def.maxLevel then
 		return false, "maxLevel"
 	end
-	if not PlayerData:spendFeathers(player, Formulas.upgradeCost(kind, level)) then
+	if not PlayerData:spendFeathers(player, Formulas.upgradeCost(kind, level), "upgrade:" .. kind) then
 		return false, "notEnough"
 	end
 	data.upgrades[kind] = level + 1

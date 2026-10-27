@@ -17,6 +17,7 @@ local ORDER = {
 	"SettingsService",
 	"TutorialService",
 	"DailyRewardService",
+	"TelemetryService",
 }
 
 local servicesFolder = script:WaitForChild("Services")

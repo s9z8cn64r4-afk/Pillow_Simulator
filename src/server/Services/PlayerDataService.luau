@@ -19,6 +19,8 @@ local FLUSH_INTERVAL = 0.1
 local PlayerDataService = {}
 PlayerDataService.Loaded = Signal.new() -- (player, data)
 PlayerDataService.RankChanged = Signal.new() -- (player, newRank, oldRank)
+PlayerDataService.FeathersAdded = Signal.new() -- (player, amount, source)
+PlayerDataService.FeathersSpent = Signal.new() -- (player, amount, sink)
 
 local profiles: { [Player]: any } = {}
 local dirty: { [Player]: { [string]: boolean } } = {}
@@ -172,7 +174,7 @@ function PlayerDataService:markChanged(player: Player, ...: string)
 	end
 end
 
-function PlayerDataService:addFeathers(player: Player, amount: number, _source: string?)
+function PlayerDataService:addFeathers(player: Player, amount: number, source: string?)
 	local data = self:get(player)
 	if not data or amount ~= amount or amount <= 0 or amount == math.huge then
 		return
@@ -180,6 +182,7 @@ function PlayerDataService:addFeathers(player: Player, amount: number, _source: 
 	data.feathers += amount
 	data.lifetimeFeathers += amount
 	self:markChanged(player, "feathers", "lifetimeFeathers")
+	self.FeathersAdded:Fire(player, amount, source or "other")
 	local newRank = Formulas.rankIndex(data.lifetimeFeathers)
 	if newRank ~= data.rank then
 		local old = data.rank
@@ -191,7 +194,8 @@ function PlayerDataService:addFeathers(player: Player, amount: number, _source: 
 end
 
 -- Zieht Federn ab, wenn genug vorhanden. Gibt true bei Erfolg zurück.
-function PlayerDataService:spendFeathers(player: Player, amount: number): boolean
+-- sink: wofür ausgegeben wurde (Analytics), z. B. "pillow:cotton", "upgrade:featherPower", "zone:livingroom"
+function PlayerDataService:spendFeathers(player: Player, amount: number, sink: string?): boolean
 	local data = self:get(player)
 	if not data or amount ~= amount or amount < 0 then
 		return false
@@ -201,6 +205,7 @@ function PlayerDataService:spendFeathers(player: Player, amount: number): boolea
 	end
 	data.feathers = math.max(0, data.feathers - amount)
 	self:markChanged(player, "feathers")
+	self.FeathersSpent:Fire(player, amount, sink or "other")
 	return true
 end
 
