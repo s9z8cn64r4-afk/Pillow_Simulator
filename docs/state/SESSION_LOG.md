@@ -19,6 +19,9 @@
 - Arm-Schwung repariert: aktuelle Avatare nutzen `AnimationConstraint` → alter C0-Tween wirkte nie; jetzt additives `Transform` je Frame, auch für Mitspieler/Auto-Schläge (93° gemessen).
 - Hinweis: Zwischen 16:48 und 16:57 entstanden Commits derselben Sitzung (Griff-Rotationen, erste MP-Skripte), die in meinem Kontext fehlten – geprüft und übernommen.
 - Studio wurde gespeichert (neue Instanz, Drift 0) → Owner #2 erledigt.
+- Owner-Anleitung als Doc (6 Schritte, Status zum Abhaken): https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
+- Relay ohne Terminal einrichtbar: `relay/dist/worker.js` (Einzeldatei fürs Cloudflare-Dashboard, CI prüft Aktualität).
+- PS-38 Community-Discord: `tools/discord-setup` (Konfiguration, Skript, Texte EN, AutoMod), GitHub Action „Discord Setup“, Moderationsleitfaden; 9 Tests gegen simulierten Discord.
 - PS-36 Logging-Relay: Cloudflare Worker (`relay/`, 12 Node-Tests, CI-Job) + `RelayService` (Bündeln, Fingerprints, Pseudonyme, Puffer, Ausfallsicherheit) + Feedback/Sitzungs-Summen/Anti-Exploit → 115/115 Tests; Schnittstelle mit echtem Batch geprüft. ADR-0004: Bearer-Token statt HMAC (Roblox-Secrets nicht lesbar). Owner #6 (Deploy).
 **Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID, Robux-Preise/IDs (Owner #4).
 

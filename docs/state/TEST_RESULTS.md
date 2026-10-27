@@ -56,9 +56,13 @@
 | 2026-10-27 | e3a01a4 | Schnittstelle Spiel ↔ Relay: echter Batch aus `RelayService` (Studio) durch den Worker (lokal, simuliertes Discord) | **bestanden**: 5 Kanäle, keine UserId im Batch, `@everyone` entschärft, Rollen-Ping nur in `#alerts-critical` | Konsolen-Ausgabe |
 | 2026-10-27 | e3a01a4 | Repo ↔ Studio Drift (87 Skripte) | **0 Abweichungen** (Studio-Stand war gespeichert) | `source_hash.py` |
 
+| 2026-10-27 | 5312931 | Relay-Einzeldatei fürs Dashboard (`dist/worker.js`): gleiches Verhalten wie Quelle + CI-Aktualitätsprüfung | **13/13 PASS** (Relay gesamt) | CI-Job `relay` |
+| 2026-10-27 | 5312931 | Discord-Setup gegen simulierten Discord: Erstlauf, Idempotenz, Dry-Run, Berechtigungen Tester/Staff/Info, Community-Fallback, keine Pings, AutoMod-Formate, Rate-Limit | **9/9 PASS** | CI-Job `relay`, `node --test tools/discord-setup/` |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Relay live (Cloudflare + Discord + Roblox-Secrets, Owner #6)
+- Discord-Setup gegen echten Server (Owner #7)
 - Echte Robux-Käufe (brauchen Owner-IDs/Preise, OWNER_REQUESTS #4) und Sitzungsübernahme zwischen zwei Servern (nur live nachstellbar)
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear, **Freunde-Bonus mit echten Freunden**)
 - ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)

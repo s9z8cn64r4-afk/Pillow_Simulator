@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope, Name); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert, Logging-Relay – 115/115 Tests |
+| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert, Logging-Relay, Community-Discord-Setup, Owner-Anleitung – 115/115 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -27,6 +27,7 @@
 | PS-40 Mobile | alle Fenster auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben); echtes Gerät in Beta |
 | PS-41 Tester-Programm | Sitzungsberichte + `beta_report.luau` `[VERIFIZIERT]`; Tester-Anleitung + Beta-Plan `[ENTWURF]`; Start `[BLOCKIERT]` (Owner #5) |
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
+| PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); live `[BLOCKIERT]` (Owner #7) |
 | PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
@@ -52,7 +53,9 @@ Siehe `NEXT_ACTIONS.md`.
 - GUI-Klicks: `user_mouse_input` mit Mittelpunkt aus `AbsolutePosition + AbsoluteSize/2`.
 
 ## Offene Owner-Entscheidungen / -Aktionen
-Mehrspielertest (#3) · Hörprobe Sounds + Musik · Codes freigeben · Gruppen-ID · Robux-Preise + Pass-/Produkt-IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) ·  Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Anleitung für alle Schritte: https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
+
+Mehrspielertest (#3) · Hörprobe Sounds + Musik · Codes freigeben · Gruppen-ID · Robux-Preise + Pass-/Produkt-IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord (#7) ·  Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

@@ -59,7 +59,7 @@ Ergebnisse (Masterprompt F.2, Phase 3):
 | Feedback/Bug-Report | `[VERIFIZIERT]` | Feedback.spec + echter Klick mit Filter |
 | Logging-Relay + Discord Logs | `[VERIFIZIERT]` bis Deployment (Worker 12 Tests, Relay.spec 7, Schnittstellentest); live `[BLOCKIERT]` | Owner #6: Discord-Server + Cloudflare-Deploy + Roblox-Secrets (`relay/README.md`) |
 | Mobile-Optimierung | `[VERIFIZIERT]` (Phone 844×390 mit Touch-Skalierung, alle Fenster) | Screenshots; echtes Gerät in Beta |
-| Tester-Rolle im Community-Discord | **offen** (PS-38) | Owner-Aktion |
+| Tester-Rolle im Community-Discord | Setup-Skript `[VERIFIZIERT]` gegen simulierten Discord (9 Tests); live `[BLOCKIERT]` | Owner #7: Server + Bot + Action „Discord Setup“ (`tools/discord-setup/README.md`) |
 | 10–30 Tester | **offen** | Beta-Place + Einladung (Owner #5), `docs/qa/beta-plan.md`, `docs/community/tester-guide.md` |
 | Persistenz-Stresstest | `[VERIFIZIERT]` | Persistence.spec (echter DataStore) |
 
