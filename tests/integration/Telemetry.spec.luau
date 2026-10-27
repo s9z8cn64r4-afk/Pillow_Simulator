@@ -31,13 +31,26 @@ return function(it, expect, ctx)
 		expect((e :: any).source).toBe("swing")
 	end)
 
-	it("Ausgaben werden sofort als Senke gesendet", function()
+	it("Kissenkauf wird sofort als Senke gesendet", function()
 		data.feathers = 1e6
-		expect(PD:spendFeathers(player, 500, "upgrade:featherPower")).toBeTruthy()
+		expect(PD:spendFeathers(player, 750, "pillow:cotton")).toBeTruthy()
 		local e = lastOf("economy")
 		expect((e :: any).flow).toBe("Sink")
-		expect((e :: any).amount).toBe(500)
+		expect((e :: any).amount).toBe(750)
+		expect((e :: any).sink).toBe("pillow:cotton")
+	end)
+
+	it("Upgrade-Serien werden gebündelt", function()
+		data.feathers = 1e6
+		local before = #Tele.log
+		for _ = 1, 10 do
+			PD:spendFeathers(player, 50, "upgrade:featherPower")
+		end
+		expect(#Tele.log).toBe(before)
+		Tele:flush(player)
+		local e = lastOf("economy")
 		expect((e :: any).sink).toBe("upgrade:featherPower")
+		expect((e :: any).amount).toBe(500)
 	end)
 
 	it("Zonenkauf erzeugt ein Progression-Event", function()

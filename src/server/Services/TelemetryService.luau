@@ -1,7 +1,7 @@
 --!strict
 -- Analytics (PS-35): Roblox-AnalyticsService-Events für Economy, Progression und Rank.
 -- Quellen (Schläge, Auto-Swing) werden je Spieler gesammelt und höchstens einmal pro Minute gesendet;
--- Senken (Käufe, Zonen, Rebirth) sofort. Alle Aufrufe in pcall: Analytics darf das Spiel nie stören.
+-- Upgrade-Ausgaben ebenfalls gebündelt; seltene Senken (Kissen, Zonen, Rebirth) sofort. Alle Aufrufe in pcall: Analytics darf das Spiel nie stören.
 local Players = game:GetService("Players")
 local AnalyticsService = game:GetService("AnalyticsService")
 
@@ -13,6 +13,7 @@ TelemetryService.log = {} :: { any } -- letzte Events (für Tests/Diagnose, max.
 
 local PlayerData, Log
 local pending: { [Player]: { [string]: number } } = {}
+local pendingSinks: { [Player]: { [string]: number } } = {}
 
 -- Quelle → Roblox-Transaktionstyp
 -- (Namen von Enum.AnalyticsEconomyTransactionType als String, damit unbekannte Werte nie das Laden brechen)
@@ -40,8 +41,32 @@ function TelemetryService:Init(registry)
 	Log = registry.LogService
 end
 
--- gesammelte Quellen eines Spielers senden
+local function sendSink(player: Player, amt: number, sink: string)
+	local category = string.match(sink, "^(%w+)") or sink
+	local tType = if category == "rebirth" then "Gameplay" else "Shop"
+	record({ kind = "economy", flow = "Sink", amount = amt, sink = sink })
+	pcall(function()
+		AnalyticsService:LogEconomyEvent(
+			player,
+			Enum.AnalyticsEconomyFlowType.Sink,
+			CURRENCY,
+			amt,
+			balance(player),
+			tType,
+			sink
+		)
+	end)
+end
+
+-- gesammelte Quellen und Upgrade-Ausgaben eines Spielers senden
 function TelemetryService:flush(player: Player)
+	local ps = pendingSinks[player]
+	if ps then
+		pendingSinks[player] = nil
+		for sink, amount in ps do
+			sendSink(player, math.floor(amount), sink)
+		end
+	end
 	local p = pending[player]
 	if not p then
 		return
@@ -72,20 +97,17 @@ function TelemetryService:onSpent(player: Player, amount: number, sink: string)
 	if amt <= 0 then
 		return
 	end
-	local category = string.match(sink, "^(%w+)") or sink
-	local tType = if category == "rebirth" then "Gameplay" else "Shop"
-	record({ kind = "economy", flow = "Sink", amount = amt, sink = sink })
-	pcall(function()
-		AnalyticsService:LogEconomyEvent(
-			player,
-			Enum.AnalyticsEconomyFlowType.Sink,
-			CURRENCY,
-			amt,
-			balance(player),
-			tType,
-			sink
-		)
-	end)
+	-- Upgrades werden oft in Serien gekauft → je Minute gebündelt; seltene Käufe sofort
+	if string.sub(sink, 1, 8) == "upgrade:" then
+		local ps = pendingSinks[player]
+		if not ps then
+			ps = {}
+			pendingSinks[player] = ps
+		end
+		ps[sink] = (ps[sink] or 0) + amt
+		return
+	end
+	sendSink(player, amt, sink)
 	-- Progression: Zonen-Freischaltung und Rebirth
 	local data = PlayerData:get(player)
 	local zoneId = string.match(sink, "^zone:(.+)$")
@@ -132,7 +154,14 @@ function TelemetryService:Start()
 	task.spawn(function()
 		while true do
 			task.wait(FLUSH_INTERVAL)
+			local players = {}
 			for player in pending do
+				players[player] = true
+			end
+			for player in pendingSinks do
+				players[player] = true
+			end
+			for player in players do
 				self:flush(player)
 			end
 		end
