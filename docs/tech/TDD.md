@@ -27,6 +27,7 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `CodeService` | Codes aus `Config/Codes` (einmal je Spieler, Ablauf), Remote `RedeemCode(codeText)` (alnum ≤ 20, 0,2/s) |
 | `SocialService` | Freunde im Server (`IsFriendsWith`, gecacht, pcall) + Gruppe (`Config/Social.groupId`, 0 = aus) → Multiplikator in `StatsService:extraMultiplier`, Attribute `FriendsInServer`/`GroupMember` |
 | `MonetizationService` | Gamepässe (`UserOwnsGamePassAsync`, Attribute `Pass_<id>`) → `passMultiplier`, `autoSwingEfficiency`; `ProcessReceipt` idempotent (ReceiptId in `purchaseHistory`, `PurchaseGranted` erst nach `PlayerDataService:saveAndWait`); Artikel ohne Owner-ID/Preis nicht kaufbar; Remote `PromptPurchase(kind, id)` |
+| `SessionReportService` | Beim Verlassen ein Sitzungsbericht (Pseudonym statt UserId, Länge, Tutorial, Fortschritt, Serverfehler) in DataStore `Sessions_<ENV>`; Auswertung `tools/studio/beta_report.luau` |
 | `FeedbackService` | Remote `SendFeedback(category, text)` (3–300 Zeichen, 1 je 20 s), TextService-Filter, nur gefilterter Text in DataStore `Feedback_<ENV>`, max. 5 je Sitzung |
 | `LeaderboardService` | OrderedDataStore `LB_<board>_<ENV>` (lifetimeFeathers, rebirths), alle 60 s schreiben/lesen, Tafeln zur Laufzeit im Kinderzimmer |
 | `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |

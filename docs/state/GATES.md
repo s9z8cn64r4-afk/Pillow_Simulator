@@ -47,3 +47,27 @@ Format: Kriterium · Status · Beleg · Ausnahme
 | Mehrspieler-Sichtbarkeit (Titel, Effekte anderer) | **offen** | – | Owner-Test mit 2 Clients (Owner-Aktion, ~5 Min.) |
 
 **Ergebnis:** Gate M2 vorläufig bestanden – zwei Restpunkte (manueller Volldurchlauf, Mehrspielertest) werden in M3 / Closed Beta nachgeholt. Phase 3 (M3 Beta: Retention, Monetarisierung, Analytics/Relay) kann beginnen; Owner-Freigabe des MVP-Scopes wird vor Closed Beta benötigt.
+
+## Gate M3 – Closed Beta (Vorbereitung, Stand 2026-10-27) – **noch nicht bewertbar**
+Ergebnisse (Masterprompt F.2, Phase 3):
+| Ergebnis | Status | Beleg |
+|---|---|---|
+| Daily, Codes, Leaderboards | `[VERIFIZIERT]` | Daily/Codes/Leaderboard-Specs, Klick-Tests; Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
+| Group Reward / Freunde-Bonus | Freunde `[VERIFIZIERT]` (Logik, HUD); Gruppe `[BLOCKIERT]` | Social.spec; Gruppen-ID fehlt (Owner) |
+| Monetarisierung im Testmodus | `[VERIFIZIERT]` (Testgerüst) | Monetization.spec; echte IDs/Preise → Owner #4 |
+| Analytics live | `[IMPLEMENTIERT]` – Events verifiziert in Studio | Telemetry.spec; Dashboard-Daten erst mit echten Spielern |
+| Feedback/Bug-Report | `[VERIFIZIERT]` | Feedback.spec + echter Klick mit Filter |
+| Logging-Relay + Discord Logs | **offen** (PS-36) | braucht Owner: Discord-Server/Webhook bzw. Relay-Hosting-Entscheidung |
+| Mobile-Optimierung | `[VERIFIZIERT]` (Phone 844×390 mit Touch-Skalierung, alle Fenster) | Screenshots; echtes Gerät in Beta |
+| Tester-Rolle im Community-Discord | **offen** (PS-38) | Owner-Aktion |
+| 10–30 Tester | **offen** | Beta-Place + Einladung (Owner #5), `docs/qa/beta-plan.md`, `docs/community/tester-guide.md` |
+| Persistenz-Stresstest | `[VERIFIZIERT]` | Persistence.spec (echter DataStore) |
+
+Exit-Kriterien:
+| Kriterium | Status | Messung |
+|---|---|---|
+| ≥ 20 Tester-Sitzungen ausgewertet | offen | `tools/studio/beta_report.luau` (Sitzungsberichte, `Sessions_<ENV>`) – Werkzeug `[VERIFIZIERT]` mit echter Studio-Sitzung |
+| Tutorial-Abschluss ≥ 80 % | offen | Bericht (Erstsitzungen) + Roblox Onboarding-Funnel |
+| Fehlerrate unter Grenzwert (≤ 1 % Sitzungen mit Serverfehlern) | offen | Bericht + Roblox-Fehlerberichte |
+| Economy mit realen Daten abgeglichen | offen | Median Federn/Min., Zeit bis Zone 2/Rebirth 1 vs. `economy.md` |
+| Owner bestätigt MVP-Scope endgültig | offen | Owner |

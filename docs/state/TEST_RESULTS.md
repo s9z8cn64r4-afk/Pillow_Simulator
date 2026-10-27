@@ -43,6 +43,10 @@
 | 2026-10-27 | aaf7b16 | Phone 844×390 mit Touch-Skalierung (0,8): Settings war höher als der Bildschirm (Titel/Schließen abgeschnitten) → Fenster passen sich an, Settings scrollt; Feedback-Fenster passt; Feedback-Knopf vergrößert | bestanden nach Korrektur (Scrollen bis „Code“ geprüft) | Screenshots |
 | 2026-10-27 | aaf7b16 | Repo ↔ Studio Drift (81 Skripte) | **0 Abweichungen** | `source_hash.py` |
 
+| 2026-10-27 | 44c5610 | Phone 844×390 + Touch-Skalierung: Rebirth, Zonen, Index, Daily | bestanden (Rebirth-Schrift vergrößert, Zonen/Index auf 400 px Höhe → passen ungeschrumpft) | Screenshots |
+| 2026-10-27 | 5ae09f6 | Studio-Runner inkl. SessionReport.spec (3) | **107/107 PASS** | `[TEST] SUMMARY 107/107 passed` |
+| 2026-10-27 | 5ae09f6 | Sitzungsbericht E2E: Play-Sitzung beenden → `Sessions_DEV` → `beta_report.luau` | bestanden: 1 Sitzung (3,2 Min., 0 Serverfehler), Feedback-Eintrag gelistet | Bericht-Ausgabe |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Echte Robux-Käufe (brauchen Owner-IDs/Preise, OWNER_REQUESTS #4) und Sitzungsübernahme zwischen zwei Servern (nur live nachstellbar)

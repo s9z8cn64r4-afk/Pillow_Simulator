@@ -7,8 +7,8 @@
 |---|---|
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
-| Sprint-Ziel | M3 Rest: Mobile-Feinschliff (Rest), Tester-Programm, Gate-M3-Vorbereitung; Restpunkte M2 (Mehrspielertest, manueller Durchlauf) |
-| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen – 104/104 Tests |
+| Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope, Name); danach Auswertung bis Gate M3 |
+| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung – 107/107 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,13 +18,15 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | **104/104** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Tests | **107/107** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
 | Repo ↔ Studio | 0 Abweichungen (81 Skripte, Commit aaf7b16) `[VERIFIZIERT]` |
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus `[BLOCKIERT]` (Gruppen-ID vom Owner) |
 | PS-34 Monetarisierung | Testgerüst `[VERIFIZIERT]` (7 Tests, Shop „Extras“ zeigt SOON); echte Käufe `[BLOCKIERT]` (Owner: Preise + Pass-/Produkt-IDs, #4) |
 | PS-39 Persistenz | Stresstest `[VERIFIZIERT]` (4 Tests, echter DataStore); Übernahme zwischen zwei Servern nur live prüfbar |
-| PS-40 Mobile | Settings/Feedback/Shop auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben); übrige Fenster offen |
+| PS-40 Mobile | alle Fenster auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben); echtes Gerät in Beta |
+| PS-41 Tester-Programm | Sitzungsberichte + `beta_report.luau` `[VERIFIZIERT]`; Tester-Anleitung + Beta-Plan `[ENTWURF]`; Start `[BLOCKIERT]` (Owner #5) |
+| PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
@@ -49,7 +51,7 @@ Siehe `NEXT_ACTIONS.md`.
 - GUI-Klicks: `user_mouse_input` mit Mittelpunkt aus `AbsolutePosition + AbsoluteSize/2`.
 
 ## Offene Owner-Entscheidungen / -Aktionen
-Studio speichern (#2) · Mehrspielertest (#3) · Hörprobe Sounds + Musik · Codes freigeben · Gruppen-ID · Robux-Preise + Pass-/Produkt-IDs (#4) ·  Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Studio speichern (#2) · Mehrspielertest (#3) · Hörprobe Sounds + Musik · Codes freigeben · Gruppen-ID · Robux-Preise + Pass-/Produkt-IDs (#4) · Beta-Place + Tester (#5) ·  Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

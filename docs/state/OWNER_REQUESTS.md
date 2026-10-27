@@ -25,3 +25,9 @@
 1. **Preise** (Robux) für: 2x Feathers (Pass, dauerhaft ×2), VIP (Pass, ×1,1 + später Kosmetik), Better Auto-Swing (Pass, Auto-Swing 100 % statt 80 %), 2x Feathers 30 Min. (Produkt, stapelbar). Ich mache keine Preisvorgabe; vergleichbare Simulatoren nutzen grob Pässe im Bereich einiger hundert Robux und Kurz-Boosts im zweistelligen Bereich.
 2. **Anlegen** im Creator Hub (Spiel → Monetarisierung → Pässe bzw. Developer Products), danach die **IDs** nennen. Ich trage sie in `tools/economy-sim/content.py` ein, erzeuge die Config neu und teste den Kauf im Dev-Place.
 Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Knöpfe grün markiert, keine Kauf-Pop-ups.
+
+## #5 (2026-10-27) – offen, Start der Closed Beta
+1. **Beta-Place** anlegen: Dev-Place kopieren (Datei → Speichern unter / „Place duplizieren“), im neuen Place am **Workspace** das Attribut `Environment` = `BETA` setzen (eigene Spielstände/Berichte, getrennt von meinen Tests) und am Skript `ServerScriptService.Server` das Attribut `RunTestsOnStart` ausschalten.
+2. **Tester einladen** (10–30; Weg legst du fest, z. B. Roblox-Gruppe mit Tester-Rolle) und `docs/community/tester-guide.md` weitergeben.
+3. Mir den **Beta-Place-Namen/ID** nennen – ich erstelle dann täglich den Bericht (`docs/qa/beta-plan.md`).
+4. Vorher noch nötig: **MVP-Scope bestätigen** (`docs/MVP_SCOPE.md`) und **Spielname**.

@@ -12,6 +12,9 @@
 - PS-40 (Teil): Phone mit Touch-Skalierung geprüft, Fehler gefunden (Settings höher als Bildschirm) und behoben: Fenster passen sich an, Settings scrollt.
 - Doppelte Bonus-Werte entfernt (SocialService nutzt generiertes `Rewards.social`).
 - Gesamt **104/104 Tests**, Drift 0 (81 Skripte).
+- PS-40 abgeschlossen (Phone + Touch: alle Fenster passen; Rebirth-Schrift größer, Zonen/Index kürzer).
+- PS-41: SessionReportService (pseudonyme Sitzungsberichte), `beta_report.luau` (Gate-M3-Kennzahlen + Feedback), Tester-Anleitung, Beta-Plan → 107/107 Tests, Bericht mit echter Sitzung geprüft.
+- PS-42: Gate-M3-Vorbereitung in GATES.md (Ergebnisse/Exit-Kriterien mit Status); Owner-Anfrage #5 (Beta-Place).
 **Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID, Robux-Preise/IDs (Owner #4).
 
 ## Sitzung 3 – 2026-10-27
