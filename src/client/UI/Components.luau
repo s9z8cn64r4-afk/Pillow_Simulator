@@ -234,4 +234,57 @@ function Components.progressBar(size: UDim2, fillColor: Color3)
 		end
 end
 
+-- Tooltip (nur Maus/Hover; Touch hat kein Hover): kleine Karte über dem Ziel, erscheint nach 0,35 s
+local tooltipLabel: TextLabel? = nil
+function Components.tooltip(target: GuiObject, text: string)
+	local token = 0
+	target.MouseEnter:Connect(function()
+		token += 1
+		local my = token
+		task.delay(0.35, function()
+			if my ~= token then
+				return
+			end
+			local gui = target:FindFirstAncestorOfClass("ScreenGui")
+			if not gui then
+				return
+			end
+			if not tooltipLabel or tooltipLabel.Parent ~= gui then
+				local t = Instance.new("TextLabel")
+				t.Name = "Tooltip"
+				t.AutomaticSize = Enum.AutomaticSize.XY
+				t.BackgroundColor3 = Theme.color.stroke
+				t.BackgroundTransparency = 0.05
+				t.TextColor3 = Theme.color.surface
+				t.Font = Theme.font.body
+				t.TextSize = Theme.size.xs
+				t.ZIndex = 200
+				Components.corner(t, 8)
+				Components.padding(t, 8)
+				t.Parent = gui
+				tooltipLabel = t
+			end
+			local tl = tooltipLabel :: TextLabel
+			tl.Text = text
+			local pos = target.AbsolutePosition
+			local size = target.AbsoluteSize
+			-- rechte Bildschirmhälfte: Tooltip links vom Ziel, sonst rechts
+			if pos.X + size.X / 2 > gui.AbsoluteSize.X / 2 then
+				tl.AnchorPoint = Vector2.new(1, 0.5)
+				tl.Position = UDim2.fromOffset(pos.X - 10, pos.Y + size.Y / 2)
+			else
+				tl.AnchorPoint = Vector2.new(0, 0.5)
+				tl.Position = UDim2.fromOffset(pos.X + size.X + 10, pos.Y + size.Y / 2)
+			end
+			tl.Visible = true
+		end)
+	end)
+	target.MouseLeave:Connect(function()
+		token += 1
+		if tooltipLabel then
+			tooltipLabel.Visible = false
+		end
+	end)
+end
+
 return Components

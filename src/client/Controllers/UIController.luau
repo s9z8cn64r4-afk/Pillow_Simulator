@@ -424,10 +424,33 @@ function UIController:build()
 		index.refresh(s)
 		tutorialHint.refresh(s)
 	end
-	autoBtn.button.Activated:Connect(function()
+	local function toggleAuto()
 		local s = State.state
 		if s then
 			NetClient.fire("SetAutoSwing", not s.autoSwingEnabled)
+		end
+	end
+	autoBtn.button.Activated:Connect(toggleAuto)
+
+	-- Tooltips (Maus)
+	C.tooltip(shopBtn.button, "Buy pillows and upgrades")
+	C.tooltip(zonesBtn.button, "Unlock and travel to zones")
+	C.tooltip(rebirthBtn.button, "Start over with a permanent bonus")
+	C.tooltip(indexBtn.button, "Your pillow collection")
+	C.tooltip(settingsBtn.button, "Sound, effects and UI size")
+	C.tooltip(autoBtn.button, "Auto-Swing hits for you at 80% power")
+
+	-- Gamepad-Grundbedienung: R2 = Schlag (Tool), Y = Shop, X = Auto-Swing, B = Fenster schließen
+	UserInputService.InputBegan:Connect(function(input, processed)
+		if processed then
+			return
+		end
+		if input.KeyCode == Enum.KeyCode.ButtonY then
+			openOnly(shop)
+		elseif input.KeyCode == Enum.KeyCode.ButtonX then
+			toggleAuto()
+		elseif input.KeyCode == Enum.KeyCode.ButtonB then
+			openOnly(nil)
 		end
 	end)
 	State.Changed:Connect(function(key)
