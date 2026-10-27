@@ -7,22 +7,9 @@ return {
 	gamepasses = {
 		{ id = "doubleFeathers", name = "2x Feathers", multiplier = 2.0, robux = nil, assetId = 0 },
 		{ id = "vip", name = "VIP", multiplier = 1.1, robux = nil, assetId = 0 },
-		{
-			id = "fasterAutoSwing",
-			name = "Better Auto-Swing",
-			autoSwingEfficiency = 1.0,
-			robux = nil,
-			assetId = 0,
-		},
+		{ id = "fasterAutoSwing", name = "Better Auto-Swing", autoSwingEfficiency = 1.0, robux = nil, assetId = 0 },
 	},
 	devProducts = {
-		{
-			id = "boost2x30",
-			name = "2x Feathers (30 min)",
-			boost = "feathers2x",
-			minutes = 30,
-			robux = nil,
-			productId = 0,
-		},
+		{ id = "boost2x30", name = "2x Feathers (30 min)", boost = "feathers2x", minutes = 30, robux = nil, productId = 0 },
 	},
 }

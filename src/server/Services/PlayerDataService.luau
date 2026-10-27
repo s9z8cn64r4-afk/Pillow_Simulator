@@ -172,7 +172,7 @@ function PlayerDataService:markChanged(player: Player, ...: string)
 	end
 end
 
-function PlayerDataService:addFeathers(player: Player, amount: number, source: string?)
+function PlayerDataService:addFeathers(player: Player, amount: number, _source: string?)
 	local data = self:get(player)
 	if not data or amount ~= amount or amount <= 0 or amount == math.huge then
 		return

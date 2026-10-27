@@ -43,7 +43,7 @@ return function(it, expect)
 		expect(rl:take("other", 0)).toBeTruthy() -- getrennte Eimer
 	end)
 	it("Schema: jedes c2s-Remote hat Rate und gültige Validierer", function()
-		for name, e in Schema do
+		for _, e in Schema do
 			if e.dir == "c2s" then
 				expect(e.rate ~= nil and e.burst ~= nil).toBeTruthy()
 				for _, a in e.args or {} do

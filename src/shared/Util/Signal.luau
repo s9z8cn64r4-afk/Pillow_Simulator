@@ -17,7 +17,7 @@ end
 function Signal:Connect(fn)
 	local handlers = self._handlers
 	local conn = {}
-	function conn:Disconnect()
+	function conn.Disconnect()
 		local i = table.find(handlers, fn)
 		if i then
 			table.remove(handlers, i)

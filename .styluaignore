@@ -1,0 +1,6 @@
+# Vom Generator erzeugt (tools/economy-sim/gen_config.py) – nicht formatieren
+src/shared/Config/Pillows.luau
+src/shared/Config/Zones.luau
+src/shared/Config/Progression.luau
+src/shared/Config/Rewards.luau
+src/shared/Config/Products.luau

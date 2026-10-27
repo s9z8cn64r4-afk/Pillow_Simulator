@@ -18,9 +18,23 @@ local function runFolder(folder: Instance, results: TestLib.Results, ctx: any)
 				table.insert(results.failures, m.Name .. ": Laden fehlgeschlagen: " .. tostring(spec))
 				warn("[TEST] FAIL " .. m.Name .. " (Laden) :: " .. tostring(spec))
 			else
+				-- Integrations-Specs dürfen den Spielerstand nicht verändern (Restore-Wächter)
+				local pd = ctx.player and ctx.registry.PlayerDataService:get(ctx.player)
+				local before = pd and pd.feathers
 				TestLib.run(m.Name, function(it)
 					(spec :: any)(it, TestLib.expect, ctx)
 				end, results)
+				local after = pd and ctx.registry.PlayerDataService:get(ctx.player).feathers
+				if pd and before ~= after then
+					results.failed += 1
+					local msg = ("%s: Spielerstand nicht wiederhergestellt (Federn %s -> %s)"):format(
+						m.Name,
+						tostring(before),
+						tostring(after)
+					)
+					table.insert(results.failures, msg)
+					warn("[TEST] FAIL " .. msg)
+				end
 			end
 		end
 	end

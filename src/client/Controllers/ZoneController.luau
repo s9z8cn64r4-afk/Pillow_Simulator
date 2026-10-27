@@ -20,9 +20,7 @@ local function applyBarrier(b: Instance)
 	b.CanCollide = not open
 	b.Transparency = if open then 1 else 0.3
 	for _, d in b:GetDescendants() do
-		if d:IsA("ProximityPrompt") then
-			d.Enabled = not open
-		elseif d:IsA("SurfaceGui") then
+		if d:IsA("ProximityPrompt") or d:IsA("SurfaceGui") then
 			d.Enabled = not open
 		end
 	end
