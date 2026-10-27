@@ -21,6 +21,7 @@ local Schema: { [string]: Entry } = {
 	SetAutoSwing = { dir = "c2s", args = { "boolean" }, rate = 2, burst = 4 },
 	TeleportZone = { dir = "c2s", args = { "zoneId" }, rate = 1, burst = 3 },
 	Rebirth = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
+	TutorialSkip = { dir = "c2s", args = {}, rate = 0.5, burst = 2 },
 	SetSetting = { dir = "c2s", args = { "settingKey", "settingValue" }, rate = 4, burst = 8 },
 
 	-- Server -> Client

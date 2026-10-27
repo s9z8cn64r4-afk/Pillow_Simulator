@@ -8,6 +8,7 @@ local CollectionService = game:GetService("CollectionService")
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Progression = require(Shared.Config.Progression)
 local SwingGate = require(Shared.Util.SwingGate)
+local Signal = require(Shared.Util.Signal)
 
 local DUMMY_TAG = "PillowDummy"
 local FX_RADIUS = 80
@@ -16,6 +17,7 @@ local SwingService = {}
 local Net, PlayerData, Stats, Log
 local gates: { [Player]: SwingGate.State } = {}
 SwingService.rejected = 0 -- Zähler für Tests/Monitoring
+SwingService.Swung = Signal.new() -- (player, isAuto, dummy)
 
 function SwingService:Init(registry)
 	Net = registry.NetService
@@ -75,6 +77,7 @@ function SwingService:performSwing(player: Player, isAuto: boolean): number
 		dummy and dummy.Name or nil,
 		isAuto
 	)
+	self.Swung:Fire(player, isAuto, dummy)
 	return amount
 end
 

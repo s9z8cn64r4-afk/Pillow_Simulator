@@ -10,12 +10,14 @@ local Formulas = require(Shared.Util.Formulas)
 local ShopService = {}
 local Net, PlayerData, Log
 ShopService.PillowEquipped = nil :: any
+ShopService.Purchased = nil :: any
 
 function ShopService:Init(registry)
 	Net = registry.NetService
 	PlayerData = registry.PlayerDataService
 	Log = registry.LogService
 	ShopService.PillowEquipped = require(Shared.Util.Signal).new() -- (player, pillowId)
+	ShopService.Purchased = require(Shared.Util.Signal).new() -- (player, kind, id)
 end
 
 local function result(player: Player, ok: boolean, kind: string, id: string, reason: string?)
@@ -45,6 +47,7 @@ function ShopService:buyPillow(player: Player, id: string): (boolean, string?)
 	PlayerData:markChanged(player, "ownedPillows")
 	self:equipPillow(player, id)
 	Log:info("Kissen gekauft", { userId = player.UserId, pillow = id })
+	self.Purchased:Fire(player, "pillow", id)
 	return true, nil
 end
 
@@ -74,6 +77,7 @@ function ShopService:buyUpgrade(player: Player, kind: string): (boolean, string?
 	end
 	data.upgrades[kind] = level + 1
 	PlayerData:markChanged(player, "upgrades")
+	self.Purchased:Fire(player, "upgrade", kind)
 	return true, nil
 end
 

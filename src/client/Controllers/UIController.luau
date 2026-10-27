@@ -20,6 +20,7 @@ local ZonesPanel = require(UI.ZonesPanel)
 local SettingsPanel = require(UI.SettingsPanel)
 local IndexPanel = require(UI.IndexPanel)
 local Celebration = require(UI.Celebration)
+local TutorialHint = require(UI.TutorialHint)
 
 local player = Players.LocalPlayer
 local UIController = {}
@@ -179,6 +180,29 @@ function UIController:build()
 	local setFeathers = rollingCounter(featherLabel)
 	local featherScale = make("UIScale", {}, featherBox)
 
+	-- Boost-Anzeige neben den Federn (Server setzt BoostMult/BoostEndsAt am Spieler)
+	local boostBox = C.panel(UDim2.fromOffset(150, 44), Theme.color.feather)
+	boostBox.Position = UDim2.fromOffset(262, 50)
+	boostBox.Visible = false
+	boostBox.Parent = root
+	local boostLabel = C.text({ text = "", size = Theme.size.sm, color = Theme.color.stroke })
+	boostLabel.Size = UDim2.fromScale(1, 1)
+	boostLabel.Parent = boostBox
+	task.spawn(function()
+		while gui do
+			local mult = player:GetAttribute("BoostMult")
+			local endsAt = player:GetAttribute("BoostEndsAt")
+			local left = if typeof(endsAt) == "number" then endsAt - workspace:GetServerTimeNow() else 0
+			if typeof(mult) == "number" and left > 0 then
+				boostBox.Visible = true
+				boostLabel.Text = ("%gx BOOST %d:%02d"):format(mult, left // 60, math.floor(left % 60))
+			else
+				boostBox.Visible = false
+			end
+			task.wait(0.5)
+		end
+	end)
+
 	-- Rank (oben Mitte)
 	local rankBox = make("Frame", {
 		AnchorPoint = Vector2.new(0.5, 0),
@@ -307,6 +331,12 @@ function UIController:build()
 	local settingsPanel = SettingsPanel.build(root)
 	local index = IndexPanel.build(root)
 	local celebration = Celebration.build(root)
+	local tutorialHint = TutorialHint.build(root, {
+		swing = swingBtn.instance,
+		shop = shopBtn.instance,
+		rank = bar,
+		goal = goal,
+	})
 	local function celebrate(title: string, subtitle: string?, color: Color3?)
 		local st = State.state and State.state.settings or {}
 		celebration.show({
@@ -392,6 +422,7 @@ function UIController:build()
 		zones.refresh(s)
 		settingsPanel.refresh(s)
 		index.refresh(s)
+		tutorialHint.refresh(s)
 	end
 	autoBtn.button.Activated:Connect(function()
 		local s = State.state
@@ -438,6 +469,12 @@ function UIController:build()
 			celebrate(
 				("REBIRTH %d!"):format(payload.rebirths),
 				("Feathers x%.2f forever"):format(payload.multiplier),
+				Theme.color.feather
+			)
+		elseif kind == "tutorialDone" then
+			celebrate(
+				"TUTORIAL COMPLETE!",
+				("%gx Feathers for %d min"):format(payload.mult, payload.seconds // 60),
 				Theme.color.feather
 			)
 		elseif kind == "otherRankUp" then
