@@ -1,6 +1,7 @@
 --!strict
 -- Schlanke UI-Bausteine (ADR-0003). Jede Funktion erzeugt Instanzen; Animationen respektieren Reduced Motion.
 local TweenService = game:GetService("TweenService")
+local GuiService = game:GetService("GuiService")
 local Theme = require(script.Parent.Theme)
 
 local Components = {}
@@ -266,10 +267,15 @@ function Components.tooltip(target: GuiObject, text: string)
 			end
 			local tl = tooltipLabel :: TextLabel
 			tl.Text = text
-			local pos = target.AbsolutePosition
-			local size = target.AbsoluteSize
+			-- AbsolutePosition liegt im Inset-Raum, die ScreenGui ignoriert den Inset und hat eine UIScale:
+			-- beides herausrechnen, damit der Tooltip neben dem Ziel sitzt
+			local scaleObj = gui:FindFirstChildOfClass("UIScale")
+			local k = if scaleObj then scaleObj.Scale else 1
+			local inset = if (gui :: ScreenGui).IgnoreGuiInset then GuiService:GetGuiInset() else Vector2.zero
+			local pos = (target.AbsolutePosition + inset) / k
+			local size = target.AbsoluteSize / k
 			-- rechte Bildschirmhälfte: Tooltip links vom Ziel, sonst rechts
-			if pos.X + size.X / 2 > gui.AbsoluteSize.X / 2 then
+			if pos.X + size.X / 2 > gui.AbsoluteSize.X / (2 * k) then
 				tl.AnchorPoint = Vector2.new(1, 0.5)
 				tl.Position = UDim2.fromOffset(pos.X - 10, pos.Y + size.Y / 2)
 			else
