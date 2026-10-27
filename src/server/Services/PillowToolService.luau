@@ -42,7 +42,9 @@ function PillowToolService.buildTool(pillowId: string): Tool
 		handle = template:Clone()
 		handle.Name = "Handle"
 		-- Kissen quer vor dem Körper halten: Längsachse (X) quer, Fläche nach vorn
-		tool.Grip = CFrame.new(0, 0, -0.9) * CFrame.Angles(0, math.rad(90), 0)
+		-- Längsachse X (Standard) wird um 90° gedreht; Modelle mit Längsachse Z (Attribut vom Import) nicht
+		local longZ = handle:GetAttribute("LongAxisZ") == true
+		tool.Grip = CFrame.new(0, 0, -0.9) * CFrame.Angles(0, if longZ then 0 else math.rad(90), 0)
 	else
 		local part = Instance.new("Part")
 		part.Name = "Handle"

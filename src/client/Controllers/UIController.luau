@@ -19,6 +19,7 @@ local RebirthPanel = require(UI.RebirthPanel)
 local ZonesPanel = require(UI.ZonesPanel)
 local SettingsPanel = require(UI.SettingsPanel)
 local IndexPanel = require(UI.IndexPanel)
+local Celebration = require(UI.Celebration)
 
 local player = Players.LocalPlayer
 local UIController = {}
@@ -305,6 +306,17 @@ function UIController:build()
 	local zones = ZonesPanel.build(root)
 	local settingsPanel = SettingsPanel.build(root)
 	local index = IndexPanel.build(root)
+	local celebration = Celebration.build(root)
+	local function celebrate(title: string, subtitle: string?, color: Color3?)
+		local st = State.state and State.state.settings or {}
+		celebration.show({
+			title = title,
+			subtitle = subtitle,
+			color = color,
+			reducedMotion = st.reducedMotion == true,
+			lowVfx = st.lowVfx == true,
+		})
+	end
 	-- Immer nur ein Fenster offen
 	local modals = { rebirth, zones, settingsPanel, index }
 	local function openOnly(target: any?)
@@ -398,10 +410,14 @@ function UIController:build()
 			if payload.ok then
 				if payload.kind == "pillow" then
 					local p = Pillows.byId[payload.id]
-					self:toast(
-						("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name),
-						rarityInfo[p.rarity].color
-					)
+					if p.rarity == "Epic" or p.rarity == "Legendary" then
+						celebrate(p.rarity:upper() .. "!", p.name, rarityInfo[p.rarity].color)
+					else
+						self:toast(
+							("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name),
+							rarityInfo[p.rarity].color
+						)
+					end
 				elseif payload.kind == "upgrade" then
 					self:toast("Upgrade bought!", Theme.color.success)
 				elseif payload.kind == "zone" then
@@ -414,13 +430,14 @@ function UIController:build()
 				self:toast(REASONS[payload.reason] or "Not possible right now.", Theme.color.danger)
 			end
 		elseif kind == "rankUp" then
-			self:toast(("RANK UP! %s"):format(payload.name), Theme.color.secondary)
+			celebrate("RANK UP!", payload.name, Theme.color.secondary)
 			if payload.rank == Progression.swing.autoSwingRank then
 				self:toast("Auto-Swing unlocked!", Theme.color.success)
 			end
 		elseif kind == "rebirth" then
-			self:toast(
-				("REBIRTH %d! Feathers x%.2f"):format(payload.rebirths, payload.multiplier),
+			celebrate(
+				("REBIRTH %d!"):format(payload.rebirths),
+				("Feathers x%.2f forever"):format(payload.multiplier),
 				Theme.color.feather
 			)
 		elseif kind == "otherRankUp" then
