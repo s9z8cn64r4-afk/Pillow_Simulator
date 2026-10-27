@@ -17,3 +17,5 @@
 1. **Mehrspielertest (~5 Min.)**: In Studio oben „Test“ → bei „Clients and Servers“ 2 Spieler wählen → „Start“. In einem Fenster schlagen, im anderen prüfen: Kissen in der Hand sichtbar, Federn fliegen, Rang-Titel über dem Kopf. Rückmeldung „ok“ oder was fehlt.
 2. **Hörprobe** der Sounds und der 3 Musiktitel (Einstellungen → Musik/Sound) – passt die Stimmung?
 3. **Studio speichern** (Datei → Auf Roblox speichern) – weiterhin wichtig (Kissenmodelle, Map, DevTools nur im Place).
+4. **Codes freigeben** (Entwurf in `src/shared/Config/Codes.luau`): PILLOWFIGHT (5 Min. Produktion), FLUFFY (2× für 15 Min.), BETATESTER (10 Min., bis 01.01.2027). Funktionieren bereits im Spiel; öffentlich genannt werden sie erst nach deinem OK.
+5. **Roblox-Gruppe** für den Gruppen-Bonus (+10 %): Gruppen-ID nennen oder „keine Gruppe“.

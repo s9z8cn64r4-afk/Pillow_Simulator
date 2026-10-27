@@ -6,6 +6,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 ### Added
 - Daily Reward (7 Tage, Pause statt Reset) mit Willkommen-zurück-Karte, Menü-Badge und automatischem Öffnen; Boosts werden gespeichert und stapeln.
 - Menü wird auf niedrigen Bildschirmen zweispaltig.
+- Analytics: Economy-, Progression- und Rank-Events (gebündelt, gedrosselt).
+- Codes (Eingabe in den Einstellungen) und Leaderboards (Top 10 Federn/Rebirths im Kinderzimmer).
 
 ## 0.2.0-dev (M2 Vertical Slice) – Gate M2 vorläufig bestanden 2026-10-27
 ### Added

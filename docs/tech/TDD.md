@@ -23,7 +23,10 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `SettingsService` | Einstellungen validieren/runden/speichern (`SetSetting`) |
 | `TutorialService` | 6 Onboarding-Aufgaben, ausgewertet über Signale (`SwingService.Swung`, `ShopService.Purchased`, `RankChanged`); `data.tutorial.step` = erledigte Aufgaben; Funnel über `AnalyticsService:LogOnboardingFunnelStepEvent`; Skip (`TutorialSkip`); Profile ab Rank 3 still beendet; Belohnung 2×-Boost 120 s über `StatsService:addBoost` (nicht gespeichert, Attribute `BoostMult`/`BoostEndsAt`) |
 | `DailyRewardService` | 7-Tage-Kette (UTC-Tage, Lücke pausiert; Logik in `Util/Daily`), Federn = Minuten Produktion, Boost-Tage über `StatsService:addBoost`; Remote `ClaimDaily` |
-| `CodeService`, `LeaderboardService`, `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
+| `TelemetryService` | AnalyticsService: Economy-Quellen und Upgrade-Ausgaben je Minute gebündelt, seltene Senken (Kissen/Zone/Rebirth) sofort, Progression (Zonen, Rebirth), Custom (RankUp); Signale `PlayerDataService.FeathersAdded/FeathersSpent` |
+| `CodeService` | Codes aus `Config/Codes` (einmal je Spieler, Ablauf), Remote `RedeemCode(codeText)` (alnum ≤ 20, 0,2/s) |
+| `LeaderboardService` | OrderedDataStore `LB_<board>_<ENV>` (lifetimeFeathers, rebirths), alle 60 s schreiben/lesen, Tafeln zur Laufzeit im Kinderzimmer |
+| `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
 
 **Client** (`StarterPlayerScripts.Client`): `init.client.luau` lädt `Controllers/`.
 `PlayerStateController` (hält replizierten Zustand, Signal `Changed`), `SwingController` (Eingabe → Remote, lokales Sofort-Feedback), `FxController` (Partikel, Zahlen, Sounds), `UI/` (HUD, Menüs).
@@ -36,7 +39,7 @@ DataStore-Name: `PlayerData_<ENV>`, ENV aus Attribut `Environment` am `ServerScr
 
 ## 4. Netzwerk
 Schema-Einträge: `name`, `kind` (`event`/`unreliable`), `dir` (`c2s`/`s2c`), `args` (Validierer-Liste), `rate` (Tokens/s, Burst).
-Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`.
+Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`, `RedeemCode(text)`.
 Server → Client: `StateInit(snapshot)`, `StateDelta(changes)`, `SwingFx(userId, amount, hitDummy)` (unreliable), `Notify(kind, payload)`.
 Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` beantwortet.
 
