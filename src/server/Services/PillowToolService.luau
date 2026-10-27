@@ -1,5 +1,5 @@
 --!strict
--- Gibt jedem Spieler sein ausgerüstetes Kissen als Tool in die Hand (M1: Platzhalter-Modell).
+-- Gibt jedem Spieler sein ausgerüstetes Kissen als Tool in die Hand (generiertes Modell, sonst Platzhalter).
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -22,7 +22,7 @@ function PillowToolService:Init(registry)
 	Shop = registry.ShopService
 end
 
--- Baut das Kissen-Tool. M2 ersetzt das Platzhalter-Ellipsoid durch generierte Modelle je Kissen.
+-- Baut das Kissen-Tool aus ReplicatedStorage.Assets.Pillows.<id> (Fallback: Ellipsoid in Seltenheitsfarbe).
 function PillowToolService.buildTool(pillowId: string): Tool
 	local pillow = Pillows.byId[pillowId] or Pillows.byId[Pillows.starter]
 	local tool = Instance.new("Tool")
@@ -60,8 +60,50 @@ function PillowToolService.buildTool(pillowId: string): Tool
 	handle.CanCollide = false
 	handle.Massless = true
 	handle:SetAttribute("BaseSize", handle.Size)
+	PillowToolService.addRarityFx(handle, pillow.rarity)
 	handle.Parent = tool
 	return tool
+end
+
+-- Seltenheits-Visuals (GDD): Aura ab Epic, zusätzlich Trail bei Legendary. Dezent, Low Effects
+-- schaltet sie clientseitig ab (FxController, Name-Präfix "RarityFx").
+function PillowToolService.addRarityFx(handle: BasePart, rarity: string)
+	if rarity ~= "Epic" and rarity ~= "Legendary" then
+		return
+	end
+	local color = rarityColor[rarity]
+	local aura = Instance.new("ParticleEmitter")
+	aura.Name = "RarityFxAura"
+	aura.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+	aura.Color = ColorSequence.new(color)
+	aura.LightEmission = 0.6
+	aura.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.25), NumberSequenceKeypoint.new(1, 0) })
+	aura.Transparency = NumberSequence.new(0.2, 1)
+	aura.Lifetime = NumberRange.new(0.6, 1)
+	aura.Rate = if rarity == "Legendary" then 14 else 8
+	aura.Speed = NumberRange.new(0.5, 1.2)
+	aura.SpreadAngle = Vector2.new(180, 180)
+	aura.Parent = handle
+	if rarity == "Legendary" then
+		local half = handle.Size.X / 2
+		local a0 = Instance.new("Attachment")
+		a0.Name = "RarityFxA0"
+		a0.Position = Vector3.new(-half, 0, 0)
+		a0.Parent = handle
+		local a1 = Instance.new("Attachment")
+		a1.Name = "RarityFxA1"
+		a1.Position = Vector3.new(half, 0, 0)
+		a1.Parent = handle
+		local trail = Instance.new("Trail")
+		trail.Name = "RarityFxTrail"
+		trail.Attachment0 = a0
+		trail.Attachment1 = a1
+		trail.Color = ColorSequence.new(color, Color3.fromRGB(255, 255, 255))
+		trail.Transparency = NumberSequence.new(0.4, 1)
+		trail.Lifetime = 0.25
+		trail.LightEmission = 0.5
+		trail.Parent = handle
+	end
 end
 
 function PillowToolService:give(player: Player)

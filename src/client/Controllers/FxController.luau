@@ -170,6 +170,21 @@ function FxController:Start()
 		warn("[PS][WARN] Feder-Modell fehlt (ReplicatedStorage.Assets." .. Assets.models.feather .. ")")
 	end
 
+	-- Seltenheits-Effekte fremder und eigener Kissen (Server: "RarityFx…") folgen Low Effects
+	local function applyRarityFx(inst: Instance)
+		if (inst:IsA("ParticleEmitter") or inst:IsA("Trail")) and inst.Name:sub(1, 8) == "RarityFx" then
+			inst.Enabled = not settings().lowVfx
+		end
+	end
+	workspace.DescendantAdded:Connect(applyRarityFx)
+	State.Changed:Connect(function(key)
+		if key == "settings" then
+			for _, d in workspace:GetDescendants() do
+				applyRarityFx(d)
+			end
+		end
+	end)
+
 	NetClient.on("SwingFx", function(userId: number, amount: number, dummyName: string?, isAuto: boolean?)
 		local who = Players:GetPlayerByUserId(userId)
 		local char = who and who.Character
