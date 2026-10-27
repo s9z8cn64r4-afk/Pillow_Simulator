@@ -19,7 +19,9 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `ShopService` | Kissen/Upgrades kaufen, ausrüsten |
 | `ZoneService` | Zonen-Volumen (Tag `ZoneVolume`), aktuelle Zone je Spieler (alle 0,25 s), Freischaltung per ProximityPrompt an der Barriere (Tag `ZoneBarrier`), Teleport zu `ZoneSpawn` |
 | `RebirthService` | Rebirth synchron ohne Yield (keine Doppel-Ausführung), Reset + Teleport in Startzone |
-| `RankService` | Titel über dem Kopf, Rank-Up-Hinweis an Mitspieler |
+| `RankService` | Titel über dem Kopf, Trail ab Rank 5, Rank-Up-Hinweis an Mitspieler |
+| `SettingsService` | Einstellungen validieren/runden/speichern (`SetSetting`) |
+| `TutorialService` | 6 Onboarding-Aufgaben, ausgewertet über Signale (`SwingService.Swung`, `ShopService.Purchased`, `RankChanged`); `data.tutorial.step` = erledigte Aufgaben; Funnel über `AnalyticsService:LogOnboardingFunnelStepEvent`; Skip (`TutorialSkip`); Profile ab Rank 3 still beendet; Belohnung 2×-Boost 120 s über `StatsService:addBoost` (nicht gespeichert, Attribute `BoostMult`/`BoostEndsAt`) |
 | `RewardService`, `CodeService`, `LeaderboardService`, `SocialService`, `PurchaseService`, `AnalyticsService`, `AntiCheatService` | P2–P3 |
 
 **Client** (`StarterPlayerScripts.Client`): `init.client.luau` lädt `Controllers/`.
@@ -31,7 +33,7 @@ DataStore-Name: `PlayerData_<ENV>`, ENV aus Attribut `Environment` am `ServerScr
 
 ## 4. Netzwerk
 Schema-Einträge: `name`, `kind` (`event`/`unreliable`), `dir` (`c2s`/`s2c`), `args` (Validierer-Liste), `rate` (Tokens/s, Burst).
-Client → Server (P1): `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`.
+Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`.
 Server → Client: `StateInit(snapshot)`, `StateDelta(changes)`, `SwingFx(userId, amount, hitDummy)` (unreliable), `Notify(kind, payload)`.
 Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` beantwortet.
 

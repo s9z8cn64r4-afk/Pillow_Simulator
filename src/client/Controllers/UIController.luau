@@ -180,9 +180,9 @@ function UIController:build()
 	local setFeathers = rollingCounter(featherLabel)
 	local featherScale = make("UIScale", {}, featherBox)
 
-	-- Boost-Anzeige neben den Federn (Server setzt BoostMult/BoostEndsAt am Spieler)
-	local boostBox = C.panel(UDim2.fromOffset(150, 44), Theme.color.feather)
-	boostBox.Position = UDim2.fromOffset(262, 50)
+	-- Boost-Anzeige unter den Federn (Server setzt BoostMult/BoostEndsAt am Spieler)
+	local boostBox = C.panel(UDim2.fromOffset(250, 30), Theme.color.feather)
+	boostBox.Position = UDim2.fromOffset(0, 110)
 	boostBox.Visible = false
 	boostBox.Parent = root
 	local boostLabel = C.text({ text = "", size = Theme.size.sm, color = Theme.color.stroke })
@@ -220,7 +220,7 @@ function UIController:build()
 	-- Linke Menüleiste
 	local menu = make(
 		"Frame",
-		{ Position = UDim2.fromOffset(0, 130), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 },
+		{ Position = UDim2.fromOffset(0, 150), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 },
 		root
 	)
 	make("UIListLayout", { Padding = UDim.new(0, 10) }, menu)

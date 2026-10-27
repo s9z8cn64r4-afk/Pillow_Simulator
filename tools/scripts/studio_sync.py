@@ -70,6 +70,16 @@ def long_string(s: str) -> str:
 REPO_RAW = "https://raw.githubusercontent.com/s9z8cn64r4-afk/Pillow_Simulator"
 
 
+def helper_call(sha, items):
+    """Kurzform, wenn ServerStorage.DevTools.SyncFromGitHub in Studio existiert (siehe PROJECT_STATE)."""
+    rows = []
+    for _path, parts, cls, _src, repo_path in items:
+        parts_lua = "{" + ", ".join(f'"{p}"' for p in parts) + "}"
+        rows.append(f'\t{{ "{repo_path}", {parts_lua}, "{cls}" }},')
+    body = "\n".join(rows)
+    return f'return require(game.ServerStorage.DevTools.SyncFromGitHub:Clone())("{sha}", {{\n{body}\n}})\n'
+
+
 def github_chunk(sha, items):
     lines = [HEADER, 'local HttpService = game:GetService("HttpService")', "local list = {"]
     for _path, parts, cls, _src, repo_path in items:
@@ -112,6 +122,8 @@ def main():
         items = [e for e in entries() if only is None or e[0] in only]
         with open(os.path.join(out_dir, "sync_github.luau"), "w", encoding="utf-8") as fh:
             fh.write(github_chunk(sha, items))
+        with open(os.path.join(out_dir, "sync_helper.luau"), "w", encoding="utf-8") as fh:
+            fh.write(helper_call(sha, items))
         print(f"{len(items)} Datei(en) → {out_dir}/sync_github.luau")
         return
     chunks, cur, names = [], HEADER, []

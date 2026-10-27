@@ -110,7 +110,11 @@ function TutorialService:skip(player: Player)
 	if not data or data.tutorial.completed then
 		return
 	end
-	funnel(player, data.tutorial.step + 1, "skipped")
+	-- Kein Funnel-Schritt (Schrittnummern müssen eindeutige Namen behalten), sondern eigenes Event
+	Log:info("Tutorial übersprungen", { userId = player.UserId, step = data.tutorial.step })
+	pcall(function()
+		AnalyticsService:LogCustomEvent(player, "TutorialSkipped", data.tutorial.step)
+	end)
 	self:complete(player, false)
 end
 
