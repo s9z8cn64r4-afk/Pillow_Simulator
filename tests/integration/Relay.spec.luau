@@ -70,7 +70,8 @@ return function(it, expect, ctx)
 	it("Puffer-Obergrenze: Überschuss wird gezählt und gemeldet", function()
 		Relay:_setForTest(true, okSender)
 		for i = 1, Relay.MAX_EVENTS + 5 do
-			Relay:push("warn", "Meldung " .. string.rep("x", i)) -- verschiedene Fingerprints
+			-- verschiedene Fingerprints: Unterschied in den ersten 80 Zeichen, ohne Ziffern
+			Relay:push("warn", "M-" .. string.rep("a", i % 50) .. string.rep("b", i // 50))
 		end
 		Relay:flush()
 		expect(#lastEvents()).toBe(Relay.MAX_EVENTS)

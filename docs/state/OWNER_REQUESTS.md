@@ -32,3 +32,10 @@ Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Kn
 2. **Tester einladen** (10–30; Weg legst du fest, z. B. Roblox-Gruppe mit Tester-Rolle) und `docs/community/tester-guide.md` weitergeben.
 3. Mir den **Beta-Place-Namen/ID** nennen – ich erstelle dann täglich den Bericht (`docs/qa/beta-plan.md`).
 4. Vorher noch nötig: **MVP-Scope bestätigen** (`docs/MVP_SCOPE.md`) und **Spielname**.
+
+## #6 (2026-10-27) – offen, vor der Closed Beta empfohlen
+**Fehler-/Feedback-Meldungen in einen privaten Discord (PS-36)** – Relay ist fertig und getestet, braucht nur noch dein Konto (~15 Min.). Schritt für Schritt: `relay/README.md`.
+1. Privaten Discord-Server „Pillow Logs“ mit 5 Kanälen + je einem Webhook anlegen.
+2. Kostenloses Cloudflare-Konto, Worker mit `npx wrangler deploy` hochladen, Token und Webhook-URLs als Secrets eintragen.
+3. In Roblox „Allow HTTP Requests“ einschalten und die Secrets `relay_url` + `relay_token` anlegen.
+Hinweis: Webhook-URLs und Token **nicht** an mich schicken – nur dort eintragen.

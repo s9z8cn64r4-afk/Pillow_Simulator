@@ -28,6 +28,7 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `SocialService` | Freunde im Server (`IsFriendsWith`, gecacht, pcall) + Gruppe (`Config/Social.groupId`, 0 = aus) → Multiplikator in `StatsService:extraMultiplier`, Attribute `FriendsInServer`/`GroupMember` |
 | `MonetizationService` | Gamepässe (`UserOwnsGamePassAsync`, Attribute `Pass_<id>`) → `passMultiplier`, `autoSwingEfficiency`; `ProcessReceipt` idempotent (ReceiptId in `purchaseHistory`, `PurchaseGranted` erst nach `PlayerDataService:saveAndWait`); Artikel ohne Owner-ID/Preis nicht kaufbar; Remote `PromptPurchase(kind, id)` |
 | `SessionReportService` | Beim Verlassen ein Sitzungsbericht (Pseudonym statt UserId, Länge, Tutorial, Fortschritt, Serverfehler) in DataStore `Sessions_<ENV>`; Auswertung `tools/studio/beta_report.luau` |
+| `RelayService` | Logging-Relay (ADR-0004): warn+/Skriptfehler, Anti-Exploit, Feedback, Sitzungs-Summen → gebündelt alle 30 s (critical nach 2 s) an `relay/` (Cloudflare Worker) → Discord; Fingerprint-Zusammenfassung, Pseudonyme, Puffer 100, 3 Versuche; aus ohne Secrets `relay_url`/`relay_token` |
 | `FeedbackService` | Remote `SendFeedback(category, text)` (3–300 Zeichen, 1 je 20 s), TextService-Filter, nur gefilterter Text in DataStore `Feedback_<ENV>`, max. 5 je Sitzung |
 | `LeaderboardService` | OrderedDataStore `LB_<board>_<ENV>` (lifetimeFeathers, rebirths), alle 60 s schreiben/lesen, Tafeln zur Laufzeit im Kinderzimmer |
 | `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
