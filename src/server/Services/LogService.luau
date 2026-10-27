@@ -6,7 +6,7 @@ local LEVELS = { debug = 1, info = 2, warn = 3, error = 4, critical = 5 }
 
 local LogService = {}
 LogService.minLevel = if RunService:IsStudio() then LEVELS.debug else LEVELS.info
-LogService.counts = { warn = 0, error = 0, critical = 0 }
+LogService.counts = { warn = 0, error = 0, critical = 0, scriptError = 0 }
 
 local function encode(ctx: { [string]: any }?): string
 	if not ctx then
@@ -50,6 +50,18 @@ function LogService:error(msg: string, ctx: { [string]: any }?)
 end
 function LogService:critical(msg: string, ctx: { [string]: any }?)
 	self:log("critical", msg, ctx)
+end
+
+-- Unbehandelte Server-Skriptfehler mitzählen (Fehlerrate für Gate M3, SessionReportService)
+function LogService:Start()
+	game:GetService("ScriptContext").Error:Connect(function()
+		self.counts.scriptError += 1
+	end)
+end
+
+-- Summe aller Fehler (error + critical + unbehandelte Skriptfehler)
+function LogService:errorTotal(): number
+	return self.counts.error + self.counts.critical + self.counts.scriptError
 end
 
 return LogService
