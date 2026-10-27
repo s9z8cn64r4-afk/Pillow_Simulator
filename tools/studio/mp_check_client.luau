@@ -1,7 +1,7 @@
 -- Mehrspieler-Check (Client). Installiert als ReplicatedStorage.DevToolsClient.MpCheckClient
 -- (tools/studio/install_mp_check.luau). In JEDEM Client-Fenster möglichst gleichzeitig (Befehlsleiste):
---   print(require(game.ReplicatedStorage.DevToolsClient.MpCheckClient)()) Sendet 4 eigene Schläge über das echte Remote,
--- zählt 10 s lang ankommende Schlag-Effekte anderer Spieler und prüft, was dieser Client von den anderen sieht.
+--   print(require(game.ReplicatedStorage.DevToolsClient.MpCheckClient)())
+-- Sendet 4 eigene Schläge über das echte Remote, zählt 10 s lang ankommende Schlag-Effekte anderer Spieler und prüft, was dieser Client von den anderen sieht.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -39,6 +39,7 @@ task.wait(6.8)
 conn:Disconnect()
 conn2:Disconnect()
 
+check(#Players:GetPlayers() >= 2, ("mindestens 1 anderer Spieler sichtbar (%d gesamt)"):format(#Players:GetPlayers()))
 for _, p in Players:GetPlayers() do
 	if p ~= me then
 		local char = p.Character
