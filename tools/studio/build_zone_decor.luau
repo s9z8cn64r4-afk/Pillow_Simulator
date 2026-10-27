@@ -307,7 +307,7 @@ do
 	part({ Size = Vector3.new(14, 4, 10), Position = Vector3.new(-36, 2, cz + 58), Color = C(205, 195, 255), Material = Enum.Material.Fabric }, throne)
 	part({ Size = Vector3.new(14, 14, 3), Position = Vector3.new(-36, 9, cz + 63), Color = C(180, 165, 250), Material = Enum.Material.Fabric }, throne)
 	for k, id in { "starlight", "dream", "cloud" } do
-		pillowProp(id, CFrame.new(-41 + (k - 1) * 5, 5.6, cz + 59) * CFrame.Angles(math.rad(-15), 0, 0), 1.4, throne)
+		pillowProp(id, CFrame.new(-41 + (k - 1) * 5, 6.2, cz + 59) * CFrame.Angles(math.rad(-15), 0, 0), 2.2, throne)
 	end
 end
 
