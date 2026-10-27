@@ -32,6 +32,7 @@ for _, m in workspace:GetChildren() do
 		local mp = m:FindFirstChildWhichIsA("MeshPart", true)
 		if id and mp then
 			local s = mp.Size
+			mp:SetAttribute("RawSize", s)
 			-- gleichmäßig skalieren (Größe tauschen würde das Mesh verzerren; Längsachse Z wird gemeldet)
 			local scaled = s * (TARGET_LENGTH / math.max(s.X, s.Z))
 			-- Höhe begrenzen, damit würfelige Generierungen als Kissen lesbar bleiben
