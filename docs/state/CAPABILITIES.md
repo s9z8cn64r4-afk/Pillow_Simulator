@@ -50,3 +50,7 @@
 | Open-Cloud-Deployment aus CI | N/V (kein Key/CI) → Ersatz: Owner publiziert per Studio nach Checkliste |
 | Discord-Server + Relay | N/V bis Phase 3 → später TEIL |
 | Blender-Pipeline | N/V → Ersatz: Studio-Generierung + prozedurale Modelle |
+
+## Nachträge Sitzung 3 (2026-10-27)
+- StyLua/Selene lokal nicht installierbar (Registries/Release-Downloads gesperrt) → Formatierung läuft als Auto-Fix in GitHub Actions, Lint-Ergebnisse als Annotations (per REST abrufbar; Job-Logs sind aus der Cloud-Umgebung nicht abrufbar).
+- Studio `HttpService:GetAsync` auf raw.githubusercontent.com funktioniert im Edit-DataModel → `tools/scripts/studio_sync.py --github <SHA>` überträgt beliebig viele Skripte mit einem kleinen Chunk (setzt öffentliches Repo voraus).

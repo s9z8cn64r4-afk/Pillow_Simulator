@@ -2,7 +2,18 @@
 
 Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
-## [Unreleased] – 0.1.0-dev (M1 Prototype)
+## [Unreleased] – 0.2.0-dev (M2 Vertical Slice, in Arbeit)
+### Added
+- Zonen 2–4 (Graybox), Zonen-Erkennung, Freischaltung per ProximityPrompt, Teleport-Menü.
+- Rebirth (Doppel-Bestätigung, dauerhafter Multiplikator), Rank-Titel über dem Kopf, Rank-Up-Hinweis an Mitspieler.
+- Einstellungen (Musik/SFX in 25-%-Schritten, Reduced Motion, Low Effects, UI-Größe), serverseitig validiert und gespeichert.
+- Pillow Index (Sammlung x/14 mit Sperrgrund).
+- CI: StyLua-Auto-Fix auf `main`, Selene-Diagnosen als Annotations; Restore-Wächter für Integrations-Tests; `studio_sync.py` (Studio lädt gepinnten Commit).
+### Fixed
+- BUG-001 (P0): Fehl-Kick legitimer Spieler bei Halten + Auto-Swing (SwingGate).
+- CI seit Phase 0 rot (Formatierung, Selene `if_same_then_else`).
+
+## 0.1.0-dev (M1 Prototype) – Gate M1 bestanden 2026-10-27
 ### Added
 - Serverseitige Architektur: Service-Bootstrap, LogService, NetService (Schema, Validierung, Rate-Limits), PlayerDataService (ProfileStore, Migrationen, Delta-Replikation, leaderstats), StatsService, ShopService, SwingService (Cooldown-Prüfung, Puppen-Bonus, Auto-Swing), PillowToolService.
 - Client: PlayerStateController, SwingController (Halten = Dauerschlag, prozedurale Animation), FxController (Federburst, „+X“-Zahlen, Puppen-Wackeln), HUD v0 (Federn, Rank-Balken, Shop, Schlag-Taste, Auto-Schalter, Nächstes-Ziel, Toasts).

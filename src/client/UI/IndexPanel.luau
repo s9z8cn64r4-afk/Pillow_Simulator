@@ -69,7 +69,7 @@ function IndexPanel.build(root: Instance)
 			local p = c.pillow
 			if s.ownedPillows[id] then
 				owned += 1
-				c.state.Text = "✔ Owned"
+				c.state.Text = "OWNED"
 				c.state.TextColor3 = Theme.color.success
 				c.frame.BackgroundTransparency = 0
 			else

@@ -17,3 +17,17 @@ Format: Kriterium · Status · Beleg · Ausnahme
 | MVP-Scope freigegeben | **vorläufig (Orchestrator)** | MVP_SCOPE.md | Owner-Freigabe spätestens vor Closed Beta |
 
 **Ergebnis:** Gate M0 bestanden (vorläufige Scope-Freigabe). Phase 1 beginnt.
+
+## Gate M1 – Prototype (2026-10-27)
+| Kriterium | Status | Beleg | Ausnahme |
+|---|---|---|---|
+| 10 Min. spielen inkl. Käufe | erfüllt `[VERIFIZIERT]` | Dauertest 2: ~10 Min. Halten + Auto-Swing, 0 Verstöße/Kicks/Fehler, 59,9 FPS; UI-Käufe per echtem Klick | – |
+| Rejoin behält Stand | erfüllt `[VERIFIZIERT]` | `Profil geladen` nach Play-Neustart: 72 → 72; 26,5 K → 27.141; 4,82 M → 4.858.081 (Auto-Swing läuft bis zum Stopp weiter) | – |
+| Automatisierte Tests grün | erfüllt `[VERIFIZIERT]` | Studio-Runner `SUMMARY 49/49` (Unit + Integration mit echtem Spieler, ProfileStore-Roundtrip, Restore-Wächter) | – |
+| Exploit-Basistests | erfüllt `[VERIFIZIERT]` | NaN/Strings/Tabellen/Spam: keine Gutschrift, Verstöße gezählt, kein Absturz; BUG-001 (Fehl-Kick) behoben + 6 Regressionstests | – |
+| Unit-Abdeckung Formeln/Validierung ≥ 80 % | erfüllt (Schätzung) | jede öffentliche Funktion von Formulas/NumberFormat/Validate/RateLimiter/SwingGate hat Tests | nicht werkzeuggemessen (kein Coverage-Tool in Studio) |
+| CI grün | erfüllt `[VERIFIZIERT]` | GitHub Actions: StyLua (Auto-Fix auf main), Selene 0 Fehler, Economy-Sim | – |
+| Repo ↔ Studio ohne Drift | erfüllt `[VERIFIZIERT]` | `source_hash.py` → „OK – keine Abweichung“ (53 Skripte) | Place muss vom Owner gespeichert werden (Owner-Anfrage #2) |
+| Phone-Layout | erfüllt `[VERIFIZIERT]` | Debug-Viewport 844×390 + Touch-Mindestskalierung 0,8 | echtes Gerät steht aus (Closed Beta) |
+
+**Ergebnis:** Gate M1 bestanden. Phase 2 (M2 Vertical Slice) läuft.
