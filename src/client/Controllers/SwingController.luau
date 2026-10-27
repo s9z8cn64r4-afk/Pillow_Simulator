@@ -4,6 +4,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local NetClient = require(Shared.Net.NetClient)
@@ -148,6 +149,17 @@ function SwingController:Start()
 		onChar(player.Character)
 	end
 	player.CharacterAdded:Connect(onChar)
+	-- Gamepad: R2 halten = Dauerschlag (Werkzeug-Aktivierung greift bei Gamepads nicht zuverlässig)
+	UserInputService.InputBegan:Connect(function(input, processed)
+		if input.KeyCode == Enum.KeyCode.ButtonR2 and not processed then
+			self:setHolding(true)
+		end
+	end)
+	UserInputService.InputEnded:Connect(function(input)
+		if input.KeyCode == Enum.KeyCode.ButtonR2 then
+			self:setHolding(false)
+		end
+	end)
 	-- Gedrückt halten = Dauerschlag
 	RunService.Heartbeat:Connect(function()
 		if self.holding then
