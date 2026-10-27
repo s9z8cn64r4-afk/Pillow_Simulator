@@ -44,3 +44,4 @@ Hinweis: Webhook-URLs und Token **nicht** an mich schicken – nur dort eintrage
 
 ## #7 (2026-10-27) – offen, vor Beta-Ende / Open Beta
 **Community-Discord (PS-38)** – Struktur, Texte, AutoMod und Moderationsleitfaden sind fertig; das Einrichten läuft per GitHub Action. Schritte (~10 Min., nur Browser): `tools/discord-setup/README.md` – Server anlegen + Community-Modus, Bot anlegen und einladen, Token als GitHub-Secret `DISCORD_BOT_TOKEN`, Action „Discord Setup“ starten. Token nicht an mich schicken.
+Alternativ von Hand: **Discord-Vorlage** (Doc mit allen Rollen, Kanälen, Rechten, AutoMod-Regeln und Texten zum Einfügen, plus Log-Server und Speichern als Servervorlage): https://claude.ai/artifact/Pwr6S9dsnFVXB9QyKmZfB5

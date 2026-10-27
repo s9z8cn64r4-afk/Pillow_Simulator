@@ -29,7 +29,7 @@
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
 | Sicherheit | Exploit-Suite v2 über echte Remotes `[VERIFIZIERT]` (37 Angriffe, 13 Remotes, Kick bei 200) |
 | Pre-Launch-Marketing | Plan, Posts, Short-Skripte `[ENTWURF]` (`docs/marketing/`, Posten durch Owner; Spielname offen) |
-| PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); live `[BLOCKIERT]` (Owner #7) |
+| PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); Discord-Vorlage (Doc, manueller Weg) `[ENTWURF]` https://claude.ai/artifact/Pwr6S9dsnFVXB9QyKmZfB5; live `[BLOCKIERT]` (Owner #7) |
 | PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
