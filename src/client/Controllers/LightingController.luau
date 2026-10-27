@@ -91,7 +91,9 @@ function LightingController:apply(zoneId: string?, instant: boolean?)
 		return
 	end
 	local info = TweenInfo.new(FADE, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
-	for _, t in { TweenService:Create(Lighting, info, lightProps), TweenService:Create(atm, info, p.atmosphere) } do
+	for _, t in
+		{ TweenService:Create(Lighting, info, lightProps), TweenService:Create(atm, info, p.atmosphere) }
+	do
 		t:Play()
 		table.insert(tweens, t)
 	end
