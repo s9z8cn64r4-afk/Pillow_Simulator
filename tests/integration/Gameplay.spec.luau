@@ -17,8 +17,13 @@ return function(it, expect, ctx)
 		upgrades = table.clone(data.upgrades),
 		rank = data.rank,
 		autoSwingEnabled = data.autoSwingEnabled,
+		unlockedZones = table.clone(data.unlockedZones),
+		rebirths = data.rebirths,
 	}
 	data.autoSwingEnabled = false
+	-- unabhängig vom DEV-Spielstand: nur Startzone offen, keine Rebirths
+	data.unlockedZones = { bedroom = true }
+	data.rebirths = 0
 
 	it("Schlag gibt Federn, zweiter Schlag sofort danach wird abgelehnt", function()
 		task.wait(1) -- Cooldown seit letztem Schlag sicher abgelaufen
@@ -145,7 +150,9 @@ return function(it, expect, ctx)
 		"equippedPillow",
 		"upgrades",
 		"rank",
-		"autoSwingEnabled"
+		"autoSwingEnabled",
+		"unlockedZones",
+		"rebirths"
 	)
 	reg.PillowToolService:give(player) -- Werkzeug passend zum wiederhergestellten Kissen
 end
