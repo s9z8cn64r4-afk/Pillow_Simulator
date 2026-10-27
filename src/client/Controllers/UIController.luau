@@ -847,8 +847,9 @@ function UIController:buildShop(root: Frame)
 			end)
 		else
 			panel.Visible = true
-			pscale.Scale = 0.85
-			C.tween(pscale, Theme.motion.base, { Scale = 1 }, Enum.EasingStyle.Back)
+			local fit = C.fitScale(panel, root)
+			pscale.Scale = 0.85 * fit
+			C.tween(pscale, Theme.motion.base, { Scale = fit }, Enum.EasingStyle.Back)
 		end
 	end
 	close.button.Activated:Connect(api.toggle)

@@ -207,14 +207,30 @@ function Components.modal(root: Instance, title: string, size: UDim2)
 			end)
 		else
 			panel.Visible = true
-			scale.Scale = 0.85
-			tween(scale, Theme.motion.base, { Scale = 1 }, Enum.EasingStyle.Back)
+			local fit = Components.fitScale(panel, root)
+			scale.Scale = 0.85 * fit
+			tween(scale, Theme.motion.base, { Scale = fit }, Enum.EasingStyle.Back)
 		end
 	end
 	close.button.Activated:Connect(function()
 		api.toggle(false)
 	end)
 	return api
+end
+
+-- Verkleinerung, damit ein Fenster vollständig auf den (ggf. kleinen) Bildschirm passt (8 px Rand je Seite).
+-- Größen in Referenz-Pixeln des HUD-Roots; 1 = passt bereits.
+function Components.fitScale(panel: GuiObject, root: Instance): number
+	if not root:IsA("GuiObject") then
+		return 1
+	end
+	local rs = (root :: GuiObject).Size
+	local ps = panel.Size
+	local rw, rh = rs.X.Offset, rs.Y.Offset
+	if rw <= 0 or rh <= 0 or ps.X.Offset <= 0 or ps.Y.Offset <= 0 then
+		return 1
+	end
+	return math.min(1, (rw - 16) / ps.X.Offset, (rh - 16) / ps.Y.Offset)
 end
 
 -- Fortschrittsbalken: gibt set(alpha) zurück
