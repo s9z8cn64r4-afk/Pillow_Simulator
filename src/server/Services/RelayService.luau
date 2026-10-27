@@ -28,7 +28,8 @@ local criticalScheduled = false
 local urlSecret: any, tokenSecret: any = nil, nil
 
 local VALID = { critical = true, error = true, warn = true, exploit = true, feedback = true, session = true }
-local DROP_KEYS = { userId = true, name = true, displayName = true, username = true, noRelay = true, category = true }
+local DROP_KEYS =
+	{ userId = true, name = true, displayName = true, username = true, noRelay = true, category = true }
 
 -- Versand (austauschbar für Tests): gibt (ok, Status) zurück
 RelayService.send = function(body: string): (boolean, any)
@@ -115,7 +116,14 @@ function RelayService:push(cat: string, msg: string, ctx: { [string]: any }?, su
 		self.stats.dropped += 1
 		return
 	else
-		queue[fp] = { cat = cat, msg = string.sub(msg, 1, 300), fp = fp, count = 1, ctx = clean(ctx), sum = sum == true }
+		queue[fp] = {
+			cat = cat,
+			msg = string.sub(msg, 1, 300),
+			fp = fp,
+			count = 1,
+			ctx = clean(ctx),
+			sum = sum == true,
+		}
 		table.insert(order, fp)
 	end
 	if cat == "critical" and not criticalScheduled then
@@ -140,7 +148,9 @@ function RelayService:buildBatch(): (string?, number)
 	table.clear(queue)
 	table.clear(order)
 	if #events == 0 then
-		events = { { cat = "warn", msg = "Relay-Puffer übergelaufen", fp = "relay:overflow", count = 1, ctx = {} } }
+		events = {
+			{ cat = "warn", msg = "Relay-Puffer übergelaufen", fp = "relay:overflow", count = 1, ctx = {} },
+		}
 	end
 	local body = HttpService:JSONEncode({
 		v = 1,

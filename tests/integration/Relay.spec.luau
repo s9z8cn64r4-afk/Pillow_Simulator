@@ -34,7 +34,11 @@ return function(it, expect, ctx)
 
 	it("Datenschutz: UserId wird Pseudonym, Namen fliegen raus", function()
 		Relay:_setForTest(true, okSender)
-		Relay:push("warn", "Test", { userId = player.UserId, name = player.Name, displayName = player.DisplayName })
+		Relay:push(
+			"warn",
+			"Test",
+			{ userId = player.UserId, name = player.Name, displayName = player.DisplayName }
+		)
 		Relay:flush()
 		local raw = HttpService:JSONEncode(bodies[#bodies])
 		expect(string.find(raw, tostring(player.UserId), 1, true) == nil).toBeTruthy()

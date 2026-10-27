@@ -76,7 +76,11 @@ function FeedbackService:submit(player: Player, category: string, text: string):
 	end
 	-- an #feedback-inbox (nur gefilterter Text, Spieler als Pseudonym)
 	if Relay then
-		Relay:push("feedback", filtered, { type = category, rank = data.rank, zone = entry.zone, userId = player.UserId })
+		Relay:push(
+			"feedback",
+			filtered,
+			{ type = category, rank = data.rank, zone = entry.zone, userId = player.UserId }
+		)
 	end
 	return true, key
 end
