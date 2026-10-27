@@ -1,0 +1,36 @@
+# Richtet den Community-Discord (Server A) ein – manuell starten: Actions → „Discord Setup“ → Run workflow.
+# Voraussetzung: Repository-Secret DISCORD_BOT_TOKEN (Settings → Secrets and variables → Actions).
+# Idempotent: kann beliebig oft laufen, legt nur Fehlendes an. Erst mit dry_run = true ansehen.
+name: Discord Setup
+on:
+  workflow_dispatch:
+    inputs:
+      guild_id:
+        description: "Server-ID des Community-Discords (Rechtsklick auf den Server → Server-ID kopieren)"
+        required: true
+      dry_run:
+        description: "Nur anzeigen, nichts ändern"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Discord einrichten
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          GUILD_ID: ${{ inputs.guild_id }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            node tools/discord-setup/setup.mjs --guild "$GUILD_ID" --dry-run
+          else
+            node tools/discord-setup/setup.mjs --guild "$GUILD_ID"
+          fi

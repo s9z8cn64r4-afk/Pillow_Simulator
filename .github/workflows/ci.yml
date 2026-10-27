@@ -51,6 +51,8 @@ jobs:
       - name: Relay-Tests (Logging → Discord)
         working-directory: relay
         run: npm test
+      - name: Discord-Setup-Tests (simulierter Discord)
+        run: node --test tools/discord-setup/setup.test.mjs
       - name: Dashboard-Datei aktuell (dist/worker.js aus src/ gebaut)
         working-directory: relay
         run: |

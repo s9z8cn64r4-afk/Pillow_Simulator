@@ -1,0 +1,244 @@
+{
+  "_comment": "Community Discord (server A), master prompt I.5. Idempotent: existing roles/channels/rules with the same name are not created twice. No #trading-talk until trading exists. Public texts in English (game language).",
+  "roles": [
+    {
+      "name": "Owner/Dev",
+      "color": "#FF6FA8",
+      "hoist": true
+    },
+    {
+      "name": "Moderator",
+      "color": "#6FD4FF",
+      "hoist": true
+    },
+    {
+      "name": "Tester",
+      "color": "#7BE38F",
+      "hoist": true
+    },
+    {
+      "name": "Content Creator",
+      "color": "#FFD45C",
+      "hoist": true
+    },
+    {
+      "name": "Member",
+      "color": null,
+      "hoist": false
+    },
+    {
+      "name": "Updates-Ping",
+      "color": null,
+      "hoist": false,
+      "mentionable": true
+    },
+    {
+      "name": "Events-Ping",
+      "color": null,
+      "hoist": false,
+      "mentionable": true
+    },
+    {
+      "name": "Codes-Ping",
+      "color": null,
+      "hoist": false,
+      "mentionable": true
+    }
+  ],
+  "categories": [
+    {
+      "name": "📌 Info",
+      "access": "readonly",
+      "channels": [
+        {
+          "name": "welcome",
+          "type": "text",
+          "topic": "Welcome to Pillow Simulator!",
+          "post": "welcome"
+        },
+        {
+          "name": "rules",
+          "type": "text",
+          "topic": "Please read before chatting",
+          "post": "rules"
+        },
+        {
+          "name": "announcements",
+          "type": "announcement",
+          "topic": "Game news"
+        },
+        {
+          "name": "changelog",
+          "type": "announcement",
+          "topic": "Patch notes"
+        },
+        {
+          "name": "faq",
+          "type": "text",
+          "topic": "Frequently asked questions",
+          "post": "faq"
+        },
+        {
+          "name": "codes",
+          "type": "announcement",
+          "topic": "Active codes"
+        }
+      ]
+    },
+    {
+      "name": "🛠️ Dev",
+      "access": "readonly",
+      "channels": [
+        {
+          "name": "dev-updates",
+          "type": "text",
+          "topic": "What we are working on"
+        },
+        {
+          "name": "sneak-peeks",
+          "type": "text",
+          "topic": "Previews of new pillows and zones"
+        }
+      ]
+    },
+    {
+      "name": "💬 Community",
+      "access": "public",
+      "channels": [
+        {
+          "name": "general",
+          "type": "text",
+          "topic": "Chat about Pillow Simulator",
+          "slowmode": 3
+        },
+        {
+          "name": "media",
+          "type": "text",
+          "topic": "Screenshots and clips",
+          "slowmode": 10
+        }
+      ]
+    },
+    {
+      "name": "📝 Feedback",
+      "access": "public",
+      "channels": [
+        {
+          "name": "suggestions",
+          "type": "forum",
+          "topic": "Ideas for the game – one post per idea",
+          "tags": [
+            "Pillows",
+            "Zones",
+            "UI",
+            "Other"
+          ]
+        },
+        {
+          "name": "bug-reports",
+          "type": "forum",
+          "topic": "What happened? Where? What did you expect? Phone or PC?",
+          "tags": [
+            "New",
+            "Confirmed",
+            "Fixed"
+          ]
+        },
+        {
+          "name": "support",
+          "type": "forum",
+          "topic": "Help with problems – never post personal info",
+          "tags": [
+            "Open",
+            "Solved"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🎉 Events",
+      "access": "readonly",
+      "channels": [
+        {
+          "name": "events",
+          "type": "text",
+          "topic": "In-game events"
+        },
+        {
+          "name": "giveaways",
+          "type": "text",
+          "topic": "Only in-game items and codes – no Robux, no real money"
+        }
+      ]
+    },
+    {
+      "name": "🧪 Tester",
+      "access": "role:Tester",
+      "channels": [
+        {
+          "name": "tester-info",
+          "type": "text",
+          "topic": "How to test – guide and current build",
+          "post": "tester-info",
+          "readonly": true
+        },
+        {
+          "name": "tester-feedback",
+          "type": "text",
+          "topic": "Feedback from test rounds"
+        },
+        {
+          "name": "build-notes",
+          "type": "text",
+          "topic": "What's new in the test build",
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "name": "🔒 Staff",
+      "access": "role:Moderator",
+      "channels": [
+        {
+          "name": "mod-chat",
+          "type": "text",
+          "topic": "Team coordination"
+        },
+        {
+          "name": "mod-log",
+          "type": "text",
+          "topic": "Log of moderation actions"
+        }
+      ]
+    }
+  ],
+  "automod": [
+    {
+      "name": "Profanity & slurs",
+      "trigger": "keyword_preset",
+      "presets": [
+        "profanity",
+        "sexual_content",
+        "slurs"
+      ]
+    },
+    {
+      "name": "Spam",
+      "trigger": "spam"
+    },
+    {
+      "name": "Mention spam",
+      "trigger": "mention_spam",
+      "limit": 5
+    },
+    {
+      "name": "Foreign invites & scam links",
+      "trigger": "keyword",
+      "regex": [
+        "discord(\\.gg|app\\.com/invite|\\.com/invite)/\\S+",
+        "free\\s*robux",
+        "robux\\s*(generator|gratis|free)"
+      ]
+    }
+  ]
+}

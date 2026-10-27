@@ -15,6 +15,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Sitzungsberichte (pseudonym) und Beta-Bericht-Werkzeug für die Closed-Beta-Auswertung.
 - Automatischer Mehrspieler-Check für den Studio-Test mit 2 Spielern.
 - Logging-Relay: Fehler, Anti-Exploit-Meldungen, Feedback und Sitzungs-Summen gehen gebündelt in einen privaten Discord (Einrichtung durch Owner).
+- Community-Discord: Einrichtungsskript (Rollen, Kanäle, Foren, Texte, AutoMod) als GitHub Action, Moderationsleitfaden.
 ### Fixed
 - Arm-Schwung war auf aktuellen Avataren unsichtbar (neuer Gelenktyp) und für Mitspieler nie zu sehen – jetzt sichtbar für alle, auch bei Auto-Schlägen.
 - Kissen werden je Modell richtig herum gehalten.
