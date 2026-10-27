@@ -51,3 +51,8 @@ jobs:
       - name: Relay-Tests (Logging → Discord)
         working-directory: relay
         run: npm test
+      - name: Dashboard-Datei aktuell (dist/worker.js aus src/ gebaut)
+        working-directory: relay
+        run: |
+          node build.mjs
+          git diff --exit-code dist/

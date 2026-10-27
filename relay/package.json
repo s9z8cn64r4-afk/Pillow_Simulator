@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Logging-Relay Roblox → Discord (ADR-0004). Cloudflare Worker, keine Laufzeit-Abhängigkeiten.",
   "scripts": {
+    "build": "node build.mjs",
     "test": "node --test test/*.test.js"
   }
 }
