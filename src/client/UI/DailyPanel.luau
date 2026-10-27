@@ -85,7 +85,9 @@ function DailyPanel.build(root: Instance)
 	local lastState: any = nil
 
 	function api.claimable(s: any): boolean
-		return s ~= nil and s.dailyReward ~= nil and Daily.canClaim(s.dailyReward.lastClaimUnix, workspace:GetServerTimeNow())
+		return s ~= nil
+			and s.dailyReward ~= nil
+			and Daily.canClaim(s.dailyReward.lastClaimUnix, workspace:GetServerTimeNow())
 	end
 
 	function api.refresh(s: any)
@@ -105,7 +107,10 @@ function DailyPanel.build(root: Instance)
 			t.frame.BackgroundTransparency = if claimed and not isToday then 0.45 else 0
 			t.stroke.Color = if isToday then Theme.color.feather else Theme.color.bgSoft
 			t.stroke.Thickness = if isToday then 4 else 3
-			t.state.Text = if claimed and not (isToday and can) then "CLAIMED" elseif isToday and can then "TODAY" else ""
+			t.state.Text = if claimed and not (isToday and can)
+				then "CLAIMED"
+				elseif isToday and can then "TODAY"
+				else ""
 			t.state.TextColor3 = if isToday and can then Theme.color.feather else Theme.color.success
 		end
 		if can then

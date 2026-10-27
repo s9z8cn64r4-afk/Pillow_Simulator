@@ -61,7 +61,12 @@ end
 function DailyRewardService:Start()
 	Net:on("ClaimDaily", function(player)
 		local ok, info = self:claim(player)
-		Net:fire("Notify", player, "dailyResult", { ok = ok, info = if ok then info else nil, reason = if ok then nil else info })
+		Net:fire(
+			"Notify",
+			player,
+			"dailyResult",
+			{ ok = ok, info = if ok then info else nil, reason = if ok then nil else info }
+		)
 	end)
 end
 
