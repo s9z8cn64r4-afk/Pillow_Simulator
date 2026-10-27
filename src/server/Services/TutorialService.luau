@@ -67,7 +67,7 @@ function TutorialService:complete(player: Player, reward: boolean)
 	data.tutorial.completed = true
 	PlayerData:markChanged(player, "tutorial")
 	if reward then
-		Stats:addBoost(player, self.REWARD_MULT, self.REWARD_SECONDS)
+		Stats:addBoost(player, "feathers2x", self.REWARD_SECONDS)
 		Net:fire("Notify", player, "tutorialDone", { mult = self.REWARD_MULT, seconds = self.REWARD_SECONDS })
 	end
 end

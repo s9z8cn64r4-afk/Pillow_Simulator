@@ -21,6 +21,7 @@ local SettingsPanel = require(UI.SettingsPanel)
 local IndexPanel = require(UI.IndexPanel)
 local Celebration = require(UI.Celebration)
 local TutorialHint = require(UI.TutorialHint)
+local DailyPanel = require(UI.DailyPanel)
 
 local player = Players.LocalPlayer
 local UIController = {}
@@ -220,16 +221,30 @@ function UIController:build()
 	-- Linke Menüleiste
 	local menu = make(
 		"Frame",
-		{ Position = UDim2.fromOffset(0, 150), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 },
+		{ Position = UDim2.fromOffset(0, 150), Size = UDim2.fromOffset(110, 406), BackgroundTransparency = 1 },
 		root
 	)
-	make("UIListLayout", { Padding = UDim.new(0, 10) }, menu)
+	-- Raster statt Liste: einspaltig, bei wenig Höhe (Phone quer) zweispaltig mit 3 Zeilen
+	local menuGrid = make("UIGridLayout", {
+		CellSize = UDim2.fromOffset(110, 56),
+		CellPadding = UDim2.fromOffset(10, 10),
+		FillDirection = Enum.FillDirection.Vertical,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	}, menu)
+	local function layoutMenu()
+		local availableHeight = root.Size.Y.Offset - 150 - 32
+		local twoColumns = availableHeight < 6 * 56 + 5 * 10
+		menuGrid.FillDirectionMaxCells = if twoColumns then 3 else 6
+		menu.Size = if twoColumns then UDim2.fromOffset(230, 188) else UDim2.fromOffset(110, 386)
+	end
+	root:GetPropertyChangedSignal("Size"):Connect(layoutMenu)
 	local shopBtn = C.button({
 		text = "🛒 Shop",
 		size = UDim2.fromOffset(110, 56),
 		color = Theme.color.primary,
 		textSize = Theme.size.md,
 	})
+	shopBtn.instance.LayoutOrder = 1
 	shopBtn.instance.Parent = menu
 	local zonesBtn = C.button({
 		text = "🗺️ Zones",
@@ -237,6 +252,7 @@ function UIController:build()
 		color = Theme.color.secondary,
 		textSize = Theme.size.sm,
 	})
+	zonesBtn.instance.LayoutOrder = 2
 	zonesBtn.instance.Parent = menu
 	local rebirthBtn = C.button({
 		text = "🔄 Rebirth",
@@ -244,6 +260,7 @@ function UIController:build()
 		color = Theme.color.feather,
 		textSize = Theme.size.sm,
 	})
+	rebirthBtn.instance.LayoutOrder = 3
 	rebirthBtn.instance.Parent = menu
 	local settingsBtn = C.button({
 		text = "⚙️ Settings",
@@ -257,8 +274,30 @@ function UIController:build()
 		color = Theme.color.primary,
 		textSize = Theme.size.sm,
 	})
+	indexBtn.instance.LayoutOrder = 4
 	indexBtn.instance.Parent = menu
+	local dailyBtn = C.button({
+		text = "🎁 Daily",
+		size = UDim2.fromOffset(110, 56),
+		color = Theme.color.success,
+		textSize = Theme.size.sm,
+	})
+	dailyBtn.instance.LayoutOrder = 5
+	dailyBtn.instance.Parent = menu
+	-- roter Punkt: Belohnung abholbar
+	local dailyDot = make("Frame", {
+		Name = "Badge",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(1, -4, 0, 4),
+		Size = UDim2.fromOffset(18, 18),
+		BackgroundColor3 = Theme.color.danger,
+		Visible = false,
+		ZIndex = 10,
+	}, dailyBtn.instance)
+	C.corner(dailyDot, 9)
+	settingsBtn.instance.LayoutOrder = 6
 	settingsBtn.instance.Parent = menu
+	layoutMenu()
 
 	-- Schlag-Taste + Auto (unten rechts)
 	local swingBtn = C.button({
@@ -348,7 +387,8 @@ function UIController:build()
 		})
 	end
 	-- Immer nur ein Fenster offen
-	local modals = { rebirth, zones, settingsPanel, index }
+	local daily = DailyPanel.build(root)
+	local modals = { rebirth, zones, settingsPanel, index, daily }
 	local function openOnly(target: any?)
 		if target ~= shop and shop.isOpen() then
 			shop.toggle()
@@ -377,9 +417,13 @@ function UIController:build()
 	indexBtn.button.Activated:Connect(function()
 		openOnly(index)
 	end)
+	dailyBtn.button.Activated:Connect(function()
+		openOnly(daily)
+	end)
 
 	-- ---------- Binden an Zustand ----------
 	local lastFeathers = 0
+	local dailyAutoShown = false
 	local function refresh()
 		local s = State.state
 		if not s then
@@ -423,6 +467,18 @@ function UIController:build()
 		settingsPanel.refresh(s)
 		index.refresh(s)
 		tutorialHint.refresh(s)
+		daily.refresh(s)
+		local claimable = daily.claimable(s)
+		dailyDot.Visible = claimable
+		-- Willkommen-zurück: einmal pro Sitzung automatisch öffnen (nicht während des Tutorials)
+		if claimable and not dailyAutoShown and s.tutorial and s.tutorial.completed then
+			dailyAutoShown = true
+			task.delay(1.5, function()
+				if daily.claimable(State.state) and not daily.isOpen() then
+					openOnly(daily)
+				end
+			end)
+		end
 	end
 	local function toggleAuto()
 		local s = State.state
@@ -438,6 +494,7 @@ function UIController:build()
 	C.tooltip(rebirthBtn.button, "Start over with a permanent bonus")
 	C.tooltip(indexBtn.button, "Your pillow collection")
 	C.tooltip(settingsBtn.button, "Sound, effects and UI size")
+	C.tooltip(dailyBtn.button, "Free reward every day")
 	C.tooltip(autoBtn.button, "Auto-Swing hits for you at 80% power")
 
 	-- Gamepad-Grundbedienung: R2 = Schlag (Tool), Y = Shop, X = Auto-Swing, B = Fenster schließen
@@ -494,6 +551,19 @@ function UIController:build()
 				("Feathers x%.2f forever"):format(payload.multiplier),
 				Theme.color.feather
 			)
+		elseif kind == "dailyResult" then
+			if payload.ok then
+				local info = payload.info
+				local sub = if info.kind == "boost"
+					then ("2x Feathers for %d min"):format(info.minutes)
+					else ("+%s feathers"):format(NumberFormat.short(info.amount))
+				celebrate(("DAY %d!"):format(info.day), sub, Theme.color.success)
+				task.delay(1.2, function()
+					daily.toggle(false)
+				end)
+			else
+				self:toast("Already claimed today. Come back tomorrow!", Theme.color.muted)
+			end
 		elseif kind == "tutorialDone" then
 			celebrate(
 				"TUTORIAL COMPLETE!",
