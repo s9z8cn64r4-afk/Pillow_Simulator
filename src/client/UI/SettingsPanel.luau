@@ -15,11 +15,11 @@ function SettingsPanel.build(root: Instance, opts: { onFeedback: (() -> ())? }?)
 	if opts and opts.onFeedback then
 		local fb = C.button({
 			text = "💬 FEEDBACK",
-			size = UDim2.fromOffset(150, 44),
+			size = UDim2.fromOffset(170, 52),
 			color = Theme.color.secondary,
-			textSize = Theme.size.xs,
+			textSize = Theme.size.sm,
 		})
-		fb.instance.Position = UDim2.fromOffset(10, 10)
+		fb.instance.Position = UDim2.fromOffset(8, 8)
 		fb.instance.Parent = m.panel
 		fb.button.Activated:Connect(opts.onFeedback)
 	end
