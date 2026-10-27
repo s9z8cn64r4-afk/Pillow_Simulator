@@ -13,7 +13,11 @@ local function waitForPlayers(registry: any, n: number, timeout: number): { Play
 	while os.clock() < deadline do
 		local loaded = {}
 		for _, p in Players:GetPlayers() do
-			if registry.PlayerDataService:isLoaded(p) and p.Character and p.Character:FindFirstChild("Head") then
+			if
+				registry.PlayerDataService:isLoaded(p)
+				and p.Character
+				and p.Character:FindFirstChild("Head")
+			then
 				table.insert(loaded, p)
 			end
 		end
@@ -95,8 +99,8 @@ function MultiplayerCheck.run(registry: any)
 	end
 
 	-- B neben A stellen (Effekt-Radius)
-	local rootA = (A.Character :: Model):FindFirstChild("HumanoidRootPart") :: BasePart
-	;(B.Character :: Model):PivotTo(rootA.CFrame * CFrame.new(5, 0, 0))
+	local rootA = (A.Character :: Model):FindFirstChild("HumanoidRootPart") :: BasePart;
+	(B.Character :: Model):PivotTo(rootA.CFrame * CFrame.new(5, 0, 0))
 	task.wait(0.3)
 
 	-- 3) Schlag-Effekte erreichen den Mitspieler in der Nähe, Federn nur beim Schlagenden
@@ -177,12 +181,14 @@ function MultiplayerCheck.run(registry: any)
 	for _, p in { A, B } do
 		PD:markChanged(p, "feathers", "lifetimeFeathers", "autoSwingEnabled")
 	end
-	;(B.Character :: Model):PivotTo(saved.posB)
+	(B.Character :: Model):PivotTo(saved.posB)
 
-	print(("[MP] SUMMARY Server %d/%d passed – Client-Ergebnisse stehen in den Client-Ausgaben ([MP-CLIENT])"):format(
-		passed,
-		passed + failed
-	))
+	print(
+		("[MP] SUMMARY Server %d/%d passed – Client-Ergebnisse stehen in den Client-Ausgaben ([MP-CLIENT])"):format(
+			passed,
+			passed + failed
+		)
+	)
 end
 
 return MultiplayerCheck
