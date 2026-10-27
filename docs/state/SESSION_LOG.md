@@ -10,6 +10,7 @@
 - **Gate M1 bestanden**; Trello: PS-04/05/07/08/10, PS-19/20 → Done, PS-11 → In Progress, Owner-Karte Hörprobe.
 - PS-11: 13 Kissenmodelle generiert (sequenziell; parallel scheitert), 2 nach Sichtprüfung neu; Import-/Lineup-Skripte; Aura ab Epic, Trail bei Legendary.
 - PS-15: Feier-Banner + Konfetti (Rank-Up, Rebirth, Epic/Legendary), Trail ab Rank 5, Rank.spec → 52/52.
+- PS-16: Dekor-Builder für alle 4 Zonen (Art-Bible-Paletten, prozedurale Möbel, generierte Kissen als Requisiten, Lichterketten/Kronleuchter/Mond), 329 Teile, Tests weiter grün.
 - PS-18: Tutorial (TutorialService, Hinweis-UI mit Markierung, Skip, 2×-Boost, Funnel-Events), Tutorial.spec → 60/60; Sync-Helfer `DevTools.SyncFromGitHub` in Studio.
 **Probleme:** StyLua-Binary-Download in der Cloud-Umgebung nicht erlaubt (→ CI formatiert); Actions-Logs nicht abrufbar (→ Annotations).
 

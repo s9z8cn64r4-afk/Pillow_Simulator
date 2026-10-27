@@ -22,6 +22,8 @@
 | 2026-10-27 | de2d2d8 | Studio-Runner inkl. Tutorial.spec (8 Tests: 6 Schritte über echte Services, Boost, Skip, Reihenfolge) | **60/60 PASS** (2 Läufe) | `[TEST] SUMMARY 60/60 passed`, Funnel-Events in Konsole |
 | 2026-10-27 | de2d2d8 | Tutorial-UI Desktop + Phone 844×390 (Hinweis, Markierung Swing/Shop, Boost-Anzeige) | bestanden nach Layout-Korrektur (Boost unter Federn, Karte 460 px) | Screenshots |
 
+| 2026-10-27 | 5c52050 | Map-Dekor aller Zonen: Sichtprüfung je Zone + Testlauf | bestanden (60/60, Teile gesamt ~420, 13 Lichter) | Screenshots, Konsole |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)

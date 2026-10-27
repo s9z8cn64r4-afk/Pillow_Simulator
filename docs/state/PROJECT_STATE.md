@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 2 – Vertical Slice (M2)**, Gate M0 + **Gate M1 bestanden** (2026-10-27) |
 | Version | 0.2.0-dev |
 | Sprint-Ziel | M2: alle 14 Kissen als Modelle, Map final-nah, Tutorial, Rank-Up-Feedback, Bot-Durchlauf, Gate M2 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, alle 14 Kissenmodelle + Seltenheits-Effekte, Rank-Up-Feier + Trail |
+| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert, Gate M1, 14 Kissenmodelle + Effekte, Rank-Up-Feier, Tutorial, Map-Dekor aller Zonen |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -26,7 +26,7 @@
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
-| PS-16 Map | Zonen 2–4 dekoriert nach Art Bible (`tools/studio/build_zone_decor.luau`, 245 Teile, 13 Lichter) `[VERIFIZIERT]` per Screenshots; Bedroom noch Graybox-Stand |
+| PS-16 Map | alle 4 Zonen dekoriert nach Art Bible (`tools/studio/build_zone_decor.luau`, 329 Dekor-Teile, 13 Lichter) `[VERIFIZIERT]` per Screenshots + 60/60 Tests; offen: Barrieren-Optik, Licht-Profile je Zone |
 | PS-21–23 | offen |
 
 ## Nächste konkrete Aktion
