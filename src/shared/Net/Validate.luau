@@ -24,6 +24,12 @@ Validate.validators = {
 	zoneId = function(v: any): boolean
 		return type(v) == "string" and #v <= 32 and Zones.byId[v] ~= nil
 	end,
+	settingKey = function(v: any): boolean
+		return v == "music" or v == "sfx" or v == "reducedMotion" or v == "lowVfx" or v == "uiScale"
+	end,
+	settingValue = function(v: any): boolean
+		return type(v) == "boolean" or isFiniteNumber(v)
+	end,
 	finiteNumber = isFiniteNumber,
 	shortString = function(v: any): boolean
 		return type(v) == "string" and #v <= 64

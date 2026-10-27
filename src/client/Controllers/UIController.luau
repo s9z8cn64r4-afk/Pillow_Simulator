@@ -17,6 +17,8 @@ local Theme = require(UI.Theme)
 local C = require(UI.Components)
 local RebirthPanel = require(UI.RebirthPanel)
 local ZonesPanel = require(UI.ZonesPanel)
+local SettingsPanel = require(UI.SettingsPanel)
+local IndexPanel = require(UI.IndexPanel)
 
 local player = Players.LocalPlayer
 local UIController = {}
@@ -176,7 +178,7 @@ function UIController:build()
 	bar.Parent = rankBox
 
 	-- Linke Menüleiste
-	local menu = make("Frame", { Position = UDim2.fromOffset(0, 130), Size = UDim2.fromOffset(110, 200), BackgroundTransparency = 1 }, root)
+	local menu = make("Frame", { Position = UDim2.fromOffset(0, 130), Size = UDim2.fromOffset(110, 340), BackgroundTransparency = 1 }, root)
 	make("UIListLayout", { Padding = UDim.new(0, 10) }, menu)
 	local shopBtn = C.button({ text = "🛒 Shop", size = UDim2.fromOffset(110, 56), color = Theme.color.primary, textSize = Theme.size.md })
 	shopBtn.instance.Parent = menu
@@ -184,6 +186,10 @@ function UIController:build()
 	zonesBtn.instance.Parent = menu
 	local rebirthBtn = C.button({ text = "🔄 Rebirth", size = UDim2.fromOffset(110, 56), color = Theme.color.feather, textSize = Theme.size.sm })
 	rebirthBtn.instance.Parent = menu
+	local settingsBtn = C.button({ text = "⚙️ Settings", size = UDim2.fromOffset(110, 56), color = Theme.color.bgSoft, textSize = Theme.size.sm })
+	local indexBtn = C.button({ text = "📖 Index", size = UDim2.fromOffset(110, 56), color = Theme.color.primary, textSize = Theme.size.sm })
+	indexBtn.instance.Parent = menu
+	settingsBtn.instance.Parent = menu
 
 	-- Schlag-Taste + Auto (unten rechts)
 	local swingBtn = C.button({
@@ -239,25 +245,37 @@ function UIController:build()
 	local shop = self:buildShop(root)
 	local rebirth = RebirthPanel.build(root)
 	local zones = ZonesPanel.build(root)
+	local settingsPanel = SettingsPanel.build(root)
+	local index = IndexPanel.build(root)
 	-- Immer nur ein Fenster offen
+	local modals = { rebirth, zones, settingsPanel, index }
+	local function openOnly(target: any?)
+		if target ~= shop and shop.isOpen() then
+			shop.toggle()
+		end
+		for _, m in modals do
+			if m ~= target then
+				m.toggle(false)
+			end
+		end
+		if target then
+			target.toggle()
+		end
+	end
 	shopBtn.button.Activated:Connect(function()
-		rebirth.toggle(false)
-		zones.toggle(false)
-		shop.toggle()
+		openOnly(shop)
 	end)
 	zonesBtn.button.Activated:Connect(function()
-		if shop.isOpen() then
-			shop.toggle()
-		end
-		rebirth.toggle(false)
-		zones.toggle()
+		openOnly(zones)
 	end)
 	rebirthBtn.button.Activated:Connect(function()
-		if shop.isOpen() then
-			shop.toggle()
-		end
-		zones.toggle(false)
-		rebirth.toggle()
+		openOnly(rebirth)
+	end)
+	settingsBtn.button.Activated:Connect(function()
+		openOnly(settingsPanel)
+	end)
+	indexBtn.button.Activated:Connect(function()
+		openOnly(index)
 	end)
 
 	-- ---------- Binden an Zustand ----------
@@ -300,6 +318,8 @@ function UIController:build()
 		shop.refresh(s)
 		rebirth.refresh(s)
 		zones.refresh(s)
+		settingsPanel.refresh(s)
+		index.refresh(s)
 	end
 	autoBtn.button.Activated:Connect(function()
 		local s = State.state
