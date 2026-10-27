@@ -18,7 +18,9 @@ local function applyBarrier(b: Instance)
 	local id = b:GetAttribute("ZoneId")
 	local open = s.unlockedZones[id] == true
 	b.CanCollide = not open
-	b.Transparency = if open then 1 else 0.3
+	-- Vorhang-Optik (Dekor-Builder setzt LockedTransparency, Standard 0,3)
+	local locked = b:GetAttribute("LockedTransparency")
+	b.Transparency = if open then 1 else (if typeof(locked) == "number" then locked else 0.3)
 	for _, d in b:GetDescendants() do
 		if d:IsA("ProximityPrompt") or d:IsA("SurfaceGui") then
 			d.Enabled = not open

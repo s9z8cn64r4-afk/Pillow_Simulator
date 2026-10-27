@@ -364,6 +364,66 @@ do
 	end
 end
 
+-- ---------- Durchgänge: Vorhang statt Kraftfeld (Farbe der Zielzone) ----------
+-- Die Barriere selbst wird zum Vorhang (lokal unsichtbar, sobald freigeschaltet – ZoneController);
+-- Stange und Seitenschals bleiben als Türrahmen stehen.
+do
+	local CS = game:GetService("CollectionService")
+	local curtainColors = {
+		livingroom = C(255, 150, 130),
+		hotelsuite = C(150, 35, 60),
+		cloudrealm = C(180, 165, 250),
+	}
+	for _, b in CS:GetTagged("ZoneBarrier") do
+		local target = b:GetAttribute("ZoneId")
+		local color = curtainColors[target]
+		local decor = b.Parent and b.Parent:FindFirstChild("Decor")
+		if b:IsA("BasePart") and color and decor then
+			b.Material = Enum.Material.Fabric
+			b.Color = color
+			b.Transparency = 0
+			b:SetAttribute("LockedTransparency", 0)
+			local frame = Instance.new("Model")
+			frame.Name = "Doorway_" .. target
+			frame.Parent = decor
+			local z = b.Position.Z - 1.4
+			local rod = part({
+				Size = Vector3.new(38, 0.8, 0.8),
+				CFrame = CFrame.new(0, 16.6, z),
+				Color = C(255, 196, 60),
+				Material = Enum.Material.Metal,
+				CanCollide = false,
+			}, frame, Enum.PartType.Cylinder)
+			rod.Name = "Rod"
+			for _, side in { -1, 1 } do
+				-- Seitenschal: drei leicht versetzte Bahnen für Faltenwurf
+				for k = 0, 2 do
+					part({
+						Name = "Drape",
+						Size = Vector3.new(1.4, 16.2, 0.8),
+						Position = Vector3.new(side * (15.6 + k * 1.2), 8.1, z - k * 0.15),
+						Color = color:Lerp(Color3.new(0, 0, 0), 0.12 + k * 0.06),
+						Material = Enum.Material.Fabric,
+						CanCollide = false,
+					}, frame)
+				end
+				ball(Vector3.new(side * 19.5, 16.6, z), 1.4, C(255, 196, 60), frame, Enum.Material.Metal).CanCollide = false
+			end
+			-- Raffhalter (Schleifenband) auf Hüfthöhe
+			for _, side in { -1, 1 } do
+				part({
+					Name = "Tieback",
+					Size = Vector3.new(4, 0.5, 1),
+					Position = Vector3.new(side * 16.8, 6, z - 0.5),
+					Color = C(255, 226, 122),
+					Material = Enum.Material.Fabric,
+					CanCollide = false,
+				}, frame)
+			end
+		end
+	end
+end
+
 local n = 0
 for _, z in zones:GetChildren() do
 	local d = z:FindFirstChild("Decor")
