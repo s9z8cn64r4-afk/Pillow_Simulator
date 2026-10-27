@@ -8,6 +8,8 @@ local Schema = require(Shared.Net.Schema)
 local Validate = require(Shared.Net.Validate)
 local RateLimiter = require(Shared.Net.RateLimiter)
 
+local IS_STUDIO = game:GetService("RunService"):IsStudio()
+
 local NetService = {}
 NetService.remotes = {} :: { [string]: any }
 NetService.limiters = {} :: { [string]: any }
@@ -50,6 +52,9 @@ end
 function NetService:flag(player: Player, reason: string, ctx: { [string]: any }?)
 	local n = (self.violations[player] or 0) + 1
 	self.violations[player] = n
+	if IS_STUDIO then
+		player:SetAttribute("NetViolations", n) -- nur Studio: messbar für die Exploit-Suite
+	end
 	if n == 1 or n % 25 == 0 then
 		local c = ctx or {}
 		c.reason = reason
