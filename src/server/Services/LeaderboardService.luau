@@ -15,7 +15,7 @@ local MAX_VALUE = 2 ^ 53
 
 local LeaderboardService = {}
 LeaderboardService.BOARDS = table.freeze({
-	{ id = "feathers", title = "🕊️ TOP FEATHERS", field = "lifetimeFeathers", z = 8 },
+	{ id = "feathers", title = "🕊️ TOP FEATHERS", field = "lifetimeFeathers", z = 4 },
 	{ id = "rebirths", title = "🔄 TOP REBIRTHS", field = "rebirths", z = 30 },
 })
 
@@ -105,8 +105,8 @@ local function buildBoard(b: any): Frame
 	part.Anchored = true
 	part.CanCollide = false
 	part.CanQuery = false
-	part.Size = Vector3.new(0.6, 12, 16)
-	part.Position = Vector3.new(-68.5, 8, b.z)
+	part.Size = Vector3.new(0.6, 15, 22)
+	part.Position = Vector3.new(-68.5, 9.5, b.z)
 	part.Color = Color3.fromRGB(43, 35, 80)
 	part.Material = Enum.Material.SmoothPlastic
 	part.Parent = folder
@@ -115,7 +115,7 @@ local function buildBoard(b: any): Frame
 	frame.Anchored = true
 	frame.CanCollide = false
 	frame.CanQuery = false
-	frame.Size = Vector3.new(0.4, 12.8, 16.8)
+	frame.Size = Vector3.new(0.4, 15.8, 22.8)
 	frame.Position = part.Position - Vector3.new(0.2, 0, 0)
 	frame.Color = Color3.fromRGB(214, 170, 120)
 	frame.Material = Enum.Material.Wood
@@ -142,8 +142,8 @@ local function buildBoard(b: any): Frame
 	for i = 1, TOP do
 		local row = Instance.new("TextLabel")
 		row.Name = "Row" .. i
-		row.Position = UDim2.new(0.05, 0, 0.14 + (i - 1) * 0.085, 0)
-		row.Size = UDim2.new(0.9, 0, 0.08, 0)
+		row.Position = UDim2.new(0.05, 0, 0.15 + (i - 1) * 0.084, 0)
+		row.Size = UDim2.new(0.9, 0, 0.078, 0)
 		row.BackgroundTransparency = 1
 		row.Font = Enum.Font.GothamBold
 		row.TextScaled = true
