@@ -15,6 +15,9 @@
 - PS-40 abgeschlossen (Phone + Touch: alle Fenster passen; Rebirth-Schrift größer, Zonen/Index kürzer).
 - PS-41: SessionReportService (pseudonyme Sitzungsberichte), `beta_report.luau` (Gate-M3-Kennzahlen + Feedback), Tester-Anleitung, Beta-Plan → 107/107 Tests, Bericht mit echter Sitzung geprüft.
 - PS-42: Gate-M3-Vorbereitung in GATES.md (Ergebnisse/Exit-Kriterien mit Status); Owner-Anfrage #5 (Beta-Place).
+- Mehrspieler-Check automatisiert (Server-Prüfungen + Client-Sonde, Start nur per „Test → 2 Spieler“); frühere Befehlszeilen-Skripte zusammengeführt und entfernt.
+- Arm-Schwung repariert: aktuelle Avatare nutzen `AnimationConstraint` → alter C0-Tween wirkte nie; jetzt additives `Transform` je Frame, auch für Mitspieler/Auto-Schläge (93° gemessen).
+- Hinweis: Zwischen 16:48 und 16:57 entstanden Commits derselben Sitzung (Griff-Rotationen, erste MP-Skripte), die in meinem Kontext fehlten – geprüft und übernommen.
 **Offen:** Freunde-Bonus mit echten Freunden (Mehrspielertest), Gruppen-ID, Robux-Preise/IDs (Owner #4).
 
 ## Sitzung 3 – 2026-10-27

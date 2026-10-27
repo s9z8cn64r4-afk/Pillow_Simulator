@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope, Name); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung – 107/107 Tests |
+| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert – 108/108 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,7 +18,7 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | **107/107** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Tests | **108/108** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
 | Repo ↔ Studio | 0 Abweichungen (81 Skripte, Commit aaf7b16) `[VERIFIZIERT]` |
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus `[BLOCKIERT]` (Gruppen-ID vom Owner) |
@@ -35,7 +35,7 @@
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
 | PS-16 Map | alle 4 Zonen dekoriert (`tools/studio/build_zone_decor.luau`, 362 Dekor-Teile), Vorhang-Durchgänge mit lesbarem Preisschild (BUG-003 behoben), Licht-Profile je Zone (`LightingController`) `[VERIFIZIERT]` (Freischalten + Zonenwechsel im Play-Test) |
-| PS-22/23 | Bot bis Rebirth 3 + Performance `[VERIFIZIERT]`; PS-21 Mehrspielertest → Owner (#3) |
+| PS-22/23 | Bot bis Rebirth 3 + Performance `[VERIFIZIERT]`; PS-21 Mehrspielertest: automatischer Check `[IMPLEMENTIERT, UNGETESTET]` – Owner startet Test mit 2 Spielern (#3) |
 | Musik, Ladebildschirm, Tooltips, Gamepad | `[VERIFIZIERT]` (Musik spielt, Screenshots, simulierte Gamepad-Eingaben) |
 
 ## Nächste konkrete Aktion

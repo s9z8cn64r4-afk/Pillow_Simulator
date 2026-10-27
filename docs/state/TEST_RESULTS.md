@@ -47,6 +47,10 @@
 | 2026-10-27 | 5ae09f6 | Studio-Runner inkl. SessionReport.spec (3) | **107/107 PASS** | `[TEST] SUMMARY 107/107 passed` |
 | 2026-10-27 | 5ae09f6 | Sitzungsbericht E2E: Play-Sitzung beenden → `Sessions_DEV` → `beta_report.luau` | bestanden: 1 Sitzung (3,2 Min., 0 Serverfehler), Feedback-Eintrag gelistet | Bericht-Ausgabe |
 
+| 2026-10-27 | 3533e71 | Studio-Runner inkl. Griff-Rotationen (Config.spec) | **108/108 PASS** | `[TEST] SUMMARY 108/108 passed` |
+| 2026-10-27 | fc8a49a | Arm-Schwung (AnimationConstraint-Rig): Messung Oberarm relativ zum Rumpf während Auto-Schlägen | **bestanden**: 8 Auto-Schläge/3 s, Winkel 69°–162° (vorher 0° – Arm bewegte sich nie) | Konsole Play-Test |
+| 2026-10-27 | 3533e71 | Mehrspieler-Check (automatisch, `RunMultiplayerCheck`) | `[IMPLEMENTIERT, UNGETESTET]` – braucht Studio-Test mit 2 Spielern (Owner #3) | – |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Echte Robux-Käufe (brauchen Owner-IDs/Preise, OWNER_REQUESTS #4) und Sitzungsübernahme zwischen zwei Servern (nur live nachstellbar)
