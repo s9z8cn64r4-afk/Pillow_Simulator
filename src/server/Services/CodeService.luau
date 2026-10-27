@@ -47,7 +47,12 @@ function CodeService:redeem(player: Player, text: string, nowUnix: number?): (bo
 	end
 	Log:info("Code eingelöst", { userId = player.UserId, code = key })
 	pcall(function()
-		AnalyticsService:LogCustomEvent(player, "CodeRedeemed", 1, { [Enum.AnalyticsCustomFieldKeys.CustomField01.Name] = key })
+		AnalyticsService:LogCustomEvent(
+			player,
+			"CodeRedeemed",
+			1,
+			{ [Enum.AnalyticsCustomFieldKeys.CustomField01.Name] = key }
+		)
 	end)
 	return true, info
 end

@@ -132,7 +132,8 @@ function SettingsPanel.build(root: Instance)
 		box.LayoutOrder = 1
 		box.Parent = controls
 		C.corner(box)
-		local redeem = C.button({ text = "REDEEM", size = UDim2.fromOffset(110, 52), color = Theme.color.success })
+		local redeem =
+			C.button({ text = "REDEEM", size = UDim2.fromOffset(110, 52), color = Theme.color.success })
 		redeem.instance.LayoutOrder = 2
 		redeem.instance.Parent = controls
 		local function send()
