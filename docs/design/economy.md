@@ -56,3 +56,14 @@ Angaben = **aktive Spielzeit** (Tag x = Kalendertag beim jeweiligen Tagesbudget)
 - Bot spielt optimal; reale Spieler kaufen suboptimal → in Beta mit Funnel-Daten kalibrieren.
 - Daily Rewards, Codes, Freunde-/Gruppen-Bonus nicht eingerechnet (beschleunigen real um ~10–30 %).
 - Feinkörnig ab Rebirth 3: lange Abschnitte (Rebirth 3 → 5 ≈ 3 h beim Regular) – Kandidat für die Funnel-Beobachtung („Grind-Wand“).
+
+## Bot-Durchlauf im Spiel (PS-22, 2026-10-27)
+`tests/integration/BotRun.spec.luau` spielt mit den echten Services (StatsService-Ertrag inkl. Zonen-Multiplikator nach echter Position, Shop, ZoneService, RebirthService) im Zeitraffer (Tick = 10 s aktive Schläge, **ohne** Puppen-Bonus und Auto-Swing-Mix; Kauf-Heuristik: nächste Zone → bestes leistbares Kissen → Upgrades bis 50 % der Federn).
+
+| Meilenstein | Bot (Spiel) | Sim „Regular“ | Faktor |
+|---|---|---|---|
+| Zone 2 | 15,5 Min. | 9,1 Min. | 1,70 |
+| Rebirth 1 | 77,7 Min. | 47 Min. | 1,65 |
+| Rebirth 3 | 214 Min. | 126 Min. | 1,70 |
+
+**Befund:** Kein Fortschrittsblocker bis Rebirth 3; Server-Formeln und Sim stimmen strukturell überein (gleichmäßiger Faktor ≈ 1,7). Der Abstand erklärt sich durch fehlenden Puppen-Bonus (×1,5 auf einen Teil der Schläge) und die einfachere Kauf-Heuristik. **Konsequenz:** Spieler, die Puppen ignorieren, erreichen Zone 2 erst nach ~15 Min. (Obergrenze des Ziels). Das Tutorial lehrt den Puppen-Bonus (Schritt 3); keine Änderung jetzt – nach Closed Beta mit echten Funnel-/Session-Daten neu bewerten (R-Eintrag in RISKS.md).

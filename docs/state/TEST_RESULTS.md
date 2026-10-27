@@ -26,8 +26,14 @@
 
 | 2026-10-27 | 9e77dc5 | Play-Test Zone 2 freischalten (Prompt-Hold über Client-API) → Vorhang lokal offen, 75 K abgezogen, Lichtprofil Lounge aktiv (ClockTime 16,8, Atmosphäre Pfirsich) | bestanden; BUG-003 (Schild falsche Seite) gefunden + behoben | Konsole, Screenshots |
 
+| 2026-10-27 | 2daf0a7 | **Bot-Durchlauf** (BotRun.spec, echte Services, Zeitraffer) bis Rebirth 3 | **bestanden**: keine Sackgasse; Zone 2 15,5 Min., Rebirth 1 77,7 Min., Rebirth 3 214 Min. (Faktor ≈ 1,7 zur Sim, ohne Puppen-Bonus) | Konsole `[BOT]`, `docs/design/economy.md` |
+| 2026-10-27 | 2daf0a7 | Studio-Runner gesamt | **62/62 PASS** (Gameplay.spec gegen DEV-Spielstand isoliert) | `[TEST] SUMMARY 62/62 passed` |
+| 2026-10-27 | 2daf0a7 | **Performance** (Play, 1 Spieler, Auto-Swing an, alle 4 Zonen dekoriert) | Client 59,9 FPS (Frame-Max 21 ms) · Server-Heartbeat 59,9 (Max 30 ms) · 483 Teile / 879 Instanzen im Workspace · aktive Federn 9 (Budget 60) · Senden 0,63 kbit/s (Budget 5 KB/s) · StreamingEnabled an | Konsole; Speicherwert (2,7 GB) = gesamter Studio-Prozess, nicht aussagekräftig → Mikroprofiler/Gerät in Beta |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)
 - ProximityPrompt-Einblendung im echten Spielfenster (im automatisierten Studio-Fenster wird sie nicht angezeigt, Auslösen per API funktioniert)
 - Hörprobe der Sounds durch Owner
+- Server-Skriptzeit je Frame (Budget < 2 ms) – Mikroprofiler nicht automatisierbar, Owner-/Beta-Messung
+- Client-Speicher auf Referenz-Smartphone

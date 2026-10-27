@@ -2,7 +2,7 @@
 
 | Name | Typ | Quelle | Asset-ID | Lizenz/Herkunft | Größe | Status |
 |---|---|---|---|---|---|---|
-| ProfileStore | ModuleScript | Creator Store (loleris / MAD STUDIO) | 109379033046155 | frei verfügbar, Lizenz prüfen (R-07) | 64 KB | geprüft, `ServerStorage.Vendor` |
+| ProfileStore | ModuleScript | Creator Store (loleris / MAD STUDIO) | 109379033046155 | Apache-2.0 (siehe THIRD_PARTY_NOTICES.md) | 64 KB | geprüft, `ServerStorage.Vendor` |
 | FeatherMesh | MeshPart | Studio-Mesh-Generierung (2026-10-27, Prompt „single soft white bird feather…“) | Paket 136299002970817 · Mesh 104332221792787 · Textur 78955207007419 | eigene Generierung | ≤ 300 Tris, 0,6 Studs | im Einsatz (`ReplicatedStorage.Assets`) |
 | worn (Worn-Out Pillow) | MeshPart | Studio-Mesh-Generierung (2026-10-27, Prompt „old worn-out cartoon bed pillow…“) | Paket 83941139829883 · Mesh 106995477223030 · Textur 120372836494128 | eigene Generierung | ≤ 1.500 Tris, 2,4 Studs | im Einsatz (`ReplicatedStorage.Assets.Pillows`) |
 | cloud | MeshPart | Studio-Mesh-Generierung (2026-10-27, „pillow made of a puffy white cloud with a soft glow…“) | Mesh 97609267048363 · Textur 103053174127141 | eigene Generierung | ≤ 1.500 Tris, 2.40 × 1.30 × 1.64 Studs | im Einsatz (`ReplicatedStorage.Assets.Pillows`) |
