@@ -118,15 +118,12 @@ local function nextGoal(s: any): (string, number, number)
 end
 
 function UIController:build()
-	gui = make(
-		"ScreenGui",
-		{
-			Name = "HUD",
-			ResetOnSpawn = false,
-			IgnoreGuiInset = true,
-			ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-		}
-	)
+	gui = make("ScreenGui", {
+		Name = "HUD",
+		ResetOnSpawn = false,
+		IgnoreGuiInset = true,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+	})
 	local uiScale = make("UIScale", {}, gui)
 	local root = make("Frame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1 }, gui)
 	-- Touch-Geräte: höhere Mindestskalierung, damit Tippziele ≥ 44 px bleiben
@@ -182,16 +179,12 @@ function UIController:build()
 	local featherScale = make("UIScale", {}, featherBox)
 
 	-- Rank (oben Mitte)
-	local rankBox = make(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.fromScale(0.5, 0),
-			Size = UDim2.fromOffset(360, 58),
-			BackgroundTransparency = 1,
-		},
-		root
-	)
+	local rankBox = make("Frame", {
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.fromScale(0.5, 0),
+		Size = UDim2.fromOffset(360, 58),
+		BackgroundTransparency = 1,
+	}, root)
 	local rankLabel = C.text({ text = "Sleepyhead", size = Theme.size.md })
 	rankLabel.Size = UDim2.new(1, 0, 0, 30)
 	rankLabel.Parent = rankBox
@@ -291,16 +284,12 @@ function UIController:build()
 	goalBar.Parent = goal
 
 	-- Toasts (oben Mitte, unter Rank)
-	toastStack = make(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.new(0.5, 0, 0, 70),
-			Size = UDim2.fromOffset(360, 200),
-			BackgroundTransparency = 1,
-		},
-		root
-	)
+	toastStack = make("Frame", {
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.new(0.5, 0, 0, 70),
+		Size = UDim2.fromOffset(360, 200),
+		BackgroundTransparency = 1,
+	}, root)
 	make(
 		"UIListLayout",
 		{ Padding = UDim.new(0, 6), HorizontalAlignment = Enum.HorizontalAlignment.Center },
