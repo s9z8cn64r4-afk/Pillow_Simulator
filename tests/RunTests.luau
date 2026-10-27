@@ -20,11 +20,19 @@ local function runFolder(folder: Instance, results: TestLib.Results, ctx: any)
 			else
 				-- Integrations-Specs dürfen den Spielerstand nicht verändern (Restore-Wächter)
 				local pd = ctx.player and ctx.registry.PlayerDataService:get(ctx.player)
+				-- Auto-Swing während jeder Spec aus, sonst verdient der Testspieler beim Warten weiter
+				local autoBefore = pd and pd.autoSwingEnabled
+				if pd then
+					pd.autoSwingEnabled = false
+				end
 				local before = pd and pd.feathers
 				TestLib.run(m.Name, function(it)
 					(spec :: any)(it, TestLib.expect, ctx)
 				end, results)
 				local after = pd and ctx.registry.PlayerDataService:get(ctx.player).feathers
+				if pd then
+					ctx.registry.PlayerDataService:get(ctx.player).autoSwingEnabled = autoBefore
+				end
 				if pd and before ~= after then
 					results.failed += 1
 					local msg = ("%s: Spielerstand nicht wiederhergestellt (Federn %s -> %s)"):format(
