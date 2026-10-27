@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope, Name); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert, Logging-Relay, Community-Discord-Setup, Owner-Anleitung – 115/115 Tests |
+| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert, Logging-Relay, Community-Discord-Setup, Owner-Anleitung, Exploit-Suite v2, Pre-Launch-Marketing – 115/115 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -28,6 +28,7 @@
 | PS-41 Tester-Programm | Sitzungsberichte + `beta_report.luau` `[VERIFIZIERT]`; Tester-Anleitung + Beta-Plan `[ENTWURF]`; Start `[BLOCKIERT]` (Owner #5) |
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
 | Sicherheit | Exploit-Suite v2 über echte Remotes `[VERIFIZIERT]` (37 Angriffe, 13 Remotes, Kick bei 200) |
+| Pre-Launch-Marketing | Plan, Posts, Short-Skripte `[ENTWURF]` (`docs/marketing/`, Posten durch Owner; Spielname offen) |
 | PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); live `[BLOCKIERT]` (Owner #7) |
 | PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |

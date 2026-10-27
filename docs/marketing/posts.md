@@ -29,7 +29,7 @@ How to join: [LINK]
 (Beta progress may be reset. Never share personal info.)
 
 ## C) Sneak Peeks – #sneak-peeks (je 1 Bild/Clip + Text)
-1. **Hotel Suite 🏨** – "Chandeliers, room service… and a LOT of feathers. Zone 3 is almost ready."
+1. **Hotel Suite 🏨** – "Chandeliers, velvet pillows and a LOT of feathers. Welcome to Zone 3."
 2. **Cloud Kingdom ☁️** – "Only for those who dare to Rebirth. See you above the clouds."
 3. **Dreamweaver Pillow 🌙** – "Legendary, glowing aura and trail. Can you reach it?"
 
