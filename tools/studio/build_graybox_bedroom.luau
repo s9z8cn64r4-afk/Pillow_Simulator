@@ -71,7 +71,7 @@ end
 local barrier = part({Name="Barrier_livingroom", Size=Vector3.new(30,16,1), Position=Vector3.new(0,8,70), Color=C(255,143,177), Material=Enum.Material.ForceField, Transparency=0.3}, bedroom)
 barrier:SetAttribute("ZoneId", "livingroom")
 CS:AddTag(barrier, "ZoneBarrier")
-local sg = Instance.new("SurfaceGui") sg.Face = Enum.NormalId.Back sg.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud sg.PixelsPerStud = 20 sg.Parent = barrier
+local sg = Instance.new("SurfaceGui") sg.Face = Enum.NormalId.Front sg.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud sg.PixelsPerStud = 20 sg.Parent = barrier
 local lbl = Instance.new("TextLabel") lbl.Size = UDim2.fromScale(1,1) lbl.BackgroundTransparency = 1 lbl.Font = Enum.Font.FredokaOne lbl.TextScaled = true
 lbl.Text = "🔒 Pajama Party Lounge\n🕊️ 75K" lbl.TextColor3 = C(255,246,236) lbl.TextStrokeTransparency = 0 lbl.Parent = sg
 

@@ -3,6 +3,7 @@
 Keine offenen P0/P1.
 
 ## Behoben
+- BUG-003 (P1) Preisschilder an den Zonen-Durchgängen zeigten in die nächste Zone (SurfaceGui `Face = Back`), Spieler sahen Name/Preis nie – gefunden bei Sichtprüfung der Vorhänge, behoben 2026-10-27 (Builder setzen `Front`).
 - BUG-001 (P0) Fehl-Kick legitimer Spieler bei Halten + Auto-Swing – behoben 2026-10-27, siehe `docs/ops/postmortems/BUG-001-false-kick.md`.
 
 ## Offen (P2/P3)

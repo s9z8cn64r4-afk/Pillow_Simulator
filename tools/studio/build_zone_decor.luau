@@ -383,6 +383,11 @@ do
 			b.Color = color
 			b.Transparency = 0
 			b:SetAttribute("LockedTransparency", 0)
+			-- Preisschild zur Seite, von der Spieler kommen (−Z = Front; BUG-003: war Back)
+			local sg = b:FindFirstChildOfClass("SurfaceGui")
+			if sg then
+				sg.Face = Enum.NormalId.Front
+			end
 			local frame = Instance.new("Model")
 			frame.Name = "Doorway_" .. target
 			frame.Parent = decor
