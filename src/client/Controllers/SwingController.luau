@@ -39,22 +39,26 @@ local function reducedMotion(): boolean
 	return s ~= nil and s.settings ~= nil and s.settings.reducedMotion == true
 end
 
--- Prozedurale Schwung-Animation (rechter Arm + Kissen-Squash)
-local function animate(cd: number)
-	local char = player.Character
-	if not char then
-		return
+-- Prozedurale Schwung-Animation (rechter Arm + Kissen-Squash) für einen beliebigen Charakter.
+-- Gelenk-Änderungen sind rein lokal (werden nicht repliziert); deshalb animiert jeder Client auch die
+-- Mitspieler, sobald deren Schlag-Effekt ankommt (FxController → SwingFx).
+local swinging: { [Model]: boolean } = {}
+function SwingController.animateCharacter(char: Model, cd: number)
+	if swinging[char] then
+		return -- laufende Bewegung nicht abbrechen (sonst ruckelt der Arm bei schnellem Takt)
 	end
 	local shoulder = (
-		char:FindFirstChild("RightUpperArm") and char.RightUpperArm:FindFirstChild("RightShoulder")
-	) or (char:FindFirstChild("Torso") and char.Torso:FindFirstChild("Right Shoulder"))
-	local dur = math.clamp(cd * 0.45, 0.08, 0.2)
+		char:FindFirstChild("RightUpperArm") and (char :: any).RightUpperArm:FindFirstChild("RightShoulder")
+	) or (char:FindFirstChild("Torso") and (char :: any).Torso:FindFirstChild("Right Shoulder"))
+	-- sichtbare Dauer: ~55 % des Cooldowns, mindestens 0,16 s, höchstens 0,32 s
+	local dur = math.clamp(cd * 0.55, 0.16, 0.32)
 	if shoulder and shoulder:IsA("Motor6D") then
 		local base = shoulder:GetAttribute("BaseC0") :: CFrame?
 		if not base then
 			base = shoulder.C0
 			shoulder:SetAttribute("BaseC0", base)
 		end
+		swinging[char] = true
 		local angle = if reducedMotion() then 45 else 110
 		local up = TweenService:Create(
 			shoulder,
@@ -72,6 +76,9 @@ local function animate(cd: number)
 		)
 		up.Completed:Once(function()
 			down:Play()
+		end)
+		down.Completed:Once(function()
+			swinging[char] = nil
 		end)
 		up:Play()
 	end
@@ -99,6 +106,13 @@ local function animate(cd: number)
 					:Play()
 			end
 		end
+	end
+end
+
+local function animate(cd: number)
+	local char = player.Character
+	if char then
+		SwingController.animateCharacter(char, cd)
 	end
 end
 

@@ -15,7 +15,7 @@ local player = Players.LocalPlayer
 local MAX_FEATHERS = 60 -- Performance-Budget G.6: aktive Partikel pro Spieler
 
 local FxController = {}
-local State
+local State, Registry
 local pool: { BasePart } = {}
 local active = 0
 local featherTemplate: BasePart? = nil
@@ -23,6 +23,7 @@ local fxFolder: Folder
 
 function FxController:Init(registry)
 	State = registry.PlayerStateController
+	Registry = registry
 end
 
 local function settings(): any
@@ -190,6 +191,12 @@ function FxController:Start()
 		local char = who and who.Character
 		local handle = handleOf(char)
 		local dummy = dummyName and dummyByName(dummyName)
+		-- Arm-Schwung sichtbar machen: für Mitspieler immer, für mich bei Auto-Schlägen
+		-- (aktive Schläge animiert SwingController schon beim Klick)
+		local swing = Registry and Registry.SwingController
+		if char and swing and (who ~= player or isAuto) then
+			swing.animateCharacter(char, if who == player then swing:cooldown() else 0.5)
+		end
 		if who == player then
 			if handle then
 				local color = if dummyName
