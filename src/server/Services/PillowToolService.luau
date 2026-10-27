@@ -48,7 +48,8 @@ function PillowToolService.buildTool(pillowId: string): Tool
 		-- Feinjustierung je Modell (Grad): Config Assets.models.gripRotation, sonst Attribut GripRotation am Modell
 		local rot = Assets.models.gripRotation[pillow.id]
 		local attr = handle:GetAttribute("GripRotation")
-		local extra = if rot then Vector3.new(rot[1], rot[2], rot[3])
+		local extra = if rot
+			then Vector3.new(rot[1], rot[2], rot[3])
 			elseif typeof(attr) == "Vector3" then attr
 			else nil
 		if extra then
