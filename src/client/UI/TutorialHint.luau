@@ -28,7 +28,7 @@ function TutorialHint.build(root: Instance, targets: { [string]: GuiObject })
 	card.Name = "TutorialHint"
 	card.AnchorPoint = Vector2.new(0.5, 0)
 	card.Position = UDim2.new(0.5, 0, 0, 70)
-	card.Size = UDim2.fromOffset(520, 60)
+	card.Size = UDim2.fromOffset(460, 60) -- schmal genug für Phone (Abstand zum Federzähler)
 	card.BackgroundColor3 = Theme.color.bg
 	card.Visible = false
 	card.ZIndex = 20

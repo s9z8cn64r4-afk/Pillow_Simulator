@@ -10,6 +10,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Pillow Index (Sammlung x/14 mit Sperrgrund).
 - Alle 14 Kissen als generierte 3D-Modelle; Aura ab Epic, Trail bei Legendary (Low Effects schaltet ab).
 - Feier-Banner mit Konfetti für Rank-Up, Rebirth und Epic/Legendary-Kissen; Feder-Trail ab Rank 5.
+- Tutorial mit 6 Schritten (serverseitig ausgewertet, überspringbar, Funnel-Events), Belohnung 2×-Federn für 2 Min.; Boost-Anzeige im HUD.
 - CI: StyLua-Auto-Fix auf `main`, Selene-Diagnosen als Annotations; Restore-Wächter für Integrations-Tests; `studio_sync.py` (Studio lädt gepinnten Commit).
 ### Fixed
 - BUG-001 (P0): Fehl-Kick legitimer Spieler bei Halten + Auto-Swing (SwingGate).

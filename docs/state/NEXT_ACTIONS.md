@@ -1,7 +1,7 @@
 # NEXT_ACTIONS (geordnet, erste ist sofort ausführbar)
 
-1. **PS-18 Tutorial** (6 Schritte, GDD 4.9): Pfeil/Hinweis → erster Schlag → erste Federn → Shop öffnen → erstes Upgrade → Auto-Swing-Hinweis; Fortschritt im Profil (`tutorialStep`), überspringbar; Funnel-Events vorbereiten.
-2. **PS-16 Map final-nah**: Lounge, Hotel Suite, Cloud Kingdom nach Art Bible (Builder-Skripte erweitern), Screenshots je Zone.
-3. **PS-21 Mehrspielertest** (2 Clients im Studio-Server-Test): Rank-Titel/Trail/Aura für andere sichtbar, `otherRankUp`, `fireNear`-Effekte.
-4. **PS-22/23**: Bot-Durchlauf bis Rebirth 3 (Debug-Multiplikator nur DEV), Performance-Messung (FPS, Speicher, Partikel), Gate M2.
-5. P3: `GripRotation` je Kissenmodell (aufrechte Modelle zeigen Vorderseite seitlich).
+1. **PS-16 Map final-nah**: Lounge (Pfirsich, Lichterketten), Hotel Suite (Bordeaux, Gold, Creme), Cloud Kingdom (Weiß, Lavendel, Mondsilber) nach Art Bible – `tools/studio/build_graybox_zones.luau` zu Dekor-Buildern ausbauen (Möbel prozedural + generierte Props), Barrieren-Optik, Beleuchtung; Screenshots je Zone; Performance im Blick (Teile-Anzahl).
+2. **PS-21 Mehrspielertest**: Studio-Servertest mit 2 Clients (vom Owner zu starten oder über Test-Tab) – Rank-Titel/Trail/Aura für andere sichtbar, `otherRankUp`, `fireNear`-Effekte.
+3. **PS-22/23**: Bot-Durchlauf bis Rebirth 3 (Debug-Multiplikator nur DEV), Performance-Messung (FPS, Speicher, Partikel), Gate M2.
+4. Erstspieler-Durchlauf des Tutorials mit frischem Testprofil (DEV-Datastore-Schlüssel zurücksetzen oder Testkonto).
+5. P3: `GripRotation` je Kissenmodell.

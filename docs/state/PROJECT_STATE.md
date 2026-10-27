@@ -18,20 +18,21 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | 52/52 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | Stand fefe31f per GitHub-Sync übertragen (Drift-Check zuletzt 0 bei 0aff1bf) |
+| Tests | 60/60 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Repo ↔ Studio | per GitHub-Sync aktuell (Drift-Check zuletzt 0 bei 0aff1bf) |
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
 | PS-15 Ranks | Titel, Banner + Konfetti, Trail ab Rank 5 `[VERIFIZIERT]` (Tests + Screenshot); Mehrspieler-Sichtbarkeit `[IMPLEMENTIERT, UNGETESTET]` |
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
-| PS-16 Map, PS-18 Tutorial, PS-21–23 | offen |
+| PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
+| PS-16 Map, PS-21–23 | offen |
 
 ## Nächste konkrete Aktion
 Siehe `NEXT_ACTIONS.md`.
 
 ## Wichtige Hinweise für die nächste Sitzung
-- **Code nach Studio:** nach Push `python3 tools/scripts/studio_sync.py OUT drift.txt --github <SHA>` → kleinen Chunk per `execute_luau` (Edit) ausführen; Studio lädt per HttpService von raw.githubusercontent.com (geht nur, solange das Repo öffentlich ist). Danach Drift-Check (`studio_hash.luau` + `source_hash.py`).
+- **Code nach Studio:** nach Push `python3 tools/scripts/studio_sync.py OUT drift.txt --github <SHA>` → `OUT/sync_helper.luau` per `execute_luau` (Edit) ausführen (nutzt `ServerStorage.DevTools.SyncFromGitHub`; fehlt der Helfer, `sync_github.luau` nehmen); Studio lädt per HttpService von raw.githubusercontent.com (geht nur, solange das Repo öffentlich ist). Danach Drift-Check (`studio_hash.luau` + `source_hash.py`).
 - **CI formatiert selbst:** Push auf `main` → StyLua-Auto-Fix-Commit möglich → vor dem nächsten Push `git pull --rebase`, vor dem Studio-Sync den neuesten SHA nehmen. Generierte Config ist per `.styluaignore` ausgenommen.
 - Actions-Logs nicht abrufbar → Fehler über Check-Run-Annotations (`gh api repos/.../check-runs/<id>/annotations`).
 - Studio-Änderungen (Map, Modelle, Vendor) existieren nur im Place → Owner muss speichern (Owner-Anfrage #2).

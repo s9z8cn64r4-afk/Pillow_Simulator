@@ -19,6 +19,9 @@
 | 2026-10-27 | fefe31f | Studio-Runner inkl. Rank.spec (Titel, Trail ab Rank 5) | **52/52 PASS** (2 Läufe) | `[TEST] SUMMARY 52/52 passed` |
 | 2026-10-27 | fefe31f | Sichtprüfung 14 Kissenmodelle (Lineup), gehaltenes Fluffy/Dream, Aura + Trail vorhanden, Rank-Up-Banner + Konfetti | bestanden (2 Modelle neu generiert) | Screenshots Sitzung 3 |
 
+| 2026-10-27 | de2d2d8 | Studio-Runner inkl. Tutorial.spec (8 Tests: 6 Schritte über echte Services, Boost, Skip, Reihenfolge) | **60/60 PASS** (2 Läufe) | `[TEST] SUMMARY 60/60 passed`, Funnel-Events in Konsole |
+| 2026-10-27 | de2d2d8 | Tutorial-UI Desktop + Phone 844×390 (Hinweis, Markierung Swing/Shop, Boost-Anzeige) | bestanden nach Layout-Korrektur (Boost unter Federn, Karte 460 px) | Screenshots |
+
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
 - Mehrspieler (2+ Clients: RankTag/Notify für andere, fireNear)
