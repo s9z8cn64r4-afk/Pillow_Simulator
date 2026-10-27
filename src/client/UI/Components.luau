@@ -218,7 +218,7 @@ function Components.modal(root: Instance, title: string, size: UDim2)
 	return api
 end
 
--- Verkleinerung, damit ein Fenster vollständig auf den (ggf. kleinen) Bildschirm passt (8 px Rand je Seite).
+-- Verkleinerung (und Zentrierung unter der Topbar), damit ein Fenster vollständig auf den (ggf. kleinen) Bildschirm passt (8 px Rand je Seite).
 -- Größen in Referenz-Pixeln des HUD-Roots; 1 = passt bereits.
 function Components.fitScale(panel: GuiObject, root: Instance): number
 	if not root:IsA("GuiObject") then
@@ -230,7 +230,11 @@ function Components.fitScale(panel: GuiObject, root: Instance): number
 	if rw <= 0 or rh <= 0 or ps.X.Offset <= 0 or ps.Y.Offset <= 0 then
 		return 1
 	end
-	return math.min(1, (rw - 16) / ps.X.Offset, (rh - 16) / ps.Y.Offset)
+	-- Roblox-Topbar (Menü/Chat) freihalten: Inset in Referenz-Pixel umrechnen, Fenster darunter zentrieren
+	local absH = (root :: GuiObject).AbsoluteSize.Y
+	local inset = GuiService:GetGuiInset().Y * (if absH > 0 then rh / absH else 1)
+	panel.Position = UDim2.new(0.5, 0, 0.5, inset / 2)
+	return math.min(1, (rw - 16) / ps.X.Offset, (rh - inset - 16) / ps.Y.Offset)
 end
 
 -- Fortschrittsbalken: gibt set(alpha) zurück
