@@ -13,6 +13,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Map: alle 4 Zonen dekoriert (Kinderzimmer, Lounge, Hotel, Cloud Kingdom); Vorhang-Durchgänge statt Kraftfeld; eigene Lichtstimmung je Zone.
 ### Fixed (M2)
 - BUG-003: Preisschilder an den Durchgängen zeigten in die falsche Richtung.
+- Hintergrundmusik (3 Titel, Playlist mit Überblendung, Lautstärke in den Einstellungen); Ladebildschirm mit Tipps.
+- Bot-Durchlauf bis Rebirth 3 als automatisierter Test.
 - Tutorial mit 6 Schritten (serverseitig ausgewertet, überspringbar, Funnel-Events), Belohnung 2×-Federn für 2 Min.; Boost-Anzeige im HUD.
 - CI: StyLua-Auto-Fix auf `main`, Selene-Diagnosen als Annotations; Restore-Wächter für Integrations-Tests; `studio_sync.py` (Studio lädt gepinnten Commit).
 ### Fixed

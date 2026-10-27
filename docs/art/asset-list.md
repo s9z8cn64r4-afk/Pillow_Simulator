@@ -18,6 +18,9 @@
 | starlight | MeshPart | Studio-Mesh-Generierung (2026-10-27, „night-sky pillow, deep navy with golden stars and crescent moon…“) | Mesh 112999936129839 · Textur 129988029070231 | eigene Generierung | ≤ 1.500 Tris, 2.40 × 1.30 × 2.40 Studs | im Einsatz (`ReplicatedStorage.Assets.Pillows`) |
 | striped | MeshPart | Studio-Mesh-Generierung (2026-10-27, „bed pillow with pastel blue and white stripes…“) | Mesh 118794781685437 · Textur 121858714084269 | eigene Generierung | ≤ 1.500 Tris, 2.39 × 1.30 × 2.40 Studs | im Einsatz (`ReplicatedStorage.Assets.Pillows`) |
 | thunder | MeshPart | Studio-Mesh-Generierung (2026-10-27, „storm pillow, dark grey-blue with yellow lightning bolts…“) | Mesh 120447910993703 · Textur 126558595582777 | eigene Generierung | ≤ 1.500 Tris, 2.40 × 1.30 × 0.87 Studs | im Einsatz (`ReplicatedStorage.Assets.Pillows`) |
+| Musik „Lofi Bakery R&B“ | Audio (138 s) | Roblox-Musikbibliothek (DistrokidOfficial) | 121736147160985 | für Roblox-Experiences lizenziert, kostenlos | – | lädt ✔, im Einsatz (Playlist) |
+| Musik „Cheesecake Glow“ | Audio (142 s) | Roblox-Musikbibliothek (DistrokidOfficial) | 79718837116412 | für Roblox-Experiences lizenziert, kostenlos | – | lädt ✔, im Einsatz (Playlist) |
+| Musik „innocent soft funny“ | Audio (162 s) | Roblox-Musikbibliothek (DistrokidOfficial) | 140517328454242 | für Roblox-Experiences lizenziert, kostenlos | – | lädt ✔, im Einsatz (Playlist) |
 | SFX swing/hit | Audio | Creator Store „Pillow hit“ (BiblicalHeaven) | 74924309961251 | Creator Store, kostenlos | – | lädt ✔, Hörprobe Owner ausstehend |
 | SFX purchase | Audio | Creator Store „bling_diamond_pickup_2“ (thienbao2109) | 4612374393 | Creator Store, kostenlos | – | lädt ✔, Hörprobe ausstehend |
 | SFX rankUp | Audio | Creator Store „mixkit-achievement-bell-600“ (vincenzo145374) | 103516326607012 | Creator Store, kostenlos (Mixkit-Ursprung) | – | lädt ✔, Hörprobe ausstehend |
