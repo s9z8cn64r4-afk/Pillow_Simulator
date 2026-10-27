@@ -5,6 +5,7 @@ local ServerStorage = game:GetService("ServerStorage")
 
 local ORDER = {
 	"LogService",
+	"RelayService",
 	"NetService",
 	"PlayerDataService",
 	"StatsService",

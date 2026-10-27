@@ -41,3 +41,13 @@ jobs:
           python-version: "3.12"
       - name: Economy-Simulation + Zielkurven-Check
         run: python3 tools/economy-sim/sim.py --check
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Relay-Tests (Logging → Discord)
+        working-directory: relay
+        run: npm test

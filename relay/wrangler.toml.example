@@ -1,0 +1,7 @@
+# Kopieren nach wrangler.toml und `npx wrangler deploy` (Owner-Konto, kostenloses Kontingent).
+# Secrets NIE in diese Datei – nur per `npx wrangler secret put NAME`:
+#   RELAY_TOKEN, WEBHOOK_ALERTS_CRITICAL, WEBHOOK_ERRORS, WEBHOOK_ANTI_EXPLOIT,
+#   WEBHOOK_FEEDBACK_INBOX, WEBHOOK_PLAYERS, optional CRITICAL_PING ("<@&ROLLEN-ID>")
+name = "pillow-relay"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"

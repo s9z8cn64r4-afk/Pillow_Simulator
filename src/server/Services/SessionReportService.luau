@@ -7,11 +7,13 @@ local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
 local RunService = game:GetService("RunService")
 
+local Pseudonym = require(script.Parent.Parent.Pseudonym)
+
 local SessionReportService = {}
 SessionReportService.VERSION = 1
 SessionReportService.last = nil :: any -- letzter Datensatz (Tests/Diagnose)
 
-local PlayerData, Log
+local PlayerData, Log, Relay
 local store: DataStore? = nil
 local open: { [Player]: any } = {}
 
@@ -22,17 +24,8 @@ SessionReportService.save = function(key: string, record: any)
 	end
 end
 
--- Pseudonym: nicht umkehrbar ohne Wörterbuch; reicht zum Zählen eindeutiger Tester
-function SessionReportService.pseudonym(userId: number): string
-	local s = "ps-beta:" .. tostring(userId)
-	local h1, h2 = 5381, 52711
-	for i = 1, #s do
-		local b = string.byte(s, i)
-		h1 = (h1 * 33 + b) % 4294967296
-		h2 = (h2 * 31 + b * 7) % 4294967296
-	end
-	return string.format("%08x%08x", h1, h2)
-end
+-- Pseudonym (gemeinsam mit RelayService, siehe Server/Pseudonym)
+SessionReportService.pseudonym = Pseudonym.of
 
 local function countTrue(t: { [string]: boolean }?): number
 	local n = 0
@@ -47,6 +40,7 @@ end
 function SessionReportService:Init(registry)
 	PlayerData = registry.PlayerDataService
 	Log = registry.LogService
+	Relay = registry.RelayService
 	local ok, s = pcall(function()
 		return DataStoreService:GetDataStore("Sessions_" .. PlayerData.environment())
 	end)
@@ -104,6 +98,15 @@ function SessionReportService:finish(player: Player)
 		return
 	end
 	self.last = record
+	-- Summen für #players (je Batch: Anzahl, Spielzeit, neue Spieler, Tutorial geschafft)
+	if Relay then
+		Relay:push("session", "Sitzungen beendet", {
+			seconds = record.seconds,
+			newPlayers = if record.newPlayer then 1 else 0,
+			tutorialDone = if record.newPlayer and record.tutDoneEnd then 1 else 0,
+			serverErrors = record.serverErrors,
+		}, true)
+	end
 	local key = ("%s_%d_%s"):format(os.date("!%Y%m%d", record.startUnix), record.startUnix, record.u)
 	local ok, err = pcall(self.save, key, record)
 	if not ok then

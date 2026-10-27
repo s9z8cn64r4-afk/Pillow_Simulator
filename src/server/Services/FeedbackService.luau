@@ -10,7 +10,7 @@ local FeedbackService = {}
 FeedbackService.MAX_PER_SESSION = 5
 FeedbackService.recent = {} :: { any } -- letzte Einträge (für Tests/Diagnose), max. 20
 
-local Net, PlayerData, Stats, Log
+local Net, PlayerData, Stats, Log, Relay
 local store: DataStore? = nil
 local sentCount: { [Player]: number } = {}
 
@@ -31,6 +31,7 @@ function FeedbackService:Init(registry)
 	PlayerData = registry.PlayerDataService
 	Stats = registry.StatsService
 	Log = registry.LogService
+	Relay = registry.RelayService
 	local ok, s = pcall(function()
 		return DataStoreService:GetDataStore("Feedback_" .. PlayerData.environment())
 	end)
@@ -72,6 +73,10 @@ function FeedbackService:submit(player: Player, category: string, text: string):
 	Log:info("Feedback", { userId = player.UserId, category = category, text = filtered, saved = saved })
 	if not saved then
 		return false, "saveFailed"
+	end
+	-- an #feedback-inbox (nur gefilterter Text, Spieler als Pseudonym)
+	if Relay then
+		Relay:push("feedback", filtered, { type = category, rank = data.rank, zone = entry.zone, userId = player.UserId })
 	end
 	return true, key
 end

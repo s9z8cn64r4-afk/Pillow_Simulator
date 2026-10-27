@@ -7,6 +7,8 @@ local LEVELS = { debug = 1, info = 2, warn = 3, error = 4, critical = 5 }
 local LogService = {}
 LogService.minLevel = if RunService:IsStudio() then LEVELS.debug else LEVELS.info
 LogService.counts = { warn = 0, error = 0, critical = 0, scriptError = 0 }
+-- Weiterleitung warn+ (setzt RelayService): sink(level, msg, ctx). ctx.noRelay = true unterdrückt sie.
+LogService.sink = nil :: ((string, string, { [string]: any }?) -> ())?
 
 local function encode(ctx: { [string]: any }?): string
 	if not ctx then
@@ -24,6 +26,9 @@ function LogService:log(level: string, msg: string, ctx: { [string]: any }?)
 	local lv = LEVELS[level] or LEVELS.info
 	if self.counts[level] then
 		self.counts[level] += 1
+	end
+	if lv >= LEVELS.warn and self.sink and not (ctx and ctx.noRelay) then
+		pcall(self.sink, level, msg, ctx) -- Logging darf nie das Spiel stören
 	end
 	if lv < self.minLevel then
 		return
@@ -54,8 +59,13 @@ end
 
 -- Unbehandelte Server-Skriptfehler mitzählen (Fehlerrate für Gate M3, SessionReportService)
 function LogService:Start()
-	game:GetService("ScriptContext").Error:Connect(function()
+	game:GetService("ScriptContext").Error:Connect(function(message: string, trace: string)
 		self.counts.scriptError += 1
+		if self.sink then
+			-- erste Stack-Zeile als Ort (ohne Zeilennummer im Fingerprint, das macht der Relay-Puffer)
+			local where = string.match(trace or "", "^[^\n]+") or ""
+			pcall(self.sink, "error", message, { where = where })
+		end
 	end)
 end
 
