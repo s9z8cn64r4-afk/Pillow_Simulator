@@ -1,9 +1,13 @@
-# CI-Grundgerüst – aktiv, sobald das Repo auf GitHub liegt.
+# CI: Format (Auto-Fix auf main, Check bei PRs), Lint (Selene → Annotations), Economy-Simulation.
 name: CI
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   quality:
@@ -11,10 +15,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: CompeyDev/setup-rokit@v0.1.2
-      - name: Format prüfen
+      - name: Format auto-fix (main)
+        if: github.event_name != 'pull_request'
+        run: |
+          stylua src tests
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "style: stylua autoformat"
+            git push
+          fi
+      - name: Format check (PR)
+        if: github.event_name == 'pull_request'
         run: stylua --check src tests
-      - name: Linten
-        run: selene src tests
+      - name: Lint
+        run: |
+          selene --display-style json2 src tests > selene.json || true
+          python3 tools/scripts/selene_annotate.py selene.json
   economy-sim:
     runs-on: ubuntu-latest
     steps:
