@@ -164,7 +164,10 @@ function Components.panel(size: UDim2, color: Color3?): Frame
 end
 
 -- Modales Fenster mit Titel und Schließen-Knopf. Gibt { panel, body, toggle, isOpen } zurück.
-function Components.modal(root: Instance, title: string, size: UDim2)
+-- opts.scroll = true: auf kleinen Bildschirmen wird das Fenster niedriger statt kleiner, body scrollt
+-- (Tippziele bleiben groß). Inhalte dann in body (ScrollingFrame, AutomaticCanvasSize Y).
+function Components.modal(root: Instance, title: string, size: UDim2, opts: { scroll: boolean? }?)
+	local scrolling = opts ~= nil and opts.scroll == true
 	local panel = Components.panel(size)
 	panel.AnchorPoint = Vector2.new(0.5, 0.5)
 	panel.Position = UDim2.fromScale(0.5, 0.5)
@@ -186,11 +189,24 @@ function Components.modal(root: Instance, title: string, size: UDim2)
 	close.instance.AnchorPoint = Vector2.new(1, 0)
 	close.instance.Position = UDim2.new(1, -8, 0, 8)
 	close.instance.Parent = panel
-	local body = Instance.new("Frame")
+	local body: GuiObject
+	if scrolling then
+		local sf = Instance.new("ScrollingFrame")
+		sf.BorderSizePixel = 0
+		sf.ScrollBarThickness = 6
+		sf.AutomaticCanvasSize = Enum.AutomaticSize.Y
+		sf.CanvasSize = UDim2.new()
+		sf.ScrollingDirection = Enum.ScrollingDirection.Y
+		sf.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+		body = sf
+	else
+		body = Instance.new("Frame")
+	end
 	body.BackgroundTransparency = 1
 	body.Position = UDim2.fromOffset(16, 64)
 	body.Size = UDim2.new(1, -32, 1, -80)
 	body.Parent = panel
+	local fullHeight = size.Y.Offset
 
 	local api = {}
 	api.panel = panel
@@ -207,6 +223,14 @@ function Components.modal(root: Instance, title: string, size: UDim2)
 			end)
 		else
 			panel.Visible = true
+			if scrolling then
+				-- erst volle Höhe annehmen, dann auf verfügbare Höhe kürzen (Breite skaliert weiter)
+				panel.Size = UDim2.fromOffset(size.X.Offset, fullHeight)
+				local _, availH = Components.available(panel, root)
+				if availH > 200 and availH < fullHeight then
+					panel.Size = UDim2.fromOffset(size.X.Offset, availH)
+				end
+			end
 			local fit = Components.fitScale(panel, root)
 			scale.Scale = 0.85 * fit
 			tween(scale, Theme.motion.base, { Scale = fit }, Enum.EasingStyle.Back)
@@ -220,21 +244,31 @@ end
 
 -- Verkleinerung (und Zentrierung unter der Topbar), damit ein Fenster vollständig auf den (ggf. kleinen) Bildschirm passt (8 px Rand je Seite).
 -- Größen in Referenz-Pixeln des HUD-Roots; 1 = passt bereits.
-function Components.fitScale(panel: GuiObject, root: Instance): number
+-- Verfügbarer Platz (Referenz-Pixel) für ein Fenster: Breite, Höhe unter der Roblox-Topbar, Topbar-Höhe.
+-- Setzt die Position so, dass das Fenster unter der Topbar zentriert ist.
+function Components.available(panel: GuiObject, root: Instance): (number, number, number)
 	if not root:IsA("GuiObject") then
-		return 1
+		return math.huge, math.huge, 0
 	end
 	local rs = (root :: GuiObject).Size
-	local ps = panel.Size
 	local rw, rh = rs.X.Offset, rs.Y.Offset
-	if rw <= 0 or rh <= 0 or ps.X.Offset <= 0 or ps.Y.Offset <= 0 then
-		return 1
+	if rw <= 0 or rh <= 0 then
+		return math.huge, math.huge, 0
 	end
-	-- Roblox-Topbar (Menü/Chat) freihalten: Inset in Referenz-Pixel umrechnen, Fenster darunter zentrieren
+	-- Roblox-Topbar (Menü/Chat) freihalten: Inset in Referenz-Pixel umrechnen
 	local absH = (root :: GuiObject).AbsoluteSize.Y
 	local inset = GuiService:GetGuiInset().Y * (if absH > 0 then rh / absH else 1)
 	panel.Position = UDim2.new(0.5, 0, 0.5, inset / 2)
-	return math.min(1, (rw - 16) / ps.X.Offset, (rh - inset - 16) / ps.Y.Offset)
+	return rw - 16, rh - inset - 16, inset
+end
+
+function Components.fitScale(panel: GuiObject, root: Instance): number
+	local ps = panel.Size
+	if ps.X.Offset <= 0 or ps.Y.Offset <= 0 then
+		return 1
+	end
+	local w, h = Components.available(panel, root)
+	return math.min(1, w / ps.X.Offset, h / ps.Y.Offset)
 end
 
 -- Fortschrittsbalken: gibt set(alpha) zurück

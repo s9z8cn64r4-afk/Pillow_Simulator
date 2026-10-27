@@ -10,7 +10,7 @@ local C = require(script.Parent.Components)
 local SettingsPanel = {}
 
 function SettingsPanel.build(root: Instance, opts: { onFeedback: (() -> ())? }?)
-	local m = C.modal(root, "SETTINGS", UDim2.fromOffset(560, 510))
+	local m = C.modal(root, "SETTINGS", UDim2.fromOffset(560, 510), { scroll = true })
 	-- Feedback-Knopf oben links in der Titelzeile (keine zusätzliche Höhe nötig)
 	if opts and opts.onFeedback then
 		local fb = C.button({
