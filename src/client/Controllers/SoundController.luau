@@ -1,10 +1,11 @@
 --!strict
--- Lokale Soundeffekte mit SoundGroups (SFX/Musik) gekoppelt an die Einstellungen.
+-- Soundeffekte und Hintergrundmusik (Playlist) mit SoundGroups SFX/Music, gekoppelt an die Einstellungen.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
 local ContentProvider = game:GetService("ContentProvider")
 local Debris = game:GetService("Debris")
+local TweenService = game:GetService("TweenService")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
 local Assets = require(Shared.Config.Assets)
@@ -15,6 +16,8 @@ local SoundController = {}
 SoundController.failed = {} :: { [string]: boolean } -- nicht ladbare Sounds (Diagnose)
 local State, Swing
 local sfxGroup: SoundGroup
+local musicGroup: SoundGroup
+local MUSIC_FADE = 2
 local templates: { [string]: Sound } = {}
 
 function SoundController:Init(registry)
@@ -39,6 +42,44 @@ local function applySettings()
 	local s = State.state
 	if s and s.settings then
 		sfxGroup.Volume = s.settings.sfx
+		musicGroup.Volume = s.settings.music
+	end
+end
+
+-- Playlist in Endlosschleife mit sanftem Ein-/Ausblenden; nicht ladbare Titel werden übersprungen.
+-- Lautstärke 0 in den Einstellungen = Musikgruppe stumm (Titel laufen weiter, kein Neustart beim Wiedereinschalten).
+local function runPlaylist()
+	local tracks = {}
+	for i, def in Assets.music do
+		local s = Instance.new("Sound")
+		s.Name = "Music" .. i
+		s.SoundId = def.id
+		s.Volume = 0
+		s.SoundGroup = musicGroup
+		s.Parent = musicGroup
+		s:SetAttribute("TargetVolume", def.volume)
+		table.insert(tracks, s)
+	end
+	local index = math.random(1, #tracks)
+	while true do
+		local s = tracks[index]
+		local t0 = os.clock()
+		while not s.IsLoaded and os.clock() - t0 < 10 do
+			task.wait(0.25)
+		end
+		if s.IsLoaded and s.TimeLength > MUSIC_FADE * 2 then
+			s.TimePosition = 0
+			s:Play()
+			TweenService:Create(s, TweenInfo.new(MUSIC_FADE), { Volume = s:GetAttribute("TargetVolume") }):Play()
+			task.wait(s.TimeLength - MUSIC_FADE)
+			TweenService:Create(s, TweenInfo.new(MUSIC_FADE), { Volume = 0 }):Play()
+			task.wait(MUSIC_FADE)
+			s:Stop()
+		else
+			warn("[PS][WARN] Musik nicht ladbar: " .. s.SoundId)
+			task.wait(1)
+		end
+		index = index % #tracks + 1
 	end
 end
 
@@ -46,6 +87,11 @@ function SoundController:Start()
 	sfxGroup = Instance.new("SoundGroup")
 	sfxGroup.Name = "SFX"
 	sfxGroup.Parent = SoundService
+	musicGroup = Instance.new("SoundGroup")
+	musicGroup.Name = "Music"
+	musicGroup.Volume = 0 -- bis die Einstellungen geladen sind
+	musicGroup.Parent = SoundService
+	task.spawn(runPlaylist)
 	local list = {}
 	for name, def in Assets.sounds do
 		local s = Instance.new("Sound")

@@ -12,6 +12,7 @@ MAP = [
     ("src/client", "StarterPlayer.StarterPlayerScripts.Client"),
     ("src/shared", "ReplicatedStorage.Shared"),
     ("tests", "ServerStorage.Tests"),
+    ("src/first", "ReplicatedFirst"),
 ]
 
 

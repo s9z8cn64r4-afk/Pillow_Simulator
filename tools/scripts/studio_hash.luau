@@ -4,6 +4,7 @@ local roots = {
 	game.StarterPlayer.StarterPlayerScripts.Client,
 	game.ReplicatedStorage.Shared,
 	game.ServerStorage.Tests,
+	game.ReplicatedFirst,
 }
 local function h(s)
 	local v = 0
