@@ -40,47 +40,67 @@ local function reducedMotion(): boolean
 end
 
 -- Prozedurale Schwung-Animation (rechter Arm + Kissen-Squash) für einen beliebigen Charakter.
--- Gelenk-Änderungen sind rein lokal (werden nicht repliziert); deshalb animiert jeder Client auch die
--- Mitspieler, sobald deren Schlag-Effekt ankommt (FxController → SwingFx).
-local swinging: { [Model]: boolean } = {}
+-- Der Arm-Schwung wird jedes Frame nach der Standard-Animation auf das Gelenk-Transform addiert
+-- (RunService.Stepped). Das funktioniert für Motor6D- und AnimationConstraint-Rigs gleich.
+-- Rein lokal (wird nicht repliziert); deshalb animiert jeder Client auch die Mitspieler, sobald
+-- deren Schlag-Effekt ankommt (FxController → SwingFx).
+type ActiveSwing = { joint: any, start: number, dur: number, angle: number }
+local active: { [Model]: ActiveSwing } = {}
+
+local function shoulderOf(char: Model): Instance?
+	local arm = char:FindFirstChild("RightUpperArm")
+	local j = arm and arm:FindFirstChild("RightShoulder")
+	if not j then
+		local torso = char:FindFirstChild("Torso")
+		j = torso and torso:FindFirstChild("Right Shoulder")
+	end
+	if j and (j:IsA("Motor6D") or j:IsA("AnimationConstraint")) then
+		return j
+	end
+	return nil
+end
+
+-- Winkel (Grad) über die Schwungdauer: schnell ausholen (40 %), dann mit Überschwung zurück
+local function swingAngle(alpha: number, maxAngle: number): number
+	if alpha < 0.4 then
+		local t = alpha / 0.4
+		return maxAngle * (1 - (1 - t) * (1 - t))
+	end
+	local t = (alpha - 0.4) / 0.6
+	-- Back-Out von 1 → 0 (leichter Überschwung nach vorn)
+	local c = 1.70158
+	local e = 1 + (c + 1) * (t - 1) ^ 3 + c * (t - 1) ^ 2
+	return maxAngle * (1 - e)
+end
+
+RunService.Stepped:Connect(function()
+	local now = os.clock()
+	for char, sw in active do
+		local alpha = (now - sw.start) / sw.dur
+		if alpha >= 1 or not sw.joint.Parent then
+			active[char] = nil
+		else
+			local a = swingAngle(alpha, sw.angle)
+			sw.joint.Transform = sw.joint.Transform
+				* CFrame.Angles(math.rad(a), 0, math.rad(-20 * a / sw.angle))
+		end
+	end
+end)
+
 function SwingController.animateCharacter(char: Model, cd: number)
-	if swinging[char] then
+	if active[char] then
 		return -- laufende Bewegung nicht abbrechen (sonst ruckelt der Arm bei schnellem Takt)
 	end
-	local shoulder = (
-		char:FindFirstChild("RightUpperArm") and (char :: any).RightUpperArm:FindFirstChild("RightShoulder")
-	) or (char:FindFirstChild("Torso") and (char :: any).Torso:FindFirstChild("Right Shoulder"))
 	-- sichtbare Dauer: ~55 % des Cooldowns, mindestens 0,16 s, höchstens 0,32 s
 	local dur = math.clamp(cd * 0.55, 0.16, 0.32)
-	if shoulder and shoulder:IsA("Motor6D") then
-		local base = shoulder:GetAttribute("BaseC0") :: CFrame?
-		if not base then
-			base = shoulder.C0
-			shoulder:SetAttribute("BaseC0", base)
-		end
-		swinging[char] = true
-		local angle = if reducedMotion() then 45 else 110
-		local up = TweenService:Create(
-			shoulder,
-			TweenInfo.new(dur * 0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-			{
-				C0 = (base :: CFrame) * CFrame.Angles(math.rad(angle), 0, math.rad(-20)),
-			}
-		)
-		local down = TweenService:Create(
-			shoulder,
-			TweenInfo.new(dur * 0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
-			{
-				C0 = base :: CFrame,
-			}
-		)
-		up.Completed:Once(function()
-			down:Play()
-		end)
-		down.Completed:Once(function()
-			swinging[char] = nil
-		end)
-		up:Play()
+	local joint = shoulderOf(char)
+	if joint then
+		active[char] = {
+			joint = joint,
+			start = os.clock(),
+			dur = dur,
+			angle = if reducedMotion() then 45 else 110,
+		}
 	end
 	-- Squash & Stretch: SpecialMesh (Platzhalter) oder MeshPart-Größe (generierte Modelle)
 	local tool = char:FindFirstChild("Pillow")
