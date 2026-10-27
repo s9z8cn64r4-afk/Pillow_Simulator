@@ -27,9 +27,12 @@ Fehlt ein Webhook, wird der Kanal einfach übersprungen.
    npx wrangler secret put WEBHOOK_ERRORS         # Webhook-URL einfügen, ebenso die anderen
    ```
    Test: `https://pillow-relay.<konto>.workers.dev/health` → `{"ok":true}`.
-3. **Roblox:** Spiel → Experience Settings → Security: **Allow HTTP Requests** an; unter **Secrets** anlegen:
-   - `relay_url` = `https://pillow-relay.<konto>.workers.dev` (Domain auf genau diese Adresse beschränken)
-   - `relay_token` = derselbe Wert wie `RELAY_TOKEN`
+3. **Roblox:**
+   - Studio: *Datei → Experience Settings → Security* → **Allow HTTP Requests** an → Speichern.
+   - Creator Dashboard (create.roblox.com) → dein Spiel → **Secrets → Create Secret** (zwei Mal):
+     - Name `relay_url`, Secret `https://pillow-relay.<konto>.workers.dev`, Domain `pillow-relay.<konto>.workers.dev`
+     - Name `relay_token`, Secret = derselbe Wert wie `RELAY_TOKEN`, Domain wie oben
+   (Quelle: https://create.roblox.com/docs/cloud-services/secrets)
 4. Fertig – Live-Server senden ab dem nächsten Start. (Lokale Studio-Tests haben keine Secrets → Relay bleibt dort aus.)
 
 Secrets nie in Chat, Code oder Repo – nur in Cloudflare bzw. Roblox eintragen.

@@ -7,9 +7,10 @@
 2. Privates GitHub-Repo `pillow-simulator` anlegen, Namen nennen → löst B-2 ✅ (inkl. Claude-GitHub-App)
 
 ## Offene Entscheidungen (für MVP-Freigabe gesammelt)
-- Endgültiger Spielname
-- Freigabe MVP-Scope (`docs/MVP_SCOPE.md`)
-- Robux-Preise
+- ~~Endgültiger Spielname~~ → **Pillow Legends** (Owner, 2026-10-27)
+- Freigabe MVP-Scope (`docs/MVP_SCOPE.md`) – Owner prüft gerade
+- ~~Robux-Preise~~ → an Claude delegiert (Owner, 2026-10-27), siehe #4
+- ~~Roblox-Gruppe~~ → **keine Gruppe** (Owner, 2026-10-27); Gruppen-Bonus bleibt aus
 - Werbebudget (Standard 0 €)
 
 ## #2 (2026-10-27) – erledigt (Studio-Stand am 27.10. abends gespeichert, Drift 0 geprüft)
@@ -21,12 +22,18 @@
 2. **Hörprobe** der Sounds und der 3 Musiktitel (Einstellungen → Musik/Sound) – passt die Stimmung?
 3. **Studio speichern** (Datei → Auf Roblox speichern) – weiterhin wichtig (Kissenmodelle, Map, DevTools nur im Place).
 4. **Codes freigeben** (Entwurf in `src/shared/Config/Codes.luau`): PILLOWFIGHT (5 Min. Produktion), FLUFFY (2× für 15 Min.), BETATESTER (10 Min., bis 01.01.2027). Funktionieren bereits im Spiel; öffentlich genannt werden sie erst nach deinem OK.
-5. **Roblox-Gruppe** für den Gruppen-Bonus (+10 %): Gruppen-ID nennen oder „keine Gruppe“.
+5. ~~Roblox-Gruppe~~ – erledigt: keine Gruppe.
 
 ## #4 (2026-10-27) – offen, erst vor Closed Beta nötig
 **Monetarisierung (PS-34)** ist technisch fertig und getestet, aber ausgeschaltet (Shop zeigt „SOON“). Zum Einschalten brauche ich von dir:
-1. **Preise** (Robux) für: 2x Feathers (Pass, dauerhaft ×2), VIP (Pass, ×1,1 + später Kosmetik), Better Auto-Swing (Pass, Auto-Swing 100 % statt 80 %), 2x Feathers 30 Min. (Produkt, stapelbar). Ich mache keine Preisvorgabe; vergleichbare Simulatoren nutzen grob Pässe im Bereich einiger hundert Robux und Kurz-Boosts im zweistelligen Bereich.
-2. **Anlegen** im Creator Hub (Spiel → Monetarisierung → Pässe bzw. Developer Products), danach die **IDs** nennen. Ich trage sie in `tools/economy-sim/content.py` ein, erzeuge die Config neu und teste den Kauf im Dev-Place.
+1. ~~Preise~~ – an Claude delegiert, festgelegt (bewusst am unteren Rand für ein neues Spiel mit junger Zielgruppe; nach Beta-Daten anpassbar):
+   | Artikel | Art | Preis |
+   |---|---|---|
+   | 2x Feathers | Game Pass (dauerhaft ×2) | **149 R$** |
+   | VIP | Game Pass (×1,1, später Kosmetik) | **99 R$** |
+   | Better Auto-Swing | Game Pass (Auto-Swing 100 % statt 80 %) | **79 R$** |
+   | 2x Feathers (30 min) | Developer Product (stapelbar bis 120 Min.) | **25 R$** |
+2. **Anlegen** im Creator Dashboard (Spiel → Monetarisierung → Passes bzw. Developer Products) **mit genau diesen Preisen**, danach die **IDs** nennen (IDs sind nicht geheim). Ich trage sie in `tools/economy-sim/content.py` ein, erzeuge die Config neu und teste den Kauf im Dev-Place.
 Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Knöpfe grün markiert, keine Kauf-Pop-ups.
 
 ## #5 (2026-10-27) – offen, Start der Closed Beta

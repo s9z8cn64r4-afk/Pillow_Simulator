@@ -1,6 +1,7 @@
 # SESSION_LOG (neueste oben)
 
 ## Sitzung 4 – 2026-10-27
+**Nachtrag (abends):** Discord-Vorlage (Doc) erstellt; Owner-Entscheidungen umgesetzt: Name **Pillow Legends** (Ladebildschirm, Discord-Texte, Marketing, GDD, README), keine Roblox-Gruppe (Gruppen-Bonus aus), Robux-Preise delegiert → 149/99/79/25 R$ in `content.py`/Config (Shop bleibt SOON bis IDs). Relay-Anleitung korrigiert (Roblox-Secrets im Creator Dashboard). Studio-Sync 3 Skripte, 115/115 Tests `[VERIFIZIERT]`.
 **Ziele:** M3 Closed Beta: Daily, Analytics, Codes, Leaderboards, Freunde-Bonus, Feedback.
 **Erledigt:**
 - PS-30 Daily Reward, PS-35 Analytics, PS-31 Codes, PS-32 Leaderboards (Tafeln vergrößert) `[VERIFIZIERT]`.

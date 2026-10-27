@@ -3,6 +3,9 @@
 Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
+### Changed
+- Spielname **Pillow Legends** (Ladebildschirm, Community-Texte).
+- Robux-Preise in der Config (149/99/79/25 R$); Kauf bleibt aus, bis Pässe angelegt sind.
 ### Added
 - Daily Reward (7 Tage, Pause statt Reset) mit Willkommen-zurück-Karte, Menü-Badge und automatischem Öffnen; Boosts werden gespeichert und stapeln.
 - Menü wird auf niedrigen Bildschirmen zweispaltig.
