@@ -19,3 +19,9 @@
 3. **Studio speichern** (Datei → Auf Roblox speichern) – weiterhin wichtig (Kissenmodelle, Map, DevTools nur im Place).
 4. **Codes freigeben** (Entwurf in `src/shared/Config/Codes.luau`): PILLOWFIGHT (5 Min. Produktion), FLUFFY (2× für 15 Min.), BETATESTER (10 Min., bis 01.01.2027). Funktionieren bereits im Spiel; öffentlich genannt werden sie erst nach deinem OK.
 5. **Roblox-Gruppe** für den Gruppen-Bonus (+10 %): Gruppen-ID nennen oder „keine Gruppe“.
+
+## #4 (2026-10-27) – offen, erst vor Closed Beta nötig
+**Monetarisierung (PS-34)** ist technisch fertig und getestet, aber ausgeschaltet (Shop zeigt „SOON“). Zum Einschalten brauche ich von dir:
+1. **Preise** (Robux) für: 2x Feathers (Pass, dauerhaft ×2), VIP (Pass, ×1,1 + später Kosmetik), Better Auto-Swing (Pass, Auto-Swing 100 % statt 80 %), 2x Feathers 30 Min. (Produkt, stapelbar). Ich mache keine Preisvorgabe; vergleichbare Simulatoren nutzen grob Pässe im Bereich einiger hundert Robux und Kurz-Boosts im zweistelligen Bereich.
+2. **Anlegen** im Creator Hub (Spiel → Monetarisierung → Pässe bzw. Developer Products), danach die **IDs** nennen. Ich trage sie in `tools/economy-sim/content.py` ein, erzeuge die Config neu und teste den Kauf im Dev-Place.
+Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Knöpfe grün markiert, keine Kauf-Pop-ups.

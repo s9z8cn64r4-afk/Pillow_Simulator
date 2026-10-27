@@ -1,6 +1,6 @@
 --!strict
 -- Integration: Persistenz-Stresstest (PS-39) gegen echten DataStore (DEV), nur Test-Schlüssel (Test_*).
--- Schnelle Sitzungswechsel, Sitzungsübernahme, großer Spielstand, bestätigtes Speichern des echten Profils.
+-- Schnelle Sitzungswechsel, Doppel-Laden-Schutz, großer Spielstand, bestätigtes Speichern des echten Profils.
 return function(it, expect, ctx)
 	local PD = ctx.registry.PlayerDataService
 	local player = ctx.player
@@ -44,7 +44,8 @@ return function(it, expect, ctx)
 		print(("[PERSIST] 8 Wechsel in %.1f s"):format(os.clock() - t0))
 	end)
 
-	it("Sitzungsübernahme: alte Sitzung endet, gespeicherte Daten bleiben", function()
+	it("Doppel-Laden im selben Server wird verweigert, Daten bleiben erhalten", function()
+		-- Echte Übernahme zwischen zwei Servern lässt sich in Studio nicht nachstellen → Beta-Test (TEST_RESULTS)
 		local key = "Test_SessionSteal"
 		local p1 = start(key)
 		expect(p1 ~= nil).toBeTruthy()
@@ -53,30 +54,16 @@ return function(it, expect, ctx)
 		end
 		local stamp = os.time() + math.random()
 		p1.Data.feathers = stamp
-		local saved = false
-		local conn = p1.OnAfterSave:Connect(function()
-			saved = true
-		end)
-		p1:Save()
-		local d = os.clock() + 15
-		while not saved and os.clock() < d do
-			task.wait(0.1)
-		end
-		conn:Disconnect()
-		expect(saved).toBeTruthy()
-		local ended = false
-		p1.OnSessionEnd:Connect(function()
-			ended = true
-		end)
-		local t0 = os.clock()
-		local p2 = start(key, 40)
-		expect(p2 ~= nil).toBeTruthy()
-		expect(ended or not p1:IsActive()).toBeTruthy()
+		local ok, err = pcall(start, key, 5)
+		expect(ok).toBeFalsy()
+		expect(string.find(tostring(err), "already loaded", 1, true) ~= nil).toBeTruthy()
+		expect(p1:IsActive()).toBeTruthy()
+		p1:EndSession()
+		local p2 = start(key)
 		expect(p2 and p2.Data.feathers).toBeNear(stamp)
 		if p2 then
 			p2:EndSession()
 		end
-		print(("[PERSIST] Übernahme in %.1f s"):format(os.clock() - t0))
 	end)
 
 	it("Großer Spielstand (1000 Quittungen, alle Kissen) speichert und lädt", function()

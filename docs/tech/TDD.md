@@ -26,6 +26,7 @@ Server-authoritativ · alle Werte aus `Shared.Config` · reine Logik in `Shared.
 | `TelemetryService` | AnalyticsService: Economy-Quellen und Upgrade-Ausgaben je Minute gebündelt, seltene Senken (Kissen/Zone/Rebirth) sofort, Progression (Zonen, Rebirth), Custom (RankUp); Signale `PlayerDataService.FeathersAdded/FeathersSpent` |
 | `CodeService` | Codes aus `Config/Codes` (einmal je Spieler, Ablauf), Remote `RedeemCode(codeText)` (alnum ≤ 20, 0,2/s) |
 | `SocialService` | Freunde im Server (`IsFriendsWith`, gecacht, pcall) + Gruppe (`Config/Social.groupId`, 0 = aus) → Multiplikator in `StatsService:extraMultiplier`, Attribute `FriendsInServer`/`GroupMember` |
+| `MonetizationService` | Gamepässe (`UserOwnsGamePassAsync`, Attribute `Pass_<id>`) → `passMultiplier`, `autoSwingEfficiency`; `ProcessReceipt` idempotent (ReceiptId in `purchaseHistory`, `PurchaseGranted` erst nach `PlayerDataService:saveAndWait`); Artikel ohne Owner-ID/Preis nicht kaufbar; Remote `PromptPurchase(kind, id)` |
 | `FeedbackService` | Remote `SendFeedback(category, text)` (3–300 Zeichen, 1 je 20 s), TextService-Filter, nur gefilterter Text in DataStore `Feedback_<ENV>`, max. 5 je Sitzung |
 | `LeaderboardService` | OrderedDataStore `LB_<board>_<ENV>` (lifetimeFeathers, rebirths), alle 60 s schreiben/lesen, Tafeln zur Laufzeit im Kinderzimmer |
 | `SocialService`, `PurchaseService`, `AntiCheatService` | M3 |
@@ -41,7 +42,7 @@ DataStore-Name: `PlayerData_<ENV>`, ENV aus Attribut `Environment` am `ServerScr
 
 ## 4. Netzwerk
 Schema-Einträge: `name`, `kind` (`event`/`unreliable`), `dir` (`c2s`/`s2c`), `args` (Validierer-Liste), `rate` (Tokens/s, Burst).
-Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`, `RedeemCode(text)`, `SendFeedback(category, text)`.
+Client → Server: `SwingRequest()`, `BuyPillow(id)`, `EquipPillow(id)`, `BuyUpgrade(kind)`, `SetAutoSwing(on)`, `TeleportZone(id)`, `Rebirth()`, `SetSetting(key, value)`, `TutorialSkip()`, `ClaimDaily()`, `RedeemCode(text)`, `SendFeedback(category, text)`, `PromptPurchase(kind, id)`.
 Server → Client: `StateInit(snapshot)`, `StateDelta(changes)`, `SwingFx(userId, amount, hitDummy)` (unreliable), `Notify(kind, payload)`.
 Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` beantwortet.
 
@@ -51,7 +52,7 @@ Keine RemoteFunctions. Anfragen werden über `Notify("purchaseResult", …)` bea
 3. Auto-Swing: Server-Heartbeat-Schleife pro Spieler (`SwingGate.auto`), pausiert während aktiver Schläge, 80 % Effizienz, nur wenn Rank ≥ 2 und aktiviert. AFK-Grenze: Robloxs Standard-Idle-Kick (20 Min.); eigene AFK-Logik erst bei Bedarf (Leaderboard-Fairness, M3).
 
 ## 6. Persistenz
-ProfileStore (Vendor, `ServerStorage.Vendor.ProfileStore`, ADR-0002). Join → `StartSessionAsync` (Abbruch bei Leave) → `Reconcile` → Migration → `StateInit`. Leave → `EndSession`. `BindToClose` wartet auf Abschluss. Käufe: `ProcessReceipt` schreibt ReceiptId in `purchaseHistory` und gibt `PurchaseGranted` erst nach Speicherbestätigung zurück (P3).
+ProfileStore (Vendor, `ServerStorage.Vendor.ProfileStore`, ADR-0002). Join → `StartSessionAsync` (Abbruch bei Leave) → `Reconcile` → Migration → `StateInit`. Leave → `EndSession`. `BindToClose` wartet auf Abschluss. Käufe: `ProcessReceipt` schreibt ReceiptId in `purchaseHistory` und gibt `PurchaseGranted` erst nach Speicherbestätigung zurück (`saveAndWait`, umgesetzt in PS-34).
 
 ## 7. Tests
 `ServerStorage.Tests` (nur Dev): `RunTests` lädt alle `*.spec`-Module; Mini-Framework `describe/it/expect` (`TestLib`). Ausführung per `execute_luau` (Edit-Modus für reine Logik) und im Play-Modus für Integrationstests (Server-DataModel). Ausgabe `[TEST] PASS/FAIL name`, Zusammenfassung `[TEST] SUMMARY x/y`.

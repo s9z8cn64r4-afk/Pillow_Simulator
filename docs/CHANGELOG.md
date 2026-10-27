@@ -10,6 +10,8 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 - Codes (Eingabe in den Einstellungen) und Leaderboards (Top 10 Federn/Rebirths im Kinderzimmer).
 - Freunde-Bonus (+10 % je Freund im Server, max. +30 %) mit HUD-Anzeige; Gruppen-Bonus vorbereitet (wartet auf Gruppen-ID).
 - Feedback-Fenster (Bug/Idee/Sonstiges) aus den Einstellungen; Text wird gefiltert gespeichert.
+- Shop-Reiter „Extras“ mit Gamepässen und 2×-Boost (noch nicht kaufbar, „SOON“ bis Owner-Preise/IDs); sichere Kaufabwicklung.
+- Ziel-Leiste zeigt „ready!“, sobald das Ziel bezahlbar ist.
 
 ## 0.2.0-dev (M2 Vertical Slice) – Gate M2 vorläufig bestanden 2026-10-27
 ### Added
