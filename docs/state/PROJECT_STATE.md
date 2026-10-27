@@ -5,40 +5,41 @@
 
 | Feld | Wert |
 |---|---|
-| Aktuelle Phase | **Phase 1 – Pre-Alpha / Prototyp (M1)**, Gate M0 bestanden (Scope vorläufig freigegeben) |
-| Version | 0.1.0-dev |
-| Sprint-Ziel | M1 abschließen: spielbare Scheibe Schlagen → Federn → Kaufen → Speichern |
-| Letzte Sitzung | 2026-10-27 (Sitzung 1): Capability Probe, Phase 0 komplett, M1-Kern gebaut und getestet |
-| Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`) – Push funktioniert |
+| Aktuelle Phase | **Phase 2 – Vertical Slice (M2)**, Gate M0 + **Gate M1 bestanden** (2026-10-27) |
+| Version | 0.2.0-dev |
+| Sprint-Ziel | M2: alle 14 Kissen als Modelle, Map final-nah, Tutorial, Rank-Up-Feedback, Bot-Durchlauf, Gate M2 |
+| Letzte Sitzung | 2026-10-27 (Sitzung 3): CI repariert (seit Phase 0 rot), Settings/Index in Studio verifiziert, Gate M1, PS-11 begonnen |
+| Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
-| Dev-Place | „Pillow Simulator [DEV]“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
+| Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
 | MVP-Scope | `docs/MVP_SCOPE.md` – vorläufig freigegeben (Orchestrator), Owner-Freigabe bis M3 |
 
-## Stand M1
-| Task | Status |
+## Stand
+| Bereich | Status |
 |---|---|
-| PS-01 Datenschema + PlayerDataService | `[VERIFIZIERT]` Rejoin behält 72 Federn; ProfileStore-Roundtrip-Test |
-| PS-02 Netzwerkschicht | `[VERIFIZIERT]` Unit-Tests + Exploit-Basistest |
-| PS-03 Formeln + Zahlformat | `[VERIFIZIERT]` Paritätstest mit sim.py |
-| PS-04 Schlagen + Auto-Swing | aktiv `[VERIFIZIERT]`; Auto-Swing `[IMPLEMENTIERT, UNGETESTET]` |
-| PS-05 Shop | Server `[VERIFIZIERT]`; Kauf per UI-Klick `[IMPLEMENTIERT, UNGETESTET]` |
-| PS-06 Graybox Bedroom | `[VERIFIZIERT]` Screenshot; Builder-Skript `tools/studio/build_graybox_bedroom.luau` |
-| PS-07 HUD v0 | Desktop `[VERIFIZIERT]`; Phone-Layout `[IMPLEMENTIERT, UNGETESTET]` |
-| PS-08 Schlag-Feedback | Animation/Burst `[IMPLEMENTIERT, teilw. geprüft]`; Sound fehlt |
-| PS-09 Testrunner | `[VERIFIZIERT]` 30/30 |
-| PS-10 Gate M1 | offen |
+| M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
+| Tests | 49/49 grün in Studio `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Repo ↔ Studio | 0 Abweichungen (53 Skripte) `[VERIFIZIERT]` |
+| PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
+| PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
+| PS-15 Ranks | Titel über Kopf `[IMPLEMENTIERT, UNGETESTET]` (Mehrspieler); Banner/Trail offen |
+| PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
+| PS-11 Kissenmodelle | in Arbeit: 13 Generierungen gestartet |
+| PS-16 Map, PS-18 Tutorial, PS-21–23 | offen |
 
 ## Nächste konkrete Aktion
-Siehe `NEXT_ACTIONS.md` – zuerst: Auto-Swing-Test (Spieler auf Rank 2 setzen, AUTO aktivieren, Federanstieg ohne Eingabe messen).
+Siehe `NEXT_ACTIONS.md`.
 
 ## Wichtige Hinweise für die nächste Sitzung
-- Studio-Änderungen müssen vom Owner gespeichert werden (Datei → Auf Roblox speichern), sonst gehen Map/Skripte im Place verloren. Code liegt zusätzlich im Repo, Map als Builder-Skript.
-- Skripte mit Punkt im Namen (`*.spec`) über `multi_edit` NICHT direkt ansprechen (Punkt = Pfadtrenner) → per `execute_luau` und `Source` bearbeiten.
-- Modul-`require` aus `execute_luau` liefert eine eigene Instanz (nicht die des laufenden Spiels) → Laufzeitzustand über Konsole/leaderstats/Attribute prüfen.
-- GUI-Klicks per Automatisierung lösen `Activated` nicht aus → UI-Kaufpfad manuell oder per Testhook prüfen.
+- **Code nach Studio:** nach Push `python3 tools/scripts/studio_sync.py OUT drift.txt --github <SHA>` → kleinen Chunk per `execute_luau` (Edit) ausführen; Studio lädt per HttpService von raw.githubusercontent.com (geht nur, solange das Repo öffentlich ist). Danach Drift-Check (`studio_hash.luau` + `source_hash.py`).
+- **CI formatiert selbst:** Push auf `main` → StyLua-Auto-Fix-Commit möglich → vor dem nächsten Push `git pull --rebase`, vor dem Studio-Sync den neuesten SHA nehmen. Generierte Config ist per `.styluaignore` ausgenommen.
+- Actions-Logs nicht abrufbar → Fehler über Check-Run-Annotations (`gh api repos/.../check-runs/<id>/annotations`).
+- Studio-Änderungen (Map, Modelle, Vendor) existieren nur im Place → Owner muss speichern (Owner-Anfrage #2).
+- Skripte mit Punkt im Namen nicht über `multi_edit` ansprechen; `require` aus `execute_luau` = eigene Modulinstanz; Studio-Aufrufe nie > 50 s blockieren.
+- GUI-Klicks: `user_mouse_input` mit Mittelpunkt aus `AbsolutePosition + AbsoluteSize/2`.
 
-## Offene Owner-Entscheidungen
-Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €)
+## Offene Owner-Entscheidungen / -Aktionen
+Studio speichern (#2) · Hörprobe Sounds · Spielname (Vorschläge: Pillow Smash Simulator, Feather Frenzy, Pillow Legends) · MVP-Freigabe · Robux-Preise · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

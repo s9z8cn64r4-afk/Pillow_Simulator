@@ -1,5 +1,16 @@
 # SESSION_LOG (neueste oben)
 
+## Sitzung 3 – 2026-10-27
+**Ziele:** CI-Fehler (rote Commits) beheben, M2-Stand in Studio verifizieren, Gate M1, PS-11.
+**Erledigt:**
+- CI seit Phase 0 rot (StyLua-Format, Selene `if_same_then_else`) → StyLua-Auto-Fix auf `main`, Selene als Annotations, Lint behoben → **CI grün** `[VERIFIZIERT]`.
+- Settings/Index/UIController + Settings.spec in Studio; 49/49 Tests; Settings + Index per echtem Klick inkl. Server-Roundtrip `[VERIFIZIERT]`; Rejoin `[VERIFIZIERT]`.
+- `studio_sync.py --github`: Studio lädt gepinnten Commit (22 Dateien in einem Aufruf); Drift 0.
+- Restore-Wächter im Testrunner (BUG-002, einmaliger Federsprung in DEV, nicht reproduzierbar).
+- **Gate M1 bestanden**; Trello: PS-04/05/07/08/10, PS-19/20 → Done, PS-11 → In Progress, Owner-Karte Hörprobe.
+- PS-11: 13 Kissenmodelle in Generierung.
+**Probleme:** StyLua-Binary-Download in der Cloud-Umgebung nicht erlaubt (→ CI formatiert); Actions-Logs nicht abrufbar (→ Annotations).
+
 ## Sitzung 2 – 2026-10-27
 **Ziele:** M1 abschließen (Auto-Swing, UI-Kauf, Phone-Layout, Sound, Gate), M2 beginnen.
 **Erledigt:**
