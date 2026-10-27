@@ -19,7 +19,13 @@ local COLORS = {
 	Color3.fromRGB(196, 140, 255),
 }
 
-export type Options = { title: string, subtitle: string?, color: Color3?, reducedMotion: boolean?, lowVfx: boolean? }
+export type Options = {
+	title: string,
+	subtitle: string?,
+	color: Color3?,
+	reducedMotion: boolean?,
+	lowVfx: boolean?,
+}
 
 function Celebration.build(root: Instance)
 	local layer = Instance.new("Frame")
@@ -90,9 +96,11 @@ function Celebration.build(root: Instance)
 			scale.Scale = 1
 		else
 			scale.Scale = 0.4
-			TweenService:Create(scale, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-				Scale = 1,
-			}):Play()
+			TweenService
+				:Create(scale, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+					Scale = 1,
+				})
+				:Play()
 			confetti(if o.lowVfx then CONFETTI // 2 else CONFETTI)
 		end
 		task.delay(SHOW_TIME, function()
