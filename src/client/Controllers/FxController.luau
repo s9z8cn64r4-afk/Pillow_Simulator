@@ -86,8 +86,8 @@ local function sparkle(origin: Vector3?, rarity: string)
 		e.Parent = anchor
 		sparkleAnchor, sparkleEmitter = anchor, e
 	end
-	local e = sparkleEmitter :: ParticleEmitter
-	;(sparkleAnchor :: Part).Position = origin
+	local e = sparkleEmitter :: ParticleEmitter;
+	(sparkleAnchor :: Part).Position = origin
 	e.Color = ColorSequence.new(rarityColor[rarity] or Color3.new(1, 1, 1), Color3.new(1, 1, 1))
 	e:Emit(if settings().reducedMotion then math.ceil(fx.sparkle / 2) else fx.sparkle)
 end
