@@ -2,6 +2,7 @@
 -- HUD v0: Federzähler, Rank-Fortschritt, Shop, Schlag-Taste, Auto-Swing, Nächstes Ziel, Toasts.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
 local Shared = ReplicatedStorage:WaitForChild("Shared")
@@ -354,6 +355,45 @@ function UIController:build()
 	autoBtn.instance.AnchorPoint = Vector2.new(1, 1)
 	autoBtn.instance.Position = UDim2.new(1, 0, 1, -166)
 	autoBtn.instance.Parent = root
+	-- Hinweis beim Freischalten (Rank 2): Knopf pulsiert, bis Auto-Swing an ist (max. 20 s)
+	local autoRing = Instance.new("Frame")
+	autoRing.Name = "AutoUnlockedRing"
+	autoRing.AnchorPoint = Vector2.new(0.5, 0.5)
+	autoRing.Position = UDim2.fromScale(0.5, 0.5)
+	autoRing.Size = UDim2.new(1, 12, 1, 12)
+	autoRing.BackgroundTransparency = 1
+	autoRing.ZIndex = 30
+	C.corner(autoRing, Theme.radius.panel)
+	local autoRingStroke = C.stroke(autoRing, 4, Theme.color.feather)
+	local autoPulse: Tween? = nil
+	local prevCanAuto: boolean? = nil
+	local function setAutoNudge(on: boolean, reducedMotion: boolean?)
+		if autoPulse then
+			autoPulse:Cancel()
+			autoPulse = nil
+		end
+		if not on then
+			autoRing.Parent = nil
+			return
+		end
+		autoRing.Parent = autoBtn.button
+		autoRingStroke.Transparency = 0
+		autoRingStroke.Thickness = 4
+		if not reducedMotion then
+			local t = TweenService:Create(
+				autoRingStroke,
+				TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+				{ Transparency = 0.7, Thickness = 8 }
+			)
+			t:Play()
+			autoPulse = t
+		end
+		task.delay(20, function()
+			if autoRing.Parent then
+				setAutoNudge(false)
+			end
+		end)
+	end
 
 	-- Nächstes Ziel (unten Mitte)
 	local goal = C.panel(UDim2.fromOffset(340, 64))
@@ -512,6 +552,13 @@ function UIController:build()
 			else ("%s  (%s / %s)"):format(text, NumberFormat.short(have), NumberFormat.short(need))
 		setGoal(if need > 0 then have / need else 1)
 		local canAuto = s.rank >= Progression.swing.autoSwingRank
+		if prevCanAuto == false and canAuto and not s.autoSwingEnabled then
+			setAutoNudge(true, s.settings and s.settings.reducedMotion == true)
+			self:toast("Auto-Swing unlocked! Tap AUTO to swing automatically.", Theme.color.feather)
+		elseif s.autoSwingEnabled or not canAuto then
+			setAutoNudge(false)
+		end
+		prevCanAuto = canAuto
 		if not canAuto then
 			autoBtn.setText("AUTO 🔒 Rank 2")
 			autoBtn.setColor(Theme.color.locked)
