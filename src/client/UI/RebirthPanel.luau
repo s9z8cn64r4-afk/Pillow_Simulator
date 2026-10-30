@@ -13,35 +13,46 @@ local RebirthPanel = {}
 
 function RebirthPanel.build(root: Instance)
 	local m = C.modal(root, "REBIRTH", UDim2.fromOffset(620, 440))
-	local function column(x: number, heading: string, color: Color3)
+	local function column(x: number, icon: string, heading: string, color: Color3)
 		local f = Instance.new("Frame")
 		f.BackgroundColor3 = Theme.color.bgSoft
 		f.Position = UDim2.new(x, 4, 0, 0)
-		f.Size = UDim2.new(1 / 3, -8, 0, 230)
+		f.Size = UDim2.new(1 / 3, -8, 0, 196)
 		f.Parent = m.body
 		C.corner(f)
+		C.stroke(f, 2, color)
+		local ic = C.text({ text = icon, size = Theme.size.lg })
+		ic.Position = UDim2.fromOffset(0, 4)
+		ic.Size = UDim2.new(1, 0, 0, 36)
+		ic.Parent = f
 		local h = C.text({ text = heading, size = Theme.size.sm, color = color })
-		h.Size = UDim2.new(1, 0, 0, 34)
+		h.Position = UDim2.fromOffset(0, 38)
+		h.Size = UDim2.new(1, 0, 0, 28)
 		h.Parent = f
 		-- größere Schrift (Phone): Karten haben genug Platz
 		local body = C.text({ text = "", size = Theme.size.sm, font = Theme.font.body })
-		body.Position = UDim2.fromOffset(8, 40)
-		body.Size = UDim2.new(1, -16, 1, -48)
+		body.Position = UDim2.fromOffset(8, 70)
+		body.Size = UDim2.new(1, -16, 1, -76)
 		body.TextYAlignment = Enum.TextYAlignment.Top
 		body.TextWrapped = true
 		body.LineHeight = 1.25
 		body.Parent = f
 		return body
 	end
-	local lose = column(0, "You lose", Theme.color.danger)
-	local keep = column(1 / 3, "You keep", Theme.color.secondary)
-	local gain = column(2 / 3, "You get", Theme.color.success)
+	local lose = column(0, "🕊️", "You lose", Theme.color.danger)
+	local keep = column(1 / 3, "🛏️", "You keep", Theme.color.secondary)
+	local gain = column(2 / 3, "✨", "You get", Theme.color.success)
 	keep.Text = "All pillows\nYour rank\nDaily rewards\nSettings"
 
 	local status = C.text({ text = "", size = Theme.size.sm })
-	status.Position = UDim2.fromOffset(0, 240)
-	status.Size = UDim2.new(1, 0, 0, 30)
+	status.Position = UDim2.fromOffset(0, 204)
+	status.Size = UDim2.new(1, 0, 0, 28)
 	status.Parent = m.body
+	-- Fortschritt bis zur Rebirth-Bedingung
+	local bar, setBar = C.progressBar(UDim2.new(0.7, 0, 0, 18), Theme.color.feather)
+	bar.AnchorPoint = Vector2.new(0.5, 0)
+	bar.Position = UDim2.new(0.5, 0, 0, 236)
+	bar.Parent = m.body
 
 	local confirmArmed = false
 	local btn = C.button({
@@ -80,7 +91,10 @@ function RebirthPanel.build(root: Instance)
 		lose.Text = ("All feathers (%s)\nAll upgrades\nUnlocked zones"):format(NumberFormat.short(s.feathers))
 		gain.Text = ("Feather multiplier\nx%.2f → x%.2f\nRebirth %d"):format(cur, nxt, s.rebirths + 1)
 		local can = s.feathers >= cost
-		status.Text = ("Needs %s feathers%s"):format(NumberFormat.short(cost), if can then " ✔" else "")
+		status.Text = if can
+			then ("Ready! (%s feathers needed)"):format(NumberFormat.short(cost))
+			else ("%s / %s feathers"):format(NumberFormat.short(s.feathers), NumberFormat.short(cost))
+		setBar(s.feathers / cost)
 		status.TextColor3 = if can then Theme.color.success else Theme.color.muted
 		btn.setEnabled(can)
 	end
