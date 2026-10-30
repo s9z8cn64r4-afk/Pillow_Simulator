@@ -65,6 +65,7 @@
 | 2026-10-30 | b4ef018 | **Server-Last** (`tests/perf/ServerBench.luau` über `ServerStorage.DevBench`, Studio): Schlagkosten + Dauerlast über den echten Server-Pfad | aktiver Schlag 0,033 ms, Auto-Schlag 0,011 ms · Ruhe 59,9 FPS · **40 Schläge/s (= 12 Spieler im Maximaltempo) 20 s: Heartbeat 59,9 FPS**, Schlag-CPU 0,05 ms/Frame · 120 Schläge/s (3-fache Reserve): 59,7 FPS, einzelner Ausreißer-Frame 101 ms · Client bei 40 Schlag-Effekten/s in der Nähe: 60 FPS, 0 Frames < 30 FPS | Hochrechnung mit 1 echtem Spieler (12 echte Clients nicht per Werkzeug startbar); Messung auf PC, nicht Phone |
 | 2026-10-30 | f5a2e79 | Nach Art-Pass Zonen v2 (+723 Teile, 1201 Teile im Workspace): Studio-Runner + Client-FPS | **115/115 PASS** · Client 60 FPS (min 49) | Konsole `[TEST] SUMMARY 115/115 passed` |
 | 2026-10-30 | 041a649 | Art-Pass Teil 2+3: Plüsch-Puppen (geschweißt), Props, `AmbientController`, Portale | **115/115 PASS**, 0 Fehler im Log · Puppe folgt Wackeln (0,2 Studs Versatz, zurück 0) · Discokugel dreht, max. 6 Lampen gedimmt, bei Reduced Motion steht beides · Lauf durch den Lounge-Durchgang: Zone wechselt auf `livingroom` · Client 60 FPS | Konsole, Client-Messung |
+| 2026-10-30 | 1af7ecf | UI-Politur: Daily-Fenster, Puppen-Schilder, 3D-Kissen-Vorschau in Shop + Index (28 ViewportFrames) | **115/115 PASS**, 0 Fehler · Shop/Index per Klick geöffnet, Vorschauen + Silhouetten sichtbar | Screenshots Play-Test |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta

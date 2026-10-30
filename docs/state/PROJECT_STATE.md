@@ -36,7 +36,7 @@
 | PS-12 Zonen 2–4 | Logik + Graybox `[VERIFIZIERT]` (Tests); Map-Ausbau → PS-16 |
 | PS-14 Rebirth | `[VERIFIZIERT]` (Test + Menü) |
 | PS-15 Ranks | Titel, Banner + Konfetti, Trail ab Rank 5 `[VERIFIZIERT]` (Tests + Screenshot); Mehrspieler-Sichtbarkeit `[IMPLEMENTIERT, UNGETESTET]` |
-| PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
+| PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip; Index + Shop mit 3D-Kissen-Vorschau (Silhouette bis gesammelt) `[VERIFIZIERT]` (Screenshots) |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
 | PS-43 Art-Pass Zonen v2 | alle 4 Zonen: Wände 44 hoch, Tapete je Zone, Leisten, Lichterketten/Wandleuchten, bekletterbarer Riesen-Kissenberg, Extras (Schrank + Bilder, Wimpel, Kronleuchter, Mond + Sterne), **generierte Hero-Props** (Teddy, Discokugel, Gepäckwagen, Mond), **Plüsch-Puppen je Zone** (an Trefferkörper geschweißt, wackeln mit), Discokugel dreht + Lichter funkeln (`AmbientController`, aus bei Reduced Motion), **Portale** an allen Durchgängen (Rahmen, Leuchtschild mit Zonenname, Riesen-Kissen; Durchlaufen geprüft) – `tools/studio/build_zones_v2.luau` `[VERIFIZIERT]` (Screenshots, 115/115, 0 Fehler, Client 60 FPS); **nur im Place → Studio speichern** |

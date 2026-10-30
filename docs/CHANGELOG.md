@@ -4,6 +4,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
 ### Changed
+- Shop und Pillow Index zeigen jedes Kissen als 3D-Vorschau; noch nicht gesammelte Kissen erscheinen als Silhouette.
 - Daily-Reward-Fenster kompakter mit größerer Schrift; Puppen-Schilder nur noch in der Nähe sichtbar.
 - Durchgänge zwischen den Zonen sind jetzt Portale mit Leuchtschild (Name der nächsten Zone) und Rahmen in deren Farben.
 - Trainingspuppen sind jetzt Plüschfiguren im Stil der jeweiligen Zone; neue Blickfänge (Riesen-Teddy, Discokugel, Gepäckwagen, Schlafmond); Discokugel dreht sich, Lichterketten funkeln (aus bei „Reduced Motion“).
