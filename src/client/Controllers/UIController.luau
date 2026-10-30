@@ -471,7 +471,7 @@ function UIController:build()
 		rank = bar,
 		goal = goal,
 	})
-	local function celebrate(title: string, subtitle: string?, color: Color3?)
+	local function celebrate(title: string, subtitle: string?, color: Color3?, extra: any?)
 		local st = State.state and State.state.settings or {}
 		celebration.show({
 			title = title,
@@ -479,6 +479,8 @@ function UIController:build()
 			color = color,
 			reducedMotion = st.reducedMotion == true,
 			lowVfx = st.lowVfx == true,
+			pillowId = extra and extra.pillowId,
+			confetti = if extra and extra.confetti ~= nil then extra.confetti else true,
 		})
 	end
 	-- Immer nur ein Fenster offen
@@ -633,15 +635,15 @@ function UIController:build()
 		if kind == "purchaseResult" then
 			if payload.ok then
 				if payload.kind == "pillow" then
+					-- Jedes neue Kissen kurz groß zeigen (3D, dreht sich); Konfetti nur ab Epic
 					local p = Pillows.byId[payload.id]
-					if p.rarity == "Epic" or p.rarity == "Legendary" then
-						celebrate(p.rarity:upper() .. "!", p.name, rarityInfo[p.rarity].color)
-					else
-						self:toast(
-							("New pillow: %s %s!"):format(rarityInfo[p.rarity].symbol, p.name),
-							rarityInfo[p.rarity].color
-						)
-					end
+					local big = p.rarity == "Epic" or p.rarity == "Legendary"
+					celebrate(
+						if big then p.rarity:upper() .. "!" else "NEW PILLOW!",
+						("%s %s · %s"):format(rarityInfo[p.rarity].symbol, p.name, p.rarity),
+						rarityInfo[p.rarity].color,
+						{ pillowId = p.id, confetti = big }
+					)
 				elseif payload.kind == "upgrade" then
 					self:toast("Upgrade bought!", Theme.color.success)
 				elseif payload.kind == "zone" then

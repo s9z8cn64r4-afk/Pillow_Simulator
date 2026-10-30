@@ -2,6 +2,7 @@
 -- Große Feier-Einblendung (Rank-Up, Rebirth, seltene Kissen): Banner mit Pop + Konfetti.
 -- Reduced Motion: kein Pop, kein Konfetti. Low Effects: halbes Konfetti. Nie mehr als ein Banner gleichzeitig.
 local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
 local Debris = game:GetService("Debris")
 
 local Theme = require(script.Parent.Theme)
@@ -25,6 +26,8 @@ export type Options = {
 	color: Color3?,
 	reducedMotion: boolean?,
 	lowVfx: boolean?,
+	pillowId: string?, -- 3D-Kissen links im Banner (dreht sich langsam)
+	confetti: boolean?, -- Standard true
 }
 
 function Celebration.build(root: Instance)
@@ -61,6 +64,41 @@ function Celebration.build(root: Instance)
 
 	local token = 0
 
+	-- Kissen-Vorschau (nur bei Kissenkäufen sichtbar)
+	local iconApi: any = nil
+	local spinConn: RBXScriptConnection? = nil
+	local function setIcon(pillowId: string?, color: Color3, reducedMotion: boolean?)
+		if spinConn then
+			spinConn:Disconnect()
+			spinConn = nil
+		end
+		if iconApi then
+			iconApi.frame:Destroy()
+			iconApi = nil
+		end
+		local off = 0
+		if pillowId then
+			iconApi = C.pillowIcon(pillowId, UDim2.fromOffset(110, 110), color)
+			iconApi.frame.Position = UDim2.fromOffset(10, 10)
+			iconApi.frame.ZIndex = 53
+			iconApi.frame.Parent = banner
+			off = 120
+			local model = iconApi.model
+			if model and not reducedMotion then
+				local base = model.CFrame
+				local a = 0
+				spinConn = RunService.RenderStepped:Connect(function(dt)
+					a += dt * 1.6
+					model.CFrame = CFrame.Angles(0, a, 0) * base
+				end)
+			end
+		end
+		title.Position = UDim2.fromOffset(12 + off, 10)
+		title.Size = UDim2.new(1, -24 - off, 0, 66)
+		sub.Position = UDim2.fromOffset(12 + off, 76)
+		sub.Size = UDim2.new(1, -24 - off, 0, 40)
+	end
+
 	local function confetti(count: number)
 		for _ = 1, count do
 			local f = Instance.new("Frame")
@@ -91,6 +129,7 @@ function Celebration.build(root: Instance)
 		title.TextColor3 = color
 		sub.Text = o.subtitle or ""
 		stroke.Color = color
+		setIcon(o.pillowId, color, o.reducedMotion)
 		banner.Visible = true
 		if o.reducedMotion then
 			scale.Scale = 1
@@ -101,11 +140,14 @@ function Celebration.build(root: Instance)
 					Scale = 1,
 				})
 				:Play()
-			confetti(if o.lowVfx then CONFETTI // 2 else CONFETTI)
+			if o.confetti ~= false then
+				confetti(if o.lowVfx then CONFETTI // 2 else CONFETTI)
+			end
 		end
 		task.delay(SHOW_TIME, function()
 			if token == my then
 				banner.Visible = false
+				setIcon(nil, color, true)
 			end
 		end)
 	end
