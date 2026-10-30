@@ -94,6 +94,7 @@ function Bench.run(registry: any, opts: any): { [string]: any }
 						ZoneSvc:unlock(player, z.id)
 						mark("Zone " .. z.id)
 						ZoneSvc:teleport(player, z.id)
+						task.wait(0.4) -- Zonen-Erkennung (0,25-s-Takt) abwarten, sonst fehlt der Zonen-Multiplikator
 					end
 					break
 				end
