@@ -68,6 +68,7 @@
 | 2026-10-30 | 1af7ecf | UI-Politur: Daily-Fenster, Puppen-Schilder, 3D-Kissen-Vorschau in Shop + Index (28 ViewportFrames) | **115/115 PASS**, 0 Fehler · Shop/Index per Klick geöffnet, Vorschauen + Silhouetten sichtbar | Screenshots Play-Test |
 | 2026-10-30 | 2896306 | UI-Politur Zonen- und Rebirth-Fenster | **115/115 PASS**, 0 Fehler · per Klick geöffnet: Zonen-Kacheln + Markierung aktuelle Zone, Rebirth-Fortschritt 5,82M / 80M | Screenshots Play-Test |
 | 2026-10-30 | 480f12b | Phone-Simulation 844 × 390 + Touch (Daily, Zonen, Rebirth, Shop, Index) + Ziel-Leiste mit Kissen-Vorschau | alle Fenster vollständig sichtbar, Schließen-Knopf erreichbar · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
+| 2026-10-30 | a9c7824 | **Tutorial-Durchlauf als Neuspieler** (frischer Spielstand, Klicks auf echte Knöpfe) | alle 6 Schritte in ~3 Min., Abschluss-Banner + 2×-Boost · 2 UX-Funde behoben und erneut geprüft (Shop-Reiter passend, Puppe leuchtet + Marker, Marker verschwindet nach Treffer) · **115/115 PASS**, 0 Fehler, DataStore wieder `PlayerData_DEV` | Screenshots Play-Test |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
