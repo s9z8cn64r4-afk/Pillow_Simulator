@@ -57,6 +57,98 @@ function Bench.run(registry: any, opts: any): { [string]: any }
 		)
 		return { ok = ok, reason = why }
 	end
+	-- Testhilfe: Zeitraffer wie der Bot (BotRun.spec), aber OHNE Rücksetzen – für UI-Prüfungen in späteren
+	-- Spielphasen mit frischem Spielstand (Workspace-Attribut Environment = DEVFRESH…). Stoppt nach Rebirth
+	-- opts.untilRebirth oder – mit opts.stopBeforeRebirth – wenn dieser Rebirth gerade bezahlbar wäre.
+	if opts.mode == "fastforward" then
+		local Shared = game:GetService("ReplicatedStorage").Shared
+		local Pillows = require(Shared.Config.Pillows)
+		local Zones = require(Shared.Config.Zones)
+		local Progression = require(Shared.Config.Progression)
+		local Formulas = require(Shared.Util.Formulas)
+		local Stats, Shop, ZoneSvc, Rebirth =
+			registry.StatsService, registry.ShopService, registry.ZoneService, registry.RebirthService
+		local data = PD:get(player)
+		local target = opts.untilRebirth or 1
+		local sim = opts.simSeconds or 0
+		local log = {}
+		local function mark(text: string)
+			table.insert(log, ("%6.1f Min. %s"):format(sim / 60, text))
+		end
+		local function allZonesOpen(): boolean
+			for _, z in Zones.list do
+				if not data.unlockedZones[z.id] and z.rebirths <= data.rebirths then
+					return false
+				end
+			end
+			return true
+		end
+		local ticks = 0
+		while sim < 8 * 3600 do
+			local swings = 10 / Stats:cooldown(player)
+			PD:addFeathers(player, Stats:feathersPerSwing(player) * swings, "studio_test")
+			sim += 10
+			for _, z in Zones.list do
+				if not data.unlockedZones[z.id] then
+					if z.rebirths <= data.rebirths and data.feathers >= z.cost then
+						ZoneSvc:unlock(player, z.id)
+						mark("Zone " .. z.id)
+						ZoneSvc:teleport(player, z.id)
+					end
+					break
+				end
+			end
+			local cur = Pillows.byId[data.equippedPillow]
+			local best = nil
+			for _, pl in Pillows.list do
+				if
+					not data.ownedPillows[pl.id]
+					and data.unlockedZones[pl.zone]
+					and data.rebirths >= pl.rebirths
+					and pl.power / pl.speed > cur.power / cur.speed
+					and pl.cost <= data.feathers
+					and (not best or pl.power > best.power)
+				then
+					best = pl
+				end
+			end
+			if best then
+				Shop:buyPillow(player, best.id)
+				mark("Kissen " .. best.id)
+			end
+			for _ = 1, 25 do
+				local bought = false
+				for _, kind in { "featherPower", "swingSpeed" } do
+					local level = data.upgrades[kind]
+					local def = (Progression.upgrades :: any)[kind]
+					if level < def.maxLevel and Formulas.upgradeCost(kind, level) <= data.feathers * 0.5 then
+						Shop:buyUpgrade(player, kind)
+						bought = true
+					end
+				end
+				if not bought then
+					break
+				end
+			end
+			if allZonesOpen() and data.feathers >= Formulas.rebirthCost(data.rebirths) then
+				if opts.stopBeforeRebirth and data.rebirths + 1 >= target then
+					mark("Rebirth " .. (data.rebirths + 1) .. " bezahlbar – Stopp")
+					break
+				end
+				Rebirth:rebirth(player)
+				mark("Rebirth " .. data.rebirths)
+				task.wait(0.4)
+				if data.rebirths >= target then
+					break
+				end
+			end
+			ticks += 1
+			if ticks % 25 == 0 then
+				task.wait()
+			end
+		end
+		return { simSeconds = sim, log = table.concat(log, "\n"), rebirths = data.rebirths, rank = data.rank }
+	end
 	local before = snapshot(PD, player)
 	local out: { [string]: any } = {}
 
