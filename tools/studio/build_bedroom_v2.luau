@@ -152,12 +152,12 @@ pile.Name = "GiantPillowPile"
 pile.Parent = root
 local PILE = {
 	-- id, Skalierung, Position, Drehung (Grad)
-	{ "cotton", 7, Vector3.new(-56, 4, 54), Vector3.new(0, 20, 0) },
-	{ "striped", 6.5, Vector3.new(-44, 4, 58), Vector3.new(0, -15, 0) },
-	{ "fluffy", 6, Vector3.new(-58, 4, 38), Vector3.new(0, 40, 0) },
-	{ "heart", 5.5, Vector3.new(-52, 11, 50), Vector3.new(8, 65, -6) },
-	{ "worn", 5, Vector3.new(-58, 16, 56), Vector3.new(-10, 110, 12) },
-	{ "cloud", 4.5, Vector3.new(-46, 10, 46), Vector3.new(0, -30, 18) },
+	{ "cotton", 10, Vector3.new(-54, 6, 52), Vector3.new(0, 20, 0) },
+	{ "striped", 9, Vector3.new(-38, 5.5, 58), Vector3.new(0, -15, 0) },
+	{ "fluffy", 9, Vector3.new(-57, 5.5, 32), Vector3.new(0, 40, 0) },
+	{ "heart", 8, Vector3.new(-50, 16, 46), Vector3.new(8, 65, -6) },
+	{ "worn", 7.5, Vector3.new(-58, 23, 56), Vector3.new(-10, 110, 12) },
+	{ "cloud", 7, Vector3.new(-40, 14, 44), Vector3.new(0, -30, 18) },
 }
 for _, e in PILE do
 	local tpl = Pillows:FindFirstChild(e[1])
