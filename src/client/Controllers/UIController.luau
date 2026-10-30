@@ -881,6 +881,16 @@ function UIController:buildShop(root: Frame)
 				panel.Visible = false
 			end)
 		else
+			-- Tutorial: passenden Reiter öffnen (Aufgabe 2 = Feather Power → Upgrades, Aufgabe 4 = Kissen)
+			local st = State.state
+			local tut = st and st.tutorial
+			if tut and not tut.completed then
+				if tut.step == 1 then
+					show("upgrades")
+				elseif tut.step == 3 then
+					show("pillows")
+				end
+			end
 			panel.Visible = true
 			local fit = C.fitScale(panel, root)
 			pscale.Scale = 0.85 * fit
