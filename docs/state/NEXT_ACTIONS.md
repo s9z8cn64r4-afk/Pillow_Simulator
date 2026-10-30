@@ -9,4 +9,4 @@
 7. Wartet auf Owner: Code-Freigabe, Pass-/Produkt-IDs (#4, Preise stehen), Studio speichern, Hörprobe. Nach IDs: in `content.py` eintragen, Config erzeugen, Kauf im Dev-Place testen.
 8. Optional nach Owner-OK: Place-/Experience-Name auf „Pillow Legends“ ändern (macht der Owner im Creator Dashboard) und Trello-Board umbenennen.
 9. Owner hat zugesagt, Discord/Relay/Pässe gemeinsam einzurichten: sobald er im Browser-Bereich angemeldet ist (Discord, GitHub, Roblox, Cloudflare) → ich baue Server, Webhooks, Bot, Worker-Upload, Pässe; Geheimnisse trägt er selbst ein.
-10. Art-Pass (PS-43) Teil 1–3 fertig (Zonen, Props, Plüsch-Puppen, Portale; Owner: „Optik passt“). Nächste Ideen: übrige Fenster im Play-Test sichten (Shop, Zonen, Index, Rebirth) und polieren, Thumbnails/Icon (`docs/marketing/store-page.md`).
+10. Art-Pass (PS-43) Teil 1–3 fertig (Zonen, Props, Plüsch-Puppen, Portale; Owner: „Optik passt“). Fenster poliert (Daily, Shop, Index, Zonen, Rebirth; Settings ok). Nächste Ideen: HUD (Federzähler/Ziel-Leiste) und Phone-Gegenprüfung der geänderten Fenster, Thumbnails/Icon (`docs/marketing/store-page.md`).

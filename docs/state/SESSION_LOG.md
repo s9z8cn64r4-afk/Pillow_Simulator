@@ -12,6 +12,7 @@
 - Portale an allen 3 Durchgängen (beide Seiten): Rahmen in Zielzonen-Farbe, Leuchtschild mit Zonenname, Riesen-Kissen; Durchlaufen per Testlauf geprüft (Zone wechselt) → 115/115, 0 Fehler.
 - UI: Daily-Fenster ohne Leerraum (größere Kacheln/Schrift), Puppen-Schilder knapp über dem Plüsch und nur in der Nähe (≤ 45 Studs) – Screenshot im Play-Test.
 - UI: 3D-Kissen-Vorschau (ViewportFrame, `Components.pillowIcon`) in Shop-Zeilen und Pillow Index; nicht gesammelte Kissen als dunkle Silhouette → 115/115, 0 Fehler, Screenshots.
+- UI: Zonen-Fenster mit Zonen-Kachel (Symbol + Zonenfarbe), Multiplikator in Federfarbe, „📍 YOU ARE HERE“; Rebirth-Fenster mit Symbolen, farbigen Rahmen und Fortschrittsbalken bis zur Bedingung → 115/115, 0 Fehler, Screenshots.
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
