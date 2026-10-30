@@ -4,6 +4,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
 ### Changed
+- Seltenere Kissen sprühen beim Schlag mehr Federn und ab Rare farbige Funken; neue Zonen werden mit einem Banner gefeiert.
 - Bei Rank 2 leuchtet der AUTO-Knopf auf; neue Spieler sehen die tägliche Belohnung erst nach der Tutorial-Feier.
 - Tutorial: Shop öffnet direkt den passenden Reiter; bei „Puppe treffen“ leuchtet die nächste Puppe mit schwebendem Marker.
 - Die Ziel-Leiste unten zeigt das nächste Kissen als 3D-Vorschau.
