@@ -72,6 +72,7 @@
 | 2026-10-30 | a1da7c8 | Neuspieler bis Rank 2 (frischer Spielstand): AUTO-Hinweis + Daily-Zeitpunkt | Ring am AUTO-Knopf sichtbar, nach Klick weg · Daily öffnet ~25 s nach Tutorial-Ende (nicht mehr über der Feier) · **115/115 PASS**, 0 Fehler | Screenshot + Client-Prüfung |
 | 2026-10-30 | 2bed301 | Studio-Fotomodus (5 Szenen) + Umbau Kissen-Tool in Shared-Modul | alle 5 Szenen per Screenshot geprüft (HUD aus, Kamera fest, Kissen in der Hand, Federn) · Beenden stellt Kamera, HUD, Laufen wieder her · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
 | 2026-10-30 | 0fce8ce | Schlag-Effekte nach Seltenheit | Treffer auf Puppe mit Satin (Rare): 14 aktive Federn (10 × 1,4) + Funken-Emitter · **115/115 PASS**, 0 Fehler · Zonen-Banner mit frischem Spielstand geprüft (Kauf über `DevBench` zoneBuy, Prompt erscheint im automatisierten Fenster nicht) | Client-Messung |
+| 2026-10-30 | 7f937c8 | Kissen-Kauf-Banner mit 3D-Vorschau | frischer Spielstand: Cotton gekauft → Banner „NEW PILLOW! ● Cotton Pillow · Common“ mit Kissenbild · **115/115 PASS**, 0 Fehler | Screenshot Play-Test |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
