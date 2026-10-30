@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-30 (Sitzung 5): Persistenz-Stress 100 Zyklen, Server-Lastmessung (12 Spieler hochgerechnet), Art-Pass Zonen v2 für alle 4 Zonen inkl. generierter Props + Plüsch-Puppen + lebendiger Deko, Spielseiten-Entwurf – 115/115 Tests |
+| Letzte Sitzung | 2026-10-30 (Sitzung 5): Persistenz-Stress 100 Zyklen, Server-Lastmessung (12 Spieler hochgerechnet), Art-Pass Zonen v2 für alle 4 Zonen inkl. generierter Props + Plüsch-Puppen + lebendiger Deko, Spielseiten-Entwurf – 118/118 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -18,7 +18,7 @@
 | Bereich | Status |
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
-| Tests | **115/115** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
+| Tests | **118/118** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
 | Repo ↔ Studio | 90 Skripte in beiden; alle in Sitzung 5 geänderten Skripte per Hash identisch (Commit 48a1d43) `[VERIFIZIERT]` – Map/Props/Puppen nur im Place → Studio-Stand gespeichert laut Owner (30.10. abends) |
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus aus (Owner: keine Gruppe) |

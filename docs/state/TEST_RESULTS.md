@@ -73,6 +73,7 @@
 | 2026-10-30 | 2bed301 | Studio-Fotomodus (5 Szenen) + Umbau Kissen-Tool in Shared-Modul | alle 5 Szenen per Screenshot geprüft (HUD aus, Kamera fest, Kissen in der Hand, Federn) · Beenden stellt Kamera, HUD, Laufen wieder her · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
 | 2026-10-30 | 0fce8ce | Schlag-Effekte nach Seltenheit | Treffer auf Puppe mit Satin (Rare): 14 aktive Federn (10 × 1,4) + Funken-Emitter · **115/115 PASS**, 0 Fehler · Zonen-Banner mit frischem Spielstand geprüft (Kauf über `DevBench` zoneBuy, Prompt erscheint im automatisierten Fenster nicht) | Client-Messung |
 | 2026-10-30 | 7f937c8 | Kissen-Kauf-Banner mit 3D-Vorschau | frischer Spielstand: Cotton gekauft → Banner „NEW PILLOW! ● Cotton Pillow · Common“ mit Kissenbild · **115/115 PASS**, 0 Fehler | Screenshot Play-Test |
+| 2026-10-30 | aa454d5 | Unit `PillowTool.spec` (neu) + Rebirth-QA mit frischem Spielstand + Bestenlisten-Sichtbarkeit | **118/118 PASS** · Rebirth aus der Hotel-Suite: Teleport ins Kinderzimmer (z 290 → 40), Zone `bedroom`, Federn 0, Banner · Bestenlisten an der linken Wand frei | Konsole, Screenshots |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta

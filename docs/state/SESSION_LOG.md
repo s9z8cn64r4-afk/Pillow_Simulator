@@ -21,6 +21,9 @@
 - Owner: Studio gespeichert und Bilder gemacht (#8, laut Owner).
 - Game-Feel: Schlag-Effekte nach Seltenheit (Federn ×1–×2, ab Rare farbige Funken; Low VFX ohne Funken) `[VERIFIZIERT]` (Satin/Rare: 14 statt 10 Federn gemessen, 115/115); Zonen-Freischaltung mit Feier-Banner statt Toast `[VERIFIZIERT]` (frischer Spielstand, Kauf über `DevBench` mode zoneBuy = gleicher Server-Pfad wie der Prompt; Banner „NEW ZONE! Pajama Party Lounge · x2 feathers“).
 - Kissenkauf: jedes neue Kissen erscheint im Banner mit drehender 3D-Vorschau (Name · Seltenheit), Konfetti nur ab Epic `[VERIFIZIERT]` (frischer Spielstand, Cotton gekauft, Screenshot; Epic-Pfad gleicher Code), 115/115.
+- Fund beim Rundgang: Riesen-Kleiderschrank und Kissenberg verdeckten die Bestenlisten an der linken Kinderzimmer-Wand → Schrank neben das Bett, Kissenberg verschoben; Tafeln wieder frei (Screenshot).
+- Unit-Spec `PillowTool.spec` (3 Tests: Tool für alle 14 Kissen, Aura/Spur nach Seltenheit, Fallback) → **118/118**.
+- QA Rebirth mit frischem Spielstand (Zonen 2+3 gekauft, Rebirth in der Hotel-Suite): Teleport ins Kinderzimmer, Federn 0, Banner „REBIRTH 1! Feathers x1.50 forever“ `[VERIFIZIERT]`.
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
