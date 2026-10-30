@@ -505,4 +505,108 @@ for _, z in ZONES do
 	local skinned = skinDummies(model, z)
 	table.insert(report, ("%s %d, Puppen %d"):format(z.folder, count - before, skinned))
 end
+-- Durchgänge (Portal): Rahmen in den Farben der Zielzone, Leuchtschild mit Zonenname (Lampen funkeln),
+-- zwei Riesen-Kissen der Zielzone daneben. Anflugseite (vorige Zone) + Rückseite (Name der vorigen Zone).
+-- Vorhang, Stange und Preisschild (Barriere, ZoneController) bleiben unverändert.
+local ZoneConfig = require(game.ReplicatedStorage.Shared.Config.Zones)
+local function portal(root: Instance, doorZ: number, facing: number, target: any, label: string)
+	-- facing = Richtung der Raumseite (−1: Raum liegt bei kleinerem Z)
+	local m = Instance.new("Model")
+	m.Name = "Portal_" .. label:gsub("%W", "")
+	m.Parent = root
+	local zf = doorZ + facing * 1.6 -- vor der Wand
+	local TRIM = target.trim
+	local mat = target.trimMaterial or Enum.Material.SmoothPlastic
+	for _, side in { -1, 1 } do
+		part({ Name = "Post", Color = TRIM, Material = mat, Size = Vector3.new(3, 21, 2), Position = Vector3.new(side * 23, 10.5, zf) }, m)
+		part({ Name = "PostCap", Shape = Enum.PartType.Ball, Color = TRIM, Material = mat, Size = Vector3.new(3.6, 3.6, 3.6), Position = Vector3.new(side * 23, 22.5, zf) }, m)
+	end
+	part({ Name = "Lintel", Color = TRIM, Material = mat, Size = Vector3.new(49, 3, 2), Position = Vector3.new(0, 19.5, zf) }, m)
+	-- Leuchtschild
+	local board = part({
+		Name = "Sign",
+		Color = target.wall,
+		Size = Vector3.new(30, 7, 0.6),
+		CFrame = CFrame.lookAt(Vector3.new(0, 27, zf), Vector3.new(0, 27, zf + facing)),
+	}, m)
+	deco(board)
+	local sg = Instance.new("SurfaceGui")
+	sg.Face = Enum.NormalId.Front
+	sg.CanvasSize = Vector2.new(600, 140)
+	sg.LightInfluence = 0
+	sg.Parent = board
+	local tl = Instance.new("TextLabel")
+	tl.Size = UDim2.fromScale(1, 1)
+	tl.BackgroundTransparency = 1
+	tl.Font = Enum.Font.FredokaOne
+	tl.TextScaled = true
+	tl.Text = label
+	tl.TextColor3 = Color3.new(1, 1, 1)
+	tl.TextStrokeTransparency = 0
+	tl.TextStrokeColor3 = Color3.fromRGB(60, 40, 90)
+	tl.Parent = sg
+	local pad = Instance.new("UIPadding")
+	pad.PaddingLeft, pad.PaddingRight = UDim.new(0.05, 0), UDim.new(0.05, 0)
+	pad.PaddingTop, pad.PaddingBottom = UDim.new(0.12, 0), UDim.new(0.12, 0)
+	pad.Parent = tl
+	-- Lampenrand ums Schild
+	local bz = zf + facing * 0.5
+	local function bulb(x: number, y: number)
+		local b = deco(part({
+			Name = "Bulb",
+			Shape = Enum.PartType.Ball,
+			Material = Enum.Material.Neon,
+			Color = target.bulbs[1],
+			Size = Vector3.new(0.9, 0.9, 0.9),
+			Position = Vector3.new(x, y, bz),
+		}, m))
+		CollectionService:AddTag(b, "AmbientTwinkle")
+	end
+	for x = -14.5, 14.5, 2.9 do
+		bulb(x, 30.3)
+		bulb(x, 23.7)
+	end
+	for _, x in { -15.2, 15.2 } do
+		for y = 25.35, 28.65, 1.65 do
+			bulb(x, y)
+		end
+	end
+	-- Riesen-Kissen der Zielzone neben dem Durchgang
+	for i, side in { -1, 1 } do
+		local id = target.pile[i]
+		local tpl = Pillows:FindFirstChild(id)
+		if tpl and tpl:IsA("BasePart") then
+			local p = tpl:Clone()
+			p.Name = "PortalPillow"
+			p.Anchored = true
+			p.CanCollide = true
+			p.Size = tpl.Size * 4.5
+			p.CFrame = CFrame.new(side * 32, p.Size.Z / 2 + 0.5, doorZ + facing * (p.Size.Y / 2 + 1.5))
+				* CFrame.Angles(math.rad(-80 * facing), math.rad(side * 12), 0)
+			p.Parent = m
+			count += 1
+		end
+	end
+end
+
+local portals = 0
+for i = 1, #ZONES - 1 do
+	local a, b = ZONES[i], ZONES[i + 1]
+	local doorZ = a.cz + HALF
+	local aModel, bModel = Zones:FindFirstChild(a.folder), Zones:FindFirstChild(b.folder)
+	local aRoot = aModel and aModel:FindFirstChild("DecorV2")
+	local bRoot = bModel and bModel:FindFirstChild("DecorV2")
+	local nameB = ZoneConfig.byId[b.spawnId] and ZoneConfig.byId[b.spawnId].name or b.folder
+	local nameA = ZoneConfig.byId[a.spawnId] and ZoneConfig.byId[a.spawnId].name or a.folder
+	if aRoot then
+		portal(aRoot, doorZ, -1, b, nameB)
+		portals += 1
+	end
+	if bRoot then
+		portal(bRoot, doorZ, 1, a, nameA)
+		portals += 1
+	end
+end
+table.insert(report, ("Portale %d"):format(portals))
+
 return ("Zonen v2: %d Teile (%s), Wände %d hoch"):format(count, table.concat(report, ", "), WALL_H)
