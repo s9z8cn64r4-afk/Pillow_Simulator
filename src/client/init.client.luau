@@ -36,4 +36,8 @@ if game:GetService("RunService"):IsStudio() then
 	if probe then
 		(require(probe :: any) :: any).start()
 	end
+	local photo = dev and dev:FindFirstChild("PhotoMode")
+	if photo then
+		(require(photo :: any) :: any).start(registry)
+	end
 end
