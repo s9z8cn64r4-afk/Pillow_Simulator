@@ -84,7 +84,9 @@ function ZonesPanel.build(root: Instance)
 		for id, r in rows do
 			local isHere = id == cur
 			r.here.Visible = isHere
-			r.frame.BackgroundColor3 = if isHere then Theme.color.bgSoft:Lerp(Theme.color.success, 0.12) else Theme.color.bgSoft
+			r.frame.BackgroundColor3 = if isHere
+				then Theme.color.bgSoft:Lerp(Theme.color.success, 0.12)
+				else Theme.color.bgSoft
 		end
 	end
 	player:GetAttributeChangedSignal("Zone"):Connect(markHere)
