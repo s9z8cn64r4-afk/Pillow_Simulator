@@ -4,6 +4,9 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
 ### Changed
+- Rebirth-Knopf bekommt einen roten Punkt, sobald ein Rebirth bezahlbar ist.
+### Fixed
+- Seltenheits-Symbole für Epic und Legendary waren unsichtbar (jetzt ❖ und 👑).
 - Jedes neu gekaufte Kissen wird kurz groß als drehendes 3D-Modell gezeigt.
 - Seltenere Kissen sprühen beim Schlag mehr Federn und ab Rare farbige Funken; neue Zonen werden mit einem Banner gefeiert.
 - Bei Rank 2 leuchtet der AUTO-Knopf auf; neue Spieler sehen die tägliche Belohnung erst nach der Tutorial-Feier.

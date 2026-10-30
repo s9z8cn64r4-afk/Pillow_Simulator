@@ -24,6 +24,7 @@
 - Fund beim Rundgang: Riesen-Kleiderschrank und Kissenberg verdeckten die Bestenlisten an der linken Kinderzimmer-Wand → Schrank neben das Bett, Kissenberg verschoben; Tafeln wieder frei (Screenshot).
 - Unit-Spec `PillowTool.spec` (3 Tests: Tool für alle 14 Kissen, Aura/Spur nach Seltenheit, Fallback) → **118/118**.
 - QA Rebirth mit frischem Spielstand (Zonen 2+3 gekauft, Rebirth in der Hotel-Suite): Teleport ins Kinderzimmer, Federn 0, Banner „REBIRTH 1! Feathers x1.50 forever“ `[VERIFIZIERT]`.
+- **Spieldurchlauf im Zeitraffer bis Rebirth 2** (frischer Spielstand, `DevBench` fastforward = Bot-Logik ohne Rücksetzen, UI an Haltepunkten per Klick geprüft): Zone 2 15,5 Min., Rebirth 1 77,7 Min. (= BotRun), Rebirth 2 140,5 Min.; Rebirth 2 über den echten Rebirth-Knopf (Doppelklick) ausgelöst. Funde + behoben: (1) Epic-/Legendary-Symbole ✦ ♛ wurden nirgends angezeigt (Schrift kennt sie nicht) → ❖ und 👑 (Glyphen-Test im Spiel); (2) bezahlbarer Rebirth war leicht zu übersehen (Ziel-Leiste zeigt weiter Kissen) → roter Punkt am Rebirth-Knopf. Werkzeug-Fehler unterwegs gefunden: Zeitraffer ohne Warten auf Zonen-Erkennung lief ohne Zonen-Multiplikator (124 statt 78 Min.) → behoben. 118/118.
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
