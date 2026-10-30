@@ -15,7 +15,7 @@ Code-Wahrheit: `src/client/UI/Theme.luau`. Stil: weich, verspielt, Bonbonfarben,
 | `robux` | #00B06F + Robux-Symbol | ausschließlich Echtgeld-Käufe |
 | `feather` | #FFE27A | Federanzeige |
 | `stroke` | #1A1433 | Text-/Rand-Kontur |
-| Seltenheiten | Common #BEC4CC ● · Uncommon #78D68C ◆ · Rare #5AAAFF ★ · Epic #BE78FF ✦ · Legendary #FFC43C ♛ | immer Farbe **und** Symbol |
+| Seltenheiten | Common #BEC4CC ● · Uncommon #78D68C ◆ · Rare #5AAAFF ★ · Epic #BE78FF ❖ · Legendary #FFC43C 👑 | immer Farbe **und** Symbol |
 
 ## Typografie
 `FredokaOne` (Überschriften, Zahlen), `GothamSSm`/`BuilderSans` (Fließtext). Größen: 14 / 18 / 24 / 32 / 48 (Zähler). Text immer mit 2-px-Kontur `stroke`.

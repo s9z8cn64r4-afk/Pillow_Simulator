@@ -47,7 +47,7 @@ Einzige Währung. Kommazahl intern, Anzeige abgerundet mit Suffixen (K, M, B, T)
 | 12 | Starlight Pillow | Legendary | 36 K | 230 B | Zone 4, Rebirth 3 |
 | 13 | Dreamweaver Pillow | Legendary | 90 K | 1,6 T | Zone 4, Rebirth 5 |
 
-Kauf im Shop gegen Federn (deterministisch), Kissen bleiben beim Rebirth. Ab Rare leicht schnellerer Schwung (Tempo-Faktor 0,97–0,88). Seltenheit farbig **und** mit Symbol (● ◆ ★ ✦ ♛). Ab Epic Aura, ab Legendary eigener Trail. **Pillow Index:** Raster aller Kissen (gesehen/besessen/gesperrt mit Bedingung).
+Kauf im Shop gegen Federn (deterministisch), Kissen bleiben beim Rebirth. Ab Rare leicht schnellerer Schwung (Tempo-Faktor 0,97–0,88). Seltenheit farbig **und** mit Symbol (● ◆ ★ ❖ 👑 – ✦ und ♛ werden von der Roblox-Schrift nicht dargestellt, getestet 30.10.). Ab Epic Aura, ab Legendary eigener Trail. **Pillow Index:** Raster aller Kissen (gesehen/besessen/gesperrt mit Bedingung).
 
 ### 4.4 Upgrades
 Feather Power (+25 % je Stufe, bis 100) und Swing Speed (−0,05 s je Stufe, 6 Stufen). Werden beim Rebirth zurückgesetzt.

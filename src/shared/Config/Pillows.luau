@@ -40,8 +40,8 @@ local rarities = {
 	{ id = "Common", color = { 190, 196, 204 }, symbol = "●", order = 0 },
 	{ id = "Uncommon", color = { 120, 214, 140 }, symbol = "◆", order = 1 },
 	{ id = "Rare", color = { 90, 170, 255 }, symbol = "★", order = 2 },
-	{ id = "Epic", color = { 190, 120, 255 }, symbol = "✦", order = 3 },
-	{ id = "Legendary", color = { 255, 196, 60 }, symbol = "♛", order = 4 },
+	{ id = "Epic", color = { 190, 120, 255 }, symbol = "❖", order = 3 },
+	{ id = "Legendary", color = { 255, 196, 60 }, symbol = "👑", order = 4 },
 }
 
 return table.freeze({ list = table.freeze(list), byId = table.freeze(byId), rarities = rarities, starter = "worn" })
