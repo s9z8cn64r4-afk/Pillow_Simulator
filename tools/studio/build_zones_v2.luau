@@ -263,8 +263,37 @@ local function pile(root: Instance, z: any)
 	end
 end
 
+-- Generierte Hero-Props aus ReplicatedStorage.Assets.Props (Studio-Mesh-Generierung, siehe docs/art/asset-list.md)
+local Props = game.ReplicatedStorage.Assets:FindFirstChild("Props")
+local function prop(root: Instance, name: string, scale: number, groundPos: Vector3, yawDeg: number, collide: boolean)
+	local tpl = Props and Props:FindFirstChild(name)
+	if not tpl or not tpl:IsA("Model") then
+		return nil
+	end
+	local m = tpl:Clone()
+	m:ScaleTo(scale)
+	m:PivotTo(CFrame.Angles(0, math.rad(yawDeg), 0) * (m:GetPivot() - m:GetPivot().Position) + m:GetPivot().Position)
+	local cf, size = m:GetBoundingBox()
+	m:PivotTo(m:GetPivot() + (groundPos + Vector3.new(0, size.Y / 2, 0) - cf.Position))
+	for _, d in m:GetDescendants() do
+		if d:IsA("BasePart") then
+			d.Anchored = true
+			d.CanCollide = collide
+			d.CanTouch = false
+			if not collide then
+				d.CanQuery = false
+			end
+		end
+	end
+	m.Name = "Hero_" .. name
+	m.Parent = root
+	count += 1
+	return m
+end
+
 local EXTRAS = {}
 function EXTRAS.bedroom(root: Instance, z: any)
+	prop(root, "teddy", 1.4, Vector3.new(52, 0, z.cz - 28), -90, true)
 	local WOOD, WOOD_DARK, STAR = C(214, 170, 120), C(170, 122, 82), C(255, 224, 120)
 	local w = Instance.new("Model")
 	w.Name = "GiantWardrobe"
@@ -294,6 +323,18 @@ function EXTRAS.bedroom(root: Instance, z: any)
 	end
 end
 function EXTRAS.lounge(root: Instance, z: any)
+	-- Discokugel unter der mittleren Wimpelkette
+	local ball = prop(root, "disco", 1.3, Vector3.new(0, WALL_H - 22, z.cz), 0, false)
+	if ball then
+		local top = ball:GetBoundingBox().Position.Y + ball:GetExtentsSize().Y / 2
+		deco(part({
+			Name = "DiscoChain",
+			Color = C(200, 200, 210),
+			Material = Enum.Material.Metal,
+			Size = Vector3.new(0.4, WALL_H + 4 - top, 0.4),
+			Position = Vector3.new(0, (top + WALL_H + 4) / 2, z.cz),
+		}, root))
+	end
 	-- Wimpelkette (Party) quer über den Raum, unter den Lichterketten
 	local b = folder("Bunting", root)
 	local COLORS = { C(255, 140, 160), C(255, 210, 110), C(140, 210, 255), C(170, 235, 170), C(210, 170, 255) }
@@ -315,6 +356,7 @@ function EXTRAS.lounge(root: Instance, z: any)
 	end
 end
 function EXTRAS.hotel(root: Instance, z: any)
+	prop(root, "trolley", 1.3, Vector3.new(-32, 0, z.cz - 54), 20, true)
 	-- Riesen-Kronleuchter in der Mitte (Goldring + Kristalle)
 	local ch = Instance.new("Model")
 	ch.Name = "GiantChandelier"
@@ -343,6 +385,7 @@ function EXTRAS.hotel(root: Instance, z: any)
 	end
 end
 function EXTRAS.cloud(root: Instance, z: any)
+	prop(root, "moon", 3, Vector3.new(52, 0, z.cz - 30), -90, true)
 	-- Großer Mond + schwebende Sterne an der Rückwand-Höhe
 	local sky = folder("Sky", root)
 	deco(part({
