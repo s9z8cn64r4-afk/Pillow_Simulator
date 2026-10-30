@@ -66,6 +66,19 @@ if mpCheck then
 	end
 end
 
+-- Studio-Lastmessung: ServerStorage.DevBench:Invoke(opts) → Tests.perf.ServerBench (nur Studio, nie live)
+if RunService:IsStudio() then
+	local bench = Instance.new("BindableFunction")
+	bench.Name = "DevBench"
+	bench.OnInvoke = function(opts)
+		local tests = ServerStorage:FindFirstChild("Tests")
+		local perf = tests and tests:FindFirstChild("perf")
+		assert(perf and perf:FindFirstChild("ServerBench"), "Tests.perf.ServerBench fehlt")
+		return require(perf.ServerBench :: any).run(registry, opts)
+	end
+	bench.Parent = ServerStorage
+end
+
 -- Tests nur in Studio und nur wenn ausdrücklich angefordert (Attribut RunTestsOnStart am Server-Skript)
 if RunService:IsStudio() and not mpCheck and script:GetAttribute("RunTestsOnStart") then
 	local tests = ServerStorage:FindFirstChild("Tests")

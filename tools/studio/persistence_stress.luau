@@ -1,5 +1,5 @@
 -- Persistenz-Stresstest (MVP-Mindestanforderung „kein Datenverlust in 100 Join/Leave/Shutdown-Zyklen“).
--- Läuft im SERVER-DataModel (Play, Studio) per execute_luau, gegen den echten DataStore PlayerData_<ENV>,
+-- Läuft im SERVER-DataModel (Play, Studio): Dateiinhalt direkt als Code an execute_luau geben (loadstring gibt es dort nicht), gegen den echten DataStore PlayerData_<ENV>,
 -- aber NUR auf Test-Schlüsseln (Test_Stress_1..4) – nie auf Spieler-Schlüsseln.
 -- Ablauf je Zyklus (4 Schlüssel im Wechsel = 4 „Spieler“):
 --   Sitzung starten (Join) → Prüfsumme der geladenen Daten = erwartete Prüfsumme? → Daten ändern
