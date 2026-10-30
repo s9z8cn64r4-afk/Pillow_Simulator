@@ -111,11 +111,15 @@ function TutorialHint.build(root: Instance, targets: { [string]: GuiObject })
 		hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 		hl.Parent = best
 		table.insert(worldMarks, hl)
-		local _, size = best:GetBoundingBox()
+		local cf, size = best:GetBoundingBox()
+		local anchor = best.PrimaryPart or best:FindFirstChildWhichIsA("BasePart")
+		if not anchor then
+			return
+		end
 		local bb = Instance.new("BillboardGui")
-		bb.Adornee = best
+		bb.Adornee = anchor -- BillboardGui braucht ein Part als Adornee, kein Model
 		bb.Size = UDim2.fromOffset(60, 60)
-		bb.StudsOffsetWorldSpace = Vector3.new(0, size.Y / 2 + 4, 0)
+		bb.StudsOffsetWorldSpace = Vector3.new(0, cf.Position.Y + size.Y / 2 - anchor.Position.Y + 3, 0)
 		bb.AlwaysOnTop = true
 		bb.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 		local arrow = C.text({ text = "⬇", size = Theme.size.xl, color = Theme.color.feather })
