@@ -522,10 +522,14 @@ function UIController:build()
 	-- ---------- Binden an Zustand ----------
 	local lastFeathers = 0
 	local dailyAutoShown = false
+	local tutorialSeenIncomplete = false -- Tutorial lief in dieser Sitzung (Neuspieler)
 	local function refresh()
 		local s = State.state
 		if not s then
 			return
+		end
+		if s.tutorial and not s.tutorial.completed then
+			tutorialSeenIncomplete = true
 		end
 		C.reducedMotion = s.settings.reducedMotion
 		if s.feathers > lastFeathers and not s.settings.reducedMotion then
@@ -581,8 +585,9 @@ function UIController:build()
 		-- Willkommen-zurück: einmal pro Sitzung automatisch öffnen (nicht während des Tutorials)
 		if claimable and not dailyAutoShown and s.tutorial and s.tutorial.completed then
 			dailyAutoShown = true
-			task.delay(1.5, function()
-				if daily.claimable(State.state) and not daily.isOpen() then
+			-- Neuspieler: erst Abschluss-Feier und Auto-Swing-Hinweis wirken lassen, dann Daily
+			task.delay(if tutorialSeenIncomplete then 25 else 1.5, function()
+				if daily.claimable(State.state) and not daily.isOpen() and not shop.isOpen() then
 					openOnly(daily)
 				end
 			end)
