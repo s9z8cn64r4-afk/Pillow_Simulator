@@ -12,7 +12,12 @@ local Bench = {}
 
 local function snapshot(PD: any, player: Player)
 	local d = PD:get(player)
-	return { feathers = d.feathers, swings = d.stats.totalSwings, lifetime = d.lifetimeFeathers, rank = d.rank }
+	return {
+		feathers = d.feathers,
+		swings = d.stats.totalSwings,
+		lifetime = d.lifetimeFeathers,
+		rank = d.rank,
+	}
 end
 
 local function restore(PD: any, player: Player, s: any)
