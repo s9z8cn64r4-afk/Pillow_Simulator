@@ -30,6 +30,7 @@ local ZONES = {
 		frontDoor = true,
 		ownBack = "WallBack",
 		pile = { "cotton", "striped", "fluffy", "heart", "worn", "cloud" },
+		pileOffset = Vector3.new(6, 0, 10), -- Abstand zur Rebirth-Bestenliste an der linken Wand (z 19–41)
 		extras = "bedroom",
 		dummySkin = "dummy_bedroom",
 		spawnId = "bedroom",
@@ -266,7 +267,7 @@ local function pile(root: Instance, z: any)
 			p.CanCollide = true
 			p.Size = tpl.Size * L[1]
 			local r = L[3]
-			p.CFrame = CFrame.new(L[2] + Vector3.new(0, 0, z.cz)) * CFrame.Angles(math.rad(r.X), math.rad(r.Y), math.rad(r.Z))
+			p.CFrame = CFrame.new(L[2] + Vector3.new(0, 0, z.cz) + (z.pileOffset or Vector3.zero)) * CFrame.Angles(math.rad(r.X), math.rad(r.Y), math.rad(r.Z))
 			p.Parent = m
 			count += 1
 		end
@@ -308,7 +309,8 @@ function EXTRAS.bedroom(root: Instance, z: any)
 	local w = Instance.new("Model")
 	w.Name = "GiantWardrobe"
 	w.Parent = root
-	local wx, wz = -HALF + 7, z.cz + 12
+	-- hinten links neben dem Bett: die linke Wand bei z −7…41 gehört den Bestenlisten (LeaderboardService)
+	local wx, wz = -HALF + 7, z.cz - 45
 	part({ Name = "Body", Color = WOOD, Material = Enum.Material.Wood, Size = Vector3.new(12, 34, 30), Position = Vector3.new(wx, 17, wz) }, w)
 	part({ Name = "Top", Color = WOOD_DARK, Material = Enum.Material.Wood, Size = Vector3.new(13.5, 2, 32), Position = Vector3.new(wx, 35, wz) }, w)
 	for _, dz in { -7.3, 7.3 } do
