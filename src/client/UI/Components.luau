@@ -368,7 +368,9 @@ function Components.pillowIcon(pillowId: string, size: UDim2, bg: Color3?): any
 	if tpl and tpl:IsA("BasePart") then
 		local m = tpl:Clone()
 		for _, d in m:GetDescendants() do
-			if not (d:IsA("SpecialMesh") or d:IsA("SurfaceAppearance") or d:IsA("Decal") or d:IsA("Texture")) then
+			if
+				not (d:IsA("SpecialMesh") or d:IsA("SurfaceAppearance") or d:IsA("Decal") or d:IsA("Texture"))
+			then
 				d:Destroy() -- Auren, Trails, Partikel gehören nicht in die Vorschau
 			end
 		end
