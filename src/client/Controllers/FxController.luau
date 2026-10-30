@@ -10,6 +10,7 @@ local Shared = ReplicatedStorage:WaitForChild("Shared")
 local NetClient = require(Shared.Net.NetClient)
 local NumberFormat = require(Shared.Util.NumberFormat)
 local Assets = require(Shared.Config.Assets)
+local Pillows = require(Shared.Config.Pillows)
 
 local player = Players.LocalPlayer
 local MAX_FEATHERS = 60 -- Performance-Budget G.6: aktive Partikel pro Spieler
@@ -33,6 +34,67 @@ end
 local function handleOf(char: Model?): BasePart?
 	local tool = char and char:FindFirstChild("Pillow")
 	return tool and tool:FindFirstChild("Handle") :: BasePart?
+end
+
+-- Seltenheit sichtbar beim Schlag: mehr Federn, ab Rare farbige Funken (GDD Game-Feel)
+local RARITY_FX: { [string]: { mult: number, sparkle: number } } = {
+	Common = { mult = 1, sparkle = 0 },
+	Uncommon = { mult = 1.2, sparkle = 0 },
+	Rare = { mult = 1.4, sparkle = 6 },
+	Epic = { mult = 1.7, sparkle = 12 },
+	Legendary = { mult = 2, sparkle = 18 },
+}
+local rarityColor: { [string]: Color3 } = {}
+for _, r in Pillows.rarities do
+	rarityColor[r.id] = Color3.fromRGB(r.color[1], r.color[2], r.color[3])
+end
+
+local function rarityOf(char: Model?): string
+	local tool = char and char:FindFirstChild("Pillow")
+	local id = tool and tool:GetAttribute("PillowId")
+	local p = typeof(id) == "string" and Pillows.byId[id] or nil
+	return if p then p.rarity else "Common"
+end
+
+local sparkleEmitter: ParticleEmitter? = nil
+local sparkleAnchor: Part? = nil
+local function sparkle(origin: Vector3?, rarity: string)
+	local fx = RARITY_FX[rarity]
+	if not origin or not fx or fx.sparkle <= 0 or settings().lowVfx then
+		return
+	end
+	if not sparkleEmitter then
+		local anchor = Instance.new("Part")
+		anchor.Name = "SparkleAnchor"
+		anchor.Anchored = true
+		anchor.CanCollide = false
+		anchor.CanQuery = false
+		anchor.CanTouch = false
+		anchor.Transparency = 1
+		anchor.Size = Vector3.new(0.2, 0.2, 0.2)
+		anchor.Parent = fxFolder
+		local e = Instance.new("ParticleEmitter")
+		e.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+		e.Rate = 0
+		e.LightEmission = 0.8
+		e.Lifetime = NumberRange.new(0.35, 0.6)
+		e.Speed = NumberRange.new(6, 11)
+		e.SpreadAngle = Vector2.new(180, 180)
+		e.Drag = 4
+		e.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.45), NumberSequenceKeypoint.new(1, 0) })
+		e.Transparency = NumberSequence.new(0, 1)
+		e.Parent = anchor
+		sparkleAnchor, sparkleEmitter = anchor, e
+	end
+	local e = sparkleEmitter :: ParticleEmitter
+	;(sparkleAnchor :: Part).Position = origin
+	e.Color = ColorSequence.new(rarityColor[rarity] or Color3.new(1, 1, 1), Color3.new(1, 1, 1))
+	e:Emit(if settings().reducedMotion then math.ceil(fx.sparkle / 2) else fx.sparkle)
+end
+
+local function scaled(count: number, rarity: string): number
+	local fx = RARITY_FX[rarity]
+	return math.ceil(count * (if fx then fx.mult else 1))
 end
 
 local function takeFeather(): BasePart?
@@ -156,7 +218,9 @@ end
 -- Sofortiges Feedback beim eigenen Schlag (vor Serverantwort)
 function FxController:localSwing()
 	local h = handleOf(player.Character)
-	burst(h and h.Position, 6)
+	local r = rarityOf(player.Character)
+	burst(h and h.Position, scaled(6, r))
+	sparkle(h and h.Position, r)
 end
 
 function FxController:Start()
@@ -204,14 +268,17 @@ function FxController:Start()
 					else Color3.fromRGB(255, 226, 122)
 				floatText(handle, "+" .. NumberFormat.short(amount), color)
 			end
+			local r = rarityOf(char)
 			if dummy then
 				wobbleDummy(dummy)
-				burst(dummy:GetPivot().Position + Vector3.new(0, 2, 0), 10)
+				local at = dummy:GetPivot().Position + Vector3.new(0, 2, 0)
+				burst(at, scaled(10, r))
+				sparkle(at, r)
 			elseif isAuto then
-				burst(handle and handle.Position, 4)
+				burst(handle and handle.Position, scaled(4, r))
 			end
 		else
-			burst(handle and handle.Position, 3)
+			burst(handle and handle.Position, scaled(3, rarityOf(char)))
 			if dummy then
 				wobbleDummy(dummy)
 			end

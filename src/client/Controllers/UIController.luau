@@ -645,10 +645,8 @@ function UIController:build()
 				elseif payload.kind == "upgrade" then
 					self:toast("Upgrade bought!", Theme.color.success)
 				elseif payload.kind == "zone" then
-					self:toast(
-						("Zone unlocked: %s!"):format(Zones.byId[payload.id].name),
-						Theme.color.secondary
-					)
+					local z = Zones.byId[payload.id]
+					celebrate("NEW ZONE!", ("%s · x%d feathers"):format(z.name, z.multiplier), Theme.color.secondary)
 				end
 			else
 				self:toast(REASONS[payload.reason] or "Not possible right now.", Theme.color.danger)
