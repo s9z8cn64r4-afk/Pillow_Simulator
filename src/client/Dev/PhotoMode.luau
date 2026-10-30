@@ -195,11 +195,13 @@ local function apply(i: number)
 	if registry and registry.LightingController then
 		registry.LightingController:apply(scene.zone, true)
 	end
-	print(("[PHOTO] Szene %d/%d: %s – jetzt Screenshot machen (N = weiter, P = Ende)"):format(
-		i,
-		#PhotoMode.SCENES,
-		scene.name
-	))
+	print(
+		("[PHOTO] Szene %d/%d: %s – jetzt Screenshot machen (N = weiter, P = Ende)"):format(
+			i,
+			#PhotoMode.SCENES,
+			scene.name
+		)
+	)
 end
 
 local function stop()
