@@ -7,6 +7,7 @@ local ORDER = {
 	"SoundController",
 	"ZoneController",
 	"LightingController",
+	"AmbientController",
 	"UIController",
 }
 

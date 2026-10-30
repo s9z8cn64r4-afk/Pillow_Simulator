@@ -4,6 +4,7 @@
 -- (Rückseite geteilter Wände bekommt die Farbe der jeweiligen Zone), Fuß- und Zierleiste, Lichter je Zonenstil,
 -- ein bekletterbarer Riesen-Kissenberg aus den echten Kissenmodellen, Extras je Zone.
 -- Unverändert: Böden, Puppen, Spawns, Zonen-Volumen, Durchgänge (30 × 16) und Barrieren.
+local CollectionService = game:GetService("CollectionService")
 local Zones = workspace.Map.Zones
 local Pillows = game.ReplicatedStorage.Assets.Pillows
 
@@ -203,7 +204,7 @@ local function lights(root: Instance, z: any)
 				for i = 0, n do
 					local a = i / n
 					local y = WALL_H - 6 - 5 * (1 - (2 * a - 1) ^ 2)
-					deco(part({
+					local bulb = deco(part({
 						Name = "Bulb",
 						Shape = Enum.PartType.Ball,
 						Material = Enum.Material.Neon,
@@ -211,6 +212,7 @@ local function lights(root: Instance, z: any)
 						Size = Vector3.new(1.3, 1.3, 1.3),
 						Position = at(f, t0 + 66 * a, y, 1.2),
 					}, lf))
+					CollectionService:AddTag(bulb, "AmbientTwinkle")
 				end
 			end
 		end
@@ -326,6 +328,7 @@ function EXTRAS.lounge(root: Instance, z: any)
 	-- Discokugel unter der mittleren Wimpelkette
 	local ball = prop(root, "disco", 1.3, Vector3.new(0, WALL_H - 22, z.cz), 0, false)
 	if ball then
+		CollectionService:AddTag(ball, "AmbientSpin") -- dreht sich lokal (AmbientController)
 		local top = ball:GetBoundingBox().Position.Y + ball:GetExtentsSize().Y / 2
 		deco(part({
 			Name = "DiscoChain",
@@ -385,7 +388,7 @@ function EXTRAS.hotel(root: Instance, z: any)
 	end
 end
 function EXTRAS.cloud(root: Instance, z: any)
-	prop(root, "moon", 3, Vector3.new(52, 0, z.cz - 30), -90, true)
+	prop(root, "moon", 4.5, Vector3.new(52, 0, z.cz - 30), -90, true)
 	-- Großer Mond + schwebende Sterne an der Rückwand-Höhe
 	local sky = folder("Sky", root)
 	deco(part({
