@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-30 (Sitzung 5): Persistenz-Stress 100 Zyklen, Server-Lastmessung (12 Spieler hochgerechnet), Art-Pass Zonen v2 für alle 4 Zonen, Spielseiten-Entwurf – 115/115 Tests |
+| Letzte Sitzung | 2026-10-30 (Sitzung 5): Persistenz-Stress 100 Zyklen, Server-Lastmessung (12 Spieler hochgerechnet), Art-Pass Zonen v2 für alle 4 Zonen inkl. generierter Props + Plüsch-Puppen + lebendiger Deko, Spielseiten-Entwurf – 115/115 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |

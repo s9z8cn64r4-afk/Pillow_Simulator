@@ -25,10 +25,15 @@
 | SFX purchase | Audio | Creator Store „bling_diamond_pickup_2“ (thienbao2109) | 4612374393 | Creator Store, kostenlos | – | lädt ✔, Hörprobe ausstehend |
 | SFX rankUp | Audio | Creator Store „mixkit-achievement-bell-600“ (vincenzo145374) | 103516326607012 | Creator Store, kostenlos (Mixkit-Ursprung) | – | lädt ✔, Hörprobe ausstehend |
 | SFX click | Audio | Creator Store „ui-simple-button-click“ (AmbientSorcery) | 88442833509532 | Creator Store, kostenlos | – | lädt ✔, Hörprobe ausstehend |
+| Props.teddy | Model (MeshPart) | Studio-Mesh-Generierung (2026-10-30, „giant cute plush teddy bear…“) | Asset 137220455760607 | eigene Generierung | ≤ 6.000 Tris | im Einsatz: Kinderzimmer (Skalierung 1,4) |
+| Props.disco | Model (MeshPart) | Studio-Mesh-Generierung (2026-10-30, „giant colorful disco ball…“) | Asset 91526004127023 | eigene Generierung | ≤ 4.000 Tris | im Einsatz: Lounge, dreht sich lokal |
+| Props.trolley | Model (MeshPart) | Studio-Mesh-Generierung (2026-10-30, „luxury hotel luggage trolley…“) | Asset 115953794438689 | eigene Generierung | ≤ 6.000 Tris | im Einsatz: Hotel-Suite |
+| Props.moon | Model (MeshPart) | Studio-Mesh-Generierung (2026-10-30, „giant golden crescent moon with a sleepy smiling face…“) | Asset 108763173804142 | eigene Generierung | ≤ 4.000 Tris | im Einsatz: Wolkenreich (Skalierung 4,5) |
+| Props.dummy_bedroom / _lounge / _hotel / _cloud | Model (MeshPart) | Studio-Mesh-Generierung (2026-10-30, „cute plush training dummy…“ je Zone) | Assets 100160026922239 · 73554780908635 · 99047813154474 · 124886886971106 | eigene Generierung | ≤ 3.000 Tris | im Einsatz: Puppen-Optik je Zone (an Trefferkörper geschweißt) |
 
 ## Verworfen
 - Feder-Decals aus dem Creator Store (242842527, 1214661135, 2860102028, 15328748484, 3095530026): Bilder anderer Ersteller ließen sich im Spiel nicht laden (`AssetFetchStatus.Failure`) → ersetzt durch eigenes 3D-Federmodell.
 
 ## Hinweis
 Generierte Modelle liegen nur im Place (nicht im Repo). Sicherung: Place speichern. Import/Normalisierung: `tools/studio/import_generated_pillows.luau` (Länge 2,4 Studs, Höhe 0,9–1,3, Attribute `RawSize`/`LongAxisZ`/`Source`); Sichtprüfung: `tools/studio/pillow_lineup.luau`.
-Generierung: nur **sequenziell** – parallele async-Aufträge scheiterten alle („Unable to generate Model“).
+Generierung: am 27.10. scheiterten parallele async-Aufträge („Unable to generate Model“); am 30.10. liefen je 4 parallele Aufträge erfolgreich. Platzierung der Props/Puppen: `tools/studio/build_zones_v2.luau` (liest `ReplicatedStorage.Assets.Props`).

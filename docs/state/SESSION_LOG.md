@@ -8,6 +8,7 @@
 - Server-Lastmessung (`DevBench`, nur Studio): 12 Spieler im Maximaltempo hochgerechnet → 59,9 FPS `[VERIFIZIERT]`.
 - Art-Pass Zonen v2 (PS-43) für alle 4 Zonen: höhere Wände, Tapete, Leisten, Lichter, Riesen-Kissenberg, Extras; Vorher/Nachher-Screenshots; 115/115 Tests.
 - Spielseiten-Entwurf (Titel, Beschreibung, Icon/Thumbnail-Plan) `docs/marketing/store-page.md`.
+- Owner: „Optik passt“ → Art-Pass Teil 2: 8 generierte Modelle (Teddy, Discokugel, Gepäckwagen, Mond, 4 Plüsch-Puppen), Puppen-Optik je Zone ohne Änderung der Trefferlogik, `AmbientController` (Discokugel dreht, Lichter funkeln; Reduced Motion geprüft) → 115/115, 0 Fehler.
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
