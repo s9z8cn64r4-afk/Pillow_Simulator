@@ -32,8 +32,8 @@ PhotoMode.SCENES = {
 		pillow = "dream",
 		char = Vector3.new(0, 3, -6),
 		face = Vector3.new(0, 3, 10),
-		cam = Vector3.new(1.5, 5.2, 3.5),
-		look = Vector3.new(0, 4, -6),
+		cam = Vector3.new(1.8, 5.8, 3),
+		look = Vector3.new(0, 4.6, -6),
 		fov = 45,
 	},
 	{
@@ -80,6 +80,25 @@ local photoPart: BasePart? = nil
 local hiddenTools: { Tool } = {}
 local loopToken = 0
 local registry: any = nil
+local camTarget: CFrame? = nil
+local camFov = 70
+local CAM_BIND = "PhotoModeCamera"
+
+-- Kamera jedes Frame festhalten (das Standard-Kameraskript setzt sie sonst z. B. nach Respawn zurück)
+local function holdCamera(on: boolean)
+	RunService:UnbindFromRenderStep(CAM_BIND)
+	if not on then
+		return
+	end
+	RunService:BindToRenderStep(CAM_BIND, Enum.RenderPriority.Camera.Value + 1, function()
+		local cam = workspace.CurrentCamera
+		if camTarget then
+			cam.CameraType = Enum.CameraType.Scriptable
+			cam.CFrame = camTarget
+			cam.FieldOfView = camFov
+		end
+	end)
+end
 
 local function character(): Model?
 	return Players.LocalPlayer.Character
@@ -188,10 +207,9 @@ local function apply(i: number)
 		hum.JumpPower = 0
 	end
 	holdPillow(char, scene.pillow)
-	local cam = workspace.CurrentCamera
-	cam.CameraType = Enum.CameraType.Scriptable
-	cam.FieldOfView = scene.fov or 70
-	cam.CFrame = CFrame.lookAt(scene.cam, scene.look)
+	camTarget = CFrame.lookAt(scene.cam, scene.look)
+	camFov = scene.fov or 70
+	holdCamera(true)
 	if registry and registry.LightingController then
 		registry.LightingController:apply(scene.zone, true)
 	end
@@ -209,6 +227,8 @@ local function stop()
 	loopToken += 1
 	clearTool()
 	setHud(true)
+	holdCamera(false)
+	camTarget = nil
 	local cam = workspace.CurrentCamera
 	cam.CameraType = Enum.CameraType.Custom
 	cam.FieldOfView = 70
