@@ -49,6 +49,9 @@ Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Kn
 3. In Roblox „Allow HTTP Requests“ einschalten und die Secrets `relay_url` + `relay_token` anlegen.
 Hinweis: Webhook-URLs und Token **nicht** an mich schicken – nur dort eintragen.
 
+## #8 (2026-10-30) – offen, vor Closed Beta empfohlen
+**Icon + Vorschaubilder für die Spielseite** (~10 Min.): Fotomodus in Studio (Taste **P**, dann **N**) – Anleitung in `docs/marketing/store-page.md`. Bilder im Creator Dashboard hochladen (Icon 512 × 512, Thumbnails 1920 × 1080), dazu Titel „Pillow Legends“ und die Beschreibung von dort.
+
 ## #7 (2026-10-27) – offen, vor Beta-Ende / Open Beta
 **Community-Discord (PS-38)** – Struktur, Texte, AutoMod und Moderationsleitfaden sind fertig; das Einrichten läuft per GitHub Action. Schritte (~10 Min., nur Browser): `tools/discord-setup/README.md` – Server anlegen + Community-Modus, Bot anlegen und einladen, Token als GitHub-Secret `DISCORD_BOT_TOKEN`, Action „Discord Setup“ starten. Token nicht an mich schicken.
 Alternativ von Hand: **Discord-Vorlage** (Doc mit allen Rollen, Kanälen, Rechten, AutoMod-Regeln und Texten zum Einfügen, plus Log-Server und Speichern als Servervorlage): https://claude.ai/artifact/Pwr6S9dsnFVXB9QyKmZfB5

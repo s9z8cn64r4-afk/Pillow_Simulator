@@ -29,7 +29,7 @@
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
 | Server-Last | 12 Spieler hochgerechnet (40 Schläge/s): Heartbeat 59,9 FPS `[VERIFIZIERT]` (Studio, `DevBench`); echte 12-Spieler-Messung in der Beta |
 | Sicherheit | Exploit-Suite v2 über echte Remotes `[VERIFIZIERT]` (37 Angriffe, 13 Remotes, Kick bei 200) |
-| Pre-Launch-Marketing | Plan, Posts, Short-Skripte, Spielseite (`store-page.md`) `[ENTWURF]` (`docs/marketing/`, Posten durch Owner; Name Pillow Legends eingesetzt) |
+| Pre-Launch-Marketing | Plan, Posts, Short-Skripte, Spielseite (`store-page.md`) `[ENTWURF]` + Studio-Fotomodus für Icon/Thumbnails `[VERIFIZIERT]` (`docs/marketing/`, Posten durch Owner; Name Pillow Legends eingesetzt) |
 | PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); Discord-Vorlage (Doc, manueller Weg) `[ENTWURF]` https://claude.ai/artifact/Pwr6S9dsnFVXB9QyKmZfB5; live `[BLOCKIERT]` (Owner #7) |
 | PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
@@ -59,7 +59,7 @@ Siehe `NEXT_ACTIONS.md`.
 ## Offene Owner-Entscheidungen / -Aktionen
 Anleitung für alle Schritte: https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
 
-Mehrspielertest (#3) · **Studio speichern (Art-Pass v2!)** · Owner richtet Discord/Relay/Pässe mit mir im Browser ein (angemeldet sein: Discord, GitHub, Roblox, Cloudflare) · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Mehrspielertest (#3) · **Studio speichern (Art-Pass v2!)** · Icon + Thumbnails per Fotomodus (#8) · Owner richtet Discord/Relay/Pässe mit mir im Browser ein (angemeldet sein: Discord, GitHub, Roblox, Cloudflare) · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

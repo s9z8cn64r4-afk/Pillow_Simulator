@@ -26,6 +26,13 @@ Found a bug or have an idea? Use the 💬 Feedback button in the settings!
 - Fragebogen Inhaltsreife (Maturity): kein Gewalt-/Blut-Inhalt außer cartoonhaftem Kissenschlagen → erwartbar „Minimal“; Fragebogen ehrlich ausfüllen (Owner)
 - Geräte: Computer, Phone, Tablet (Konsole erst nach Gamepad-Test auf echter Konsole)
 
+## Fotomodus in Studio (fertig, für die Aufnahmen)
+1. Studio-Fenster maximieren (je größer, desto schärfer die Bilder), oben **Test → Play**.
+2. Warten, bis das Spiel geladen ist, dann **P** drücken → Szene 1 (Icon). Die Anzeige verschwindet, die Figur schwingt das Kissen in Schleife, Federn fliegen.
+3. Screenshot machen (Windows: **Win + Shift + S**, Mac: **Cmd + Shift + 4**). Fürs Icon einen quadratischen Ausschnitt um Figur + Kissen wählen.
+4. **N** = nächste Szene (2 Kinderzimmer · 3 Lounge · 4 Hotel · 5 Wolkenreich), **B** = zurück, **P** = Fotomodus beenden.
+Der Fotomodus gibt es nur in Studio, verändert keinen Spielstand und zeigt nur echte Spielinhalte (`src/client/Dev/PhotoMode.luau`).
+
 ## Icon (512 × 512) und Thumbnails (1920 × 1080)
 Roblox-Regel: Bilder müssen das Spiel korrekt zeigen. Aufnahme im Play-Test, Studio-Fenster maximiert, UI aus (Einstellungen → UI-Größe klein oder Screenshot vor dem Öffnen von Menüs).
 | Bild | Motiv | Vorbereitung |

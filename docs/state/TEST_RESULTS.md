@@ -70,6 +70,7 @@
 | 2026-10-30 | 480f12b | Phone-Simulation 844 × 390 + Touch (Daily, Zonen, Rebirth, Shop, Index) + Ziel-Leiste mit Kissen-Vorschau | alle Fenster vollständig sichtbar, Schließen-Knopf erreichbar · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
 | 2026-10-30 | a9c7824 | **Tutorial-Durchlauf als Neuspieler** (frischer Spielstand, Klicks auf echte Knöpfe) | alle 6 Schritte in ~3 Min., Abschluss-Banner + 2×-Boost · 2 UX-Funde behoben und erneut geprüft (Shop-Reiter passend, Puppe leuchtet + Marker, Marker verschwindet nach Treffer) · **115/115 PASS**, 0 Fehler, DataStore wieder `PlayerData_DEV` | Screenshots Play-Test |
 | 2026-10-30 | a1da7c8 | Neuspieler bis Rank 2 (frischer Spielstand): AUTO-Hinweis + Daily-Zeitpunkt | Ring am AUTO-Knopf sichtbar, nach Klick weg · Daily öffnet ~25 s nach Tutorial-Ende (nicht mehr über der Feier) · **115/115 PASS**, 0 Fehler | Screenshot + Client-Prüfung |
+| 2026-10-30 | 2bed301 | Studio-Fotomodus (5 Szenen) + Umbau Kissen-Tool in Shared-Modul | alle 5 Szenen per Screenshot geprüft (HUD aus, Kamera fest, Kissen in der Hand, Federn) · Beenden stellt Kamera, HUD, Laufen wieder her · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta
