@@ -97,7 +97,7 @@ local function rollingCounter(label: TextLabel)
 	end
 end
 
-local function nextGoal(s: any): (string, number, number)
+local function nextGoal(s: any): (string, number, number, string?)
 	-- Günstigstes noch nicht gekauftes, verfügbares Kissen oder nächste Zone
 	local best: any = nil
 	for _, p in Pillows.list do
@@ -115,7 +115,7 @@ local function nextGoal(s: any): (string, number, number)
 		end
 	end
 	if best and (not zoneGoal or best.cost <= zoneGoal.cost) then
-		return "Next: " .. best.name, s.feathers, best.cost
+		return "Next: " .. best.name, s.feathers, best.cost, best.id
 	elseif zoneGoal then
 		return "Next: " .. zoneGoal.name, s.feathers, zoneGoal.cost
 	end
@@ -367,6 +367,32 @@ function UIController:build()
 	local goalBar, setGoal = C.progressBar(UDim2.new(1, -24, 0, 14), Theme.color.feather)
 	goalBar.Position = UDim2.fromOffset(12, 40)
 	goalBar.Parent = goal
+	-- Ist das Ziel ein Kissen: 3D-Vorschau links, Leiste wird breiter
+	local goalIconId: string? = nil
+	local goalIcon: any = nil
+	local function setGoalIcon(id: string?)
+		if id == goalIconId then
+			return
+		end
+		goalIconId = id
+		if goalIcon then
+			goalIcon.frame:Destroy()
+			goalIcon = nil
+		end
+		local p = id and Pillows.byId[id]
+		if p then
+			local ri = rarityInfo[p.rarity]
+			goalIcon = C.pillowIcon(p.id, UDim2.fromOffset(52, 52), ri and ri.color)
+			goalIcon.frame.Position = UDim2.fromOffset(6, 6)
+			goalIcon.frame.Parent = goal
+		end
+		local off = if goalIcon then 62 else 0
+		goal.Size = UDim2.fromOffset(340 + off, 64)
+		goalLabel.Position = UDim2.fromOffset(8 + off, 4)
+		goalLabel.Size = UDim2.new(1, -16 - off, 0, 30)
+		goalBar.Position = UDim2.fromOffset(12 + off, 40)
+		goalBar.Size = UDim2.new(1, -24 - off, 0, 14)
+	end
 
 	-- Toasts (oben Mitte, unter Rank)
 	toastStack = make("Frame", {
@@ -479,7 +505,8 @@ function UIController:build()
 		else
 			setRank(1)
 		end
-		local text, have, need = nextGoal(s)
+		local text, have, need, goalPillow = nextGoal(s)
+		setGoalIcon(goalPillow)
 		goalLabel.Text = if have >= need
 			then ("%s  –  ready! (%s)"):format(text, NumberFormat.short(need))
 			else ("%s  (%s / %s)"):format(text, NumberFormat.short(have), NumberFormat.short(need))
