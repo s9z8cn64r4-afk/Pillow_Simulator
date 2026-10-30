@@ -27,7 +27,7 @@ function IndexPanel.build(root: Instance)
 	grid.CanvasSize = UDim2.new()
 	grid.Parent = m.body
 	local layout = Instance.new("UIGridLayout")
-	layout.CellSize = UDim2.fromOffset(140, 110)
+	layout.CellSize = UDim2.fromOffset(140, 150)
 	layout.CellPadding = UDim2.fromOffset(8, 8)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = grid
@@ -45,20 +45,25 @@ function IndexPanel.build(root: Instance)
 		f.Parent = grid
 		C.corner(f)
 		local stroke = C.stroke(f, 3, rarity[p.rarity].color)
+		local icon = C.pillowIcon(p.id, UDim2.fromOffset(84, 70), rarity[p.rarity].color)
+		icon.frame.AnchorPoint = Vector2.new(0.5, 0)
+		icon.frame.Position = UDim2.new(0.5, 0, 0, 6)
+		icon.frame.Parent = f
 		local sym =
-			C.text({ text = rarity[p.rarity].symbol, size = Theme.size.lg, color = rarity[p.rarity].color })
-		sym.Size = UDim2.new(1, 0, 0, 40)
+			C.text({ text = rarity[p.rarity].symbol, size = Theme.size.sm, color = rarity[p.rarity].color })
+		sym.Position = UDim2.fromOffset(6, 4)
+		sym.Size = UDim2.fromOffset(24, 24)
 		sym.Parent = f
 		local name = C.text({ text = p.name, size = Theme.size.xs })
-		name.Position = UDim2.fromOffset(4, 40)
+		name.Position = UDim2.fromOffset(4, 80)
 		name.Size = UDim2.new(1, -8, 0, 34)
 		name.Parent = f
 		local state =
 			C.text({ text = "", size = Theme.size.xs, font = Theme.font.body, color = Theme.color.muted })
-		state.Position = UDim2.fromOffset(4, 76)
+		state.Position = UDim2.fromOffset(4, 116)
 		state.Size = UDim2.new(1, -8, 0, 28)
 		state.Parent = f
-		cards[p.id] = { frame = f, stroke = stroke, state = state, name = name, pillow = p }
+		cards[p.id] = { frame = f, stroke = stroke, state = state, name = name, pillow = p, icon = icon }
 	end
 
 	local api = {}
@@ -72,6 +77,7 @@ function IndexPanel.build(root: Instance)
 				c.state.Text = "OWNED"
 				c.state.TextColor3 = Theme.color.success
 				c.frame.BackgroundTransparency = 0
+				c.icon.setSilhouette(false)
 			else
 				local need = if s.rebirths < p.rebirths
 					then ("🔒 Rebirth %d"):format(p.rebirths)
@@ -80,6 +86,7 @@ function IndexPanel.build(root: Instance)
 				c.state.Text = need
 				c.state.TextColor3 = Theme.color.muted
 				c.frame.BackgroundTransparency = 0.35
+				c.icon.setSilhouette(true) -- noch nicht gesammelt: nur die Form
 			end
 		end
 		progress.Text = ("Collected %d / %d"):format(owned, #Pillows.list)

@@ -742,6 +742,14 @@ function UIController:buildShop(root: Frame)
 		local ri = rarityInfo[p.rarity]
 		name.Text = ("%s %s"):format(ri.symbol, p.name)
 		name.TextColor3 = ri.color
+		-- 3D-Vorschau links, Text rückt nach rechts
+		local icon = C.pillowIcon(p.id, UDim2.fromOffset(62, 62), ri.color)
+		icon.frame.Position = UDim2.fromOffset(4, 4)
+		icon.frame.Parent = name.Parent
+		name.Position = UDim2.fromOffset(74, 4)
+		name.Size = UDim2.new(1, -260, 0, 28)
+		info.Position = UDim2.fromOffset(74, 36)
+		info.Size = UDim2.new(1, -260, 0, 24)
 		btn.button.Activated:Connect(function()
 			local s = State.state
 			if not s then

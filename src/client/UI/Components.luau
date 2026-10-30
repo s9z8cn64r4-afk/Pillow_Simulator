@@ -347,4 +347,49 @@ function Components.tooltip(target: GuiObject, text: string)
 	end)
 end
 
+-- 3D-Vorschau eines Kissens (ViewportFrame, kein Skript, keine Physik). silhouette = dunkle Form (noch nicht
+-- gesammelt). Gibt { frame, setSilhouette(bool) } zurück. Fehlt das Modell, bleibt die Fläche leer.
+local pillowFolder: Instance? = nil
+function Components.pillowIcon(pillowId: string, size: UDim2, bg: Color3?): any
+	local vp = Instance.new("ViewportFrame")
+	vp.Size = size
+	vp.BackgroundColor3 = bg or Theme.color.bg
+	vp.BackgroundTransparency = if bg then 0.55 else 1
+	vp.Ambient = Color3.fromRGB(200, 200, 210)
+	vp.LightColor = Color3.fromRGB(255, 250, 240)
+	vp.LightDirection = Vector3.new(-1, -1.5, -1)
+	Components.corner(vp)
+	if not pillowFolder then
+		local assets = game:GetService("ReplicatedStorage"):FindFirstChild("Assets")
+		pillowFolder = assets and assets:FindFirstChild("Pillows")
+	end
+	local tpl = pillowFolder and pillowFolder:FindFirstChild(pillowId)
+	local model: BasePart? = nil
+	if tpl and tpl:IsA("BasePart") then
+		local m = tpl:Clone()
+		for _, d in m:GetDescendants() do
+			if not (d:IsA("SpecialMesh") or d:IsA("SurfaceAppearance") or d:IsA("Decal") or d:IsA("Texture")) then
+				d:Destroy() -- Auren, Trails, Partikel gehören nicht in die Vorschau
+			end
+		end
+		m.Anchored = true
+		m.CFrame = CFrame.Angles(math.rad(-18), math.rad(30), math.rad(8))
+		m.Parent = vp
+		model = m
+		local cam = Instance.new("Camera")
+		cam.FieldOfView = 30
+		local r = m.Size.Magnitude
+		cam.CFrame = CFrame.lookAt(Vector3.new(0, r * 0.35, r * 1.75), Vector3.zero)
+		cam.Parent = vp
+		vp.CurrentCamera = cam
+	end
+	local api: any = { frame = vp }
+	function api.setSilhouette(on: boolean)
+		vp.ImageColor3 = if on then Color3.fromRGB(25, 20, 45) else Color3.new(1, 1, 1)
+		vp.ImageTransparency = if on then 0.25 else 0
+	end
+	api.model = model
+	return api
+end
+
 return Components
