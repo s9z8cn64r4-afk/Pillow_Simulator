@@ -20,7 +20,7 @@ local function rewardText(def: any): string
 end
 
 function DailyPanel.build(root: Instance)
-	local m = C.modal(root, "DAILY REWARD", UDim2.fromOffset(640, 380))
+	local m = C.modal(root, "DAILY REWARD", UDim2.fromOffset(640, 340))
 	local title = m.panel:FindFirstChildWhichIsA("TextLabel") :: TextLabel
 
 	local sub = C.text({
@@ -35,10 +35,10 @@ function DailyPanel.build(root: Instance)
 	local row = Instance.new("Frame")
 	row.BackgroundTransparency = 1
 	row.Position = UDim2.fromOffset(0, 32)
-	row.Size = UDim2.new(1, 0, 0, 130)
+	row.Size = UDim2.new(1, 0, 0, 154)
 	row.Parent = m.body
 	local grid = Instance.new("UIGridLayout")
-	grid.CellSize = UDim2.fromOffset(78, 126)
+	grid.CellSize = UDim2.fromOffset(80, 150)
 	grid.CellPadding = UDim2.fromOffset(6, 0)
 	grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	grid.SortOrder = Enum.SortOrder.LayoutOrder
@@ -57,15 +57,15 @@ function DailyPanel.build(root: Instance)
 		dayLabel.Parent = f
 		local reward = C.text({
 			text = rewardText(def),
-			size = Theme.size.sm,
+			size = Theme.size.md,
 			color = if def.kind == "boost" then Theme.color.secondary else Theme.color.feather,
 		})
 		reward.Position = UDim2.fromOffset(0, 30)
-		reward.Size = UDim2.new(1, 0, 0, 56)
+		reward.Size = UDim2.new(1, 0, 0, 72)
 		reward.TextWrapped = true
 		reward.Parent = f
 		local state = C.text({ text = "", size = Theme.size.xs, color = Theme.color.success })
-		state.Position = UDim2.fromOffset(0, 92)
+		state.Position = UDim2.fromOffset(0, 112)
 		state.Size = UDim2.new(1, 0, 0, 26)
 		state.Parent = f
 		tiles[i] = { frame = f, stroke = stroke, state = state }

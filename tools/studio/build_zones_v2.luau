@@ -475,6 +475,15 @@ local function skinDummies(model: Instance, z: any): number
 		weld.Part1 = plush
 		weld.Parent = plush
 		plush.Parent = d
+		-- Schild knapp über dem Plüsch, nur in der Nähe sichtbar (weniger Text im Bild)
+		local head = d:FindFirstChild("Head")
+		local bb = head and head:FindFirstChildOfClass("BillboardGui")
+		if bb and head:IsA("BasePart") then
+			local top = groundY + plush.Size.Y
+			bb.StudsOffset = Vector3.new(0, top - head.Position.Y + 1.6, 0)
+			bb.Size = UDim2.fromOffset(120, 30)
+			bb.MaxDistance = 45
+		end
 		n += 1
 	end
 	return n
