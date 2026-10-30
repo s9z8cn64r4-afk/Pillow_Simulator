@@ -41,6 +41,11 @@ function Bench.run(registry: any, opts: any): { [string]: any }
 	assert(player, "kein Spieler im Server")
 	local PD, Swing = registry.PlayerDataService, registry.SwingService
 	assert(PD:isLoaded(player), "Spielstand nicht geladen")
+	-- Testhilfe (nur Studio): Federn gutschreiben, ohne Rücksetzen (für UI-Tests mit frischem Spielstand)
+	if opts.mode == "grant" then
+		PD:addFeathers(player, opts.amount or 0, "studio_test")
+		return { feathers = PD:get(player).feathers }
+	end
 	local before = snapshot(PD, player)
 	local out: { [string]: any } = {}
 
