@@ -19,7 +19,7 @@
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
 | Tests | **115/115** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | 90 Skripte in beiden; alle in Sitzung 5 geänderten Skripte per Hash identisch (Commit 48a1d43) `[VERIFIZIERT]` – Map/Props/Puppen nur im Place → **Studio-Stand nicht gespeichert** |
+| Repo ↔ Studio | 90 Skripte in beiden; alle in Sitzung 5 geänderten Skripte per Hash identisch (Commit 48a1d43) `[VERIFIZIERT]` – Map/Props/Puppen nur im Place → Studio-Stand gespeichert laut Owner (30.10. abends) |
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus aus (Owner: keine Gruppe) |
 | PS-34 Monetarisierung | Testgerüst `[VERIFIZIERT]` (7 Tests, Shop „Extras“ zeigt SOON); Preise festgelegt (149/99/79/25 R$, Config); echte Käufe `[BLOCKIERT]` (Owner: Pässe/Produkte anlegen + IDs, #4) |
@@ -59,7 +59,7 @@ Siehe `NEXT_ACTIONS.md`.
 ## Offene Owner-Entscheidungen / -Aktionen
 Anleitung für alle Schritte: https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
 
-Mehrspielertest (#3) · **Studio speichern (Art-Pass v2!)** · Icon + Thumbnails per Fotomodus (#8) · Owner richtet Discord/Relay/Pässe mit mir im Browser ein (angemeldet sein: Discord, GitHub, Roblox, Cloudflare) · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Mehrspielertest (#3) · Owner richtet Discord/Relay/Pässe mit mir im Browser ein (angemeldet sein: Discord, GitHub, Roblox, Cloudflare) · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

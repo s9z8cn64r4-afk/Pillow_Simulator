@@ -49,7 +49,7 @@ Regeln bleiben: keine Zufallsitems, alle Inhalte ohne Robux erreichbar, Robux-Kn
 3. In Roblox „Allow HTTP Requests“ einschalten und die Secrets `relay_url` + `relay_token` anlegen.
 Hinweis: Webhook-URLs und Token **nicht** an mich schicken – nur dort eintragen.
 
-## #8 (2026-10-30) – offen, vor Closed Beta empfohlen
+## #8 (2026-10-30) – erledigt laut Owner (30.10. abends; Bilder + Studio gespeichert)
 **Icon + Vorschaubilder für die Spielseite** (~10 Min.): Fotomodus in Studio (Taste **P**, dann **N**) – Anleitung in `docs/marketing/store-page.md`. Bilder im Creator Dashboard hochladen (Icon 512 × 512, Thumbnails 1920 × 1080), dazu Titel „Pillow Legends“ und die Beschreibung von dort.
 
 ## #7 (2026-10-27) – offen, vor Beta-Ende / Open Beta
