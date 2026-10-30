@@ -284,6 +284,17 @@ function UIController:build()
 	})
 	rebirthBtn.instance.LayoutOrder = 3
 	rebirthBtn.instance.Parent = menu
+	-- roter Punkt: Rebirth bezahlbar (gefunden im Spieldurchlauf: sonst übersieht man ihn leicht)
+	local rebirthDot = make("Frame", {
+		Name = "Badge",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(1, -4, 0, 4),
+		Size = UDim2.fromOffset(18, 18),
+		BackgroundColor3 = Theme.color.danger,
+		Visible = false,
+		ZIndex = 10,
+	}, rebirthBtn.instance)
+	C.corner(rebirthDot, 9)
 	local settingsBtn = C.button({
 		text = "⚙️ Settings",
 		size = UDim2.fromOffset(110, 56),
@@ -584,6 +595,7 @@ function UIController:build()
 		daily.refresh(s)
 		local claimable = daily.claimable(s)
 		dailyDot.Visible = claimable
+		rebirthDot.Visible = s.feathers >= Formulas.rebirthCost(s.rebirths)
 		-- Willkommen-zurück: einmal pro Sitzung automatisch öffnen (nicht während des Tutorials)
 		if claimable and not dailyAutoShown and s.tutorial and s.tutorial.completed then
 			dailyAutoShown = true
