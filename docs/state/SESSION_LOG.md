@@ -1,5 +1,15 @@
 # SESSION_LOG (neueste oben)
 
+## Sitzung 5 – 2026-10-30
+**Ziele:** Spiel weiterbringen, solange Owner-Schritte (Discord, Relay, Pässe) warten.
+**Erledigt:**
+- Browser-Weg geprüft: im Browser-Bereich der Claude-App ist der Owner noch nirgends angemeldet → Einrichtung von Discord/Relay/Pässen später gemeinsam (Owner meldet sich an, trägt Geheimnisse selbst ein).
+- Persistenz-Stress 100 Zyklen mit Prüfsummen (MVP-Mindestanforderung) `[VERIFIZIERT]`.
+- Server-Lastmessung (`DevBench`, nur Studio): 12 Spieler im Maximaltempo hochgerechnet → 59,9 FPS `[VERIFIZIERT]`.
+- Art-Pass Zonen v2 (PS-43) für alle 4 Zonen: höhere Wände, Tapete, Leisten, Lichter, Riesen-Kissenberg, Extras; Vorher/Nachher-Screenshots; 115/115 Tests.
+- Spielseiten-Entwurf (Titel, Beschreibung, Icon/Thumbnail-Plan) `docs/marketing/store-page.md`.
+**Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
+
 ## Sitzung 4 – 2026-10-27
 **Nachtrag (abends):** Discord-Vorlage (Doc) erstellt; Owner-Entscheidungen umgesetzt: Name **Pillow Legends** (Ladebildschirm, Discord-Texte, Marketing, GDD, README), keine Roblox-Gruppe (Gruppen-Bonus aus), Robux-Preise delegiert → 149/99/79/25 R$ in `content.py`/Config (Shop bleibt SOON bis IDs). Relay-Anleitung korrigiert (Roblox-Secrets im Creator Dashboard). Studio-Sync 3 Skripte, 115/115 Tests `[VERIFIZIERT]`.
 **Ziele:** M3 Closed Beta: Daily, Analytics, Codes, Leaderboards, Freunde-Bonus, Feedback.

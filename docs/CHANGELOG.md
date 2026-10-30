@@ -4,6 +4,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
 ### Changed
+- Alle 4 Zonen optisch überarbeitet: höhere Wände mit Tapete je Zone, Leisten, Lichterketten bzw. Wandleuchten, bekletterbarer Riesen-Kissenberg, Extras (Kleiderschrank + Bilder, Wimpel, Kronleuchter, Mond + Sterne).
 - Spielname **Pillow Legends** (Ladebildschirm, Community-Texte).
 - Robux-Preise in der Config (149/99/79/25 R$); Kauf bleibt aus, bis Pässe angelegt sind.
 ### Added

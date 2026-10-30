@@ -8,7 +8,7 @@
 | Aktuelle Phase | **Phase 3 – Closed Beta (M3) in Arbeit**; Gate M0 + M1 bestanden, **Gate M2 vorläufig bestanden** (2 Restpunkte) |
 | Version | 0.3.0-dev (M3 in Arbeit) |
 | Sprint-Ziel | Closed Beta starten (wartet auf Owner #5: Beta-Place, Tester, MVP-Scope); danach Auswertung bis Gate M3 |
-| Letzte Sitzung | 2026-10-27 (Sitzung 4): M3-Features Daily, Analytics, Codes, Leaderboards, Freunde-/Gruppen-Bonus, Feedback, Monetarisierung (Testgerüst), Persistenz-Stresstest, Phone-Korrekturen, Sitzungsberichte + Beta-Bericht, Tester-Anleitung, Gate-M3-Vorbereitung, automatischer Mehrspieler-Check, Arm-Schwung repariert, Logging-Relay, Community-Discord-Setup, Owner-Anleitung, Exploit-Suite v2, Pre-Launch-Marketing, Discord-Vorlage; Owner-Entscheidungen Name **Pillow Legends**, keine Gruppe, Robux-Preise delegiert (149/99/79/25 R$) – 115/115 Tests |
+| Letzte Sitzung | 2026-10-30 (Sitzung 5): Persistenz-Stress 100 Zyklen, Server-Lastmessung (12 Spieler hochgerechnet), Art-Pass Zonen v2 für alle 4 Zonen, Spielseiten-Entwurf – 115/115 Tests |
 | Repository | github.com/s9z8cn64r4-afk/Pillow_Simulator (`main`, **öffentlich**) – Push funktioniert, CI grün |
 | Task-Tracker | Trello „Pillow Simulator \| Studio“ – https://trello.com/b/fAGsLKn7/pillow-simulator-studio |
 | Dev-Place | „dev place“, PlaceId 123160785919248, DataStore `PlayerData_DEV` |
@@ -23,12 +23,13 @@
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus aus (Owner: keine Gruppe) |
 | PS-34 Monetarisierung | Testgerüst `[VERIFIZIERT]` (7 Tests, Shop „Extras“ zeigt SOON); Preise festgelegt (149/99/79/25 R$, Config); echte Käufe `[BLOCKIERT]` (Owner: Pässe/Produkte anlegen + IDs, #4) |
-| PS-39 Persistenz | Stresstest `[VERIFIZIERT]` (4 Tests, echter DataStore); Übernahme zwischen zwei Servern nur live prüfbar |
+| PS-39 Persistenz | Stresstest `[VERIFIZIERT]` (4 Tests + 100 Zyklen mit Prüfsummen, echter DataStore); Übernahme zwischen zwei Servern nur live prüfbar |
 | PS-40 Mobile | alle Fenster auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben); echtes Gerät in Beta |
 | PS-41 Tester-Programm | Sitzungsberichte + `beta_report.luau` `[VERIFIZIERT]`; Tester-Anleitung + Beta-Plan `[ENTWURF]`; Start `[BLOCKIERT]` (Owner #5) |
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
+| Server-Last | 12 Spieler hochgerechnet (40 Schläge/s): Heartbeat 59,9 FPS `[VERIFIZIERT]` (Studio, `DevBench`); echte 12-Spieler-Messung in der Beta |
 | Sicherheit | Exploit-Suite v2 über echte Remotes `[VERIFIZIERT]` (37 Angriffe, 13 Remotes, Kick bei 200) |
-| Pre-Launch-Marketing | Plan, Posts, Short-Skripte `[ENTWURF]` (`docs/marketing/`, Posten durch Owner; Name Pillow Legends eingesetzt) |
+| Pre-Launch-Marketing | Plan, Posts, Short-Skripte, Spielseite (`store-page.md`) `[ENTWURF]` (`docs/marketing/`, Posten durch Owner; Name Pillow Legends eingesetzt) |
 | PS-38 Community-Discord | Setup-Skript + Action + Texte + Moderationsleitfaden `[VERIFIZIERT]` (simuliert); Discord-Vorlage (Doc, manueller Weg) `[ENTWURF]` https://claude.ai/artifact/Pwr6S9dsnFVXB9QyKmZfB5; live `[BLOCKIERT]` (Owner #7) |
 | PS-42 Gate M3 | Vorbereitung in `GATES.md`; Exit-Kriterien brauchen Beta-Daten |
 | PS-37 Feedback | `[VERIFIZIERT]` (4 Tests + echter Klick mit TextService-Filter, Ablage DataStore `Feedback_DEV`); Relay → PS-36 |
@@ -38,6 +39,7 @@
 | PS-19/20 Settings + Index | `[VERIFIZIERT]` per Klick + Server-Roundtrip |
 | PS-11 Kissenmodelle | 14/14 Modelle + Aura/Trail `[VERIFIZIERT]` (Lineup + gehalten); Griff-Feinjustierung P3 |
 | PS-18 Tutorial | 6 Schritte + Skip + Boost `[VERIFIZIERT]` (8 Integrationstests, Desktop/Phone-Screenshots); echter Erstspieler-Durchlauf steht aus |
+| PS-43 Art-Pass Zonen v2 | alle 4 Zonen: Wände 44 hoch, Tapete je Zone, Leisten, Lichterketten/Wandleuchten, bekletterbarer Riesen-Kissenberg, Extras (Schrank + Bilder, Wimpel, Kronleuchter, Mond + Sterne) – `tools/studio/build_zones_v2.luau` `[VERIFIZIERT]` (Screenshots vorher/nachher, 115/115, Client 60 FPS); **nur im Place → Studio speichern** |
 | PS-16 Map | alle 4 Zonen dekoriert (`tools/studio/build_zone_decor.luau`, 362 Dekor-Teile), Vorhang-Durchgänge mit lesbarem Preisschild (BUG-003 behoben), Licht-Profile je Zone (`LightingController`) `[VERIFIZIERT]` (Freischalten + Zonenwechsel im Play-Test) |
 | PS-22/23 | Bot bis Rebirth 3 + Performance `[VERIFIZIERT]`; PS-21 Mehrspielertest: automatischer Check `[IMPLEMENTIERT, UNGETESTET]` – Owner startet Test mit 2 Spielern (#3) |
 | Musik, Ladebildschirm, Tooltips, Gamepad | `[VERIFIZIERT]` (Musik spielt, Screenshots, simulierte Gamepad-Eingaben) |
@@ -57,7 +59,7 @@ Siehe `NEXT_ACTIONS.md`.
 ## Offene Owner-Entscheidungen / -Aktionen
 Anleitung für alle Schritte: https://claude.ai/artifact/2CQ96veHiQ7L7u1KnSxyoF
 
-Mehrspielertest (#3) · Studio speichern · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
+Mehrspielertest (#3) · **Studio speichern (Art-Pass v2!)** · Owner richtet Discord/Relay/Pässe mit mir im Browser ein (angemeldet sein: Discord, GitHub, Roblox, Cloudflare) · Hörprobe Sounds + Musik · Codes freigeben · Pässe/Produkt anlegen + IDs (#4) · Beta-Place + Tester (#5) · Log-Discord + Relay-Deploy (#6) · Community-Discord per Action (#7, Owner hat GitHub-Weg gewählt) · MVP-Freigabe (Owner prüft) · Werbebudget (Standard 0 €) · Repo öffentlich lassen? (Hinweis: ursprünglich „privat“ angefragt; enthält keine Geheimnisse)
 
 ## Aktive Blocker
 Keine.

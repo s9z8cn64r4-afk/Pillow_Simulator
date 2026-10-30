@@ -61,7 +61,8 @@ Ergebnisse (Masterprompt F.2, Phase 3):
 | Mobile-Optimierung | `[VERIFIZIERT]` (Phone 844×390 mit Touch-Skalierung, alle Fenster) | Screenshots; echtes Gerät in Beta |
 | Tester-Rolle im Community-Discord | Setup-Skript `[VERIFIZIERT]` gegen simulierten Discord (9 Tests); live `[BLOCKIERT]` | Owner #7: Server + Bot + Action „Discord Setup“ (`tools/discord-setup/README.md`) |
 | 10–30 Tester | **offen** | Beta-Place + Einladung (Owner #5), `docs/qa/beta-plan.md`, `docs/community/tester-guide.md` |
-| Persistenz-Stresstest | `[VERIFIZIERT]` | Persistence.spec (echter DataStore) |
+| Persistenz-Stresstest | `[VERIFIZIERT]` | Persistence.spec (echter DataStore) + 100 Join/Leave/Shutdown-Zyklen mit Prüfsummen, 0 Abweichungen (2026-10-30) |
+| Server-Last 12 Spieler (MVP-Mindestanforderung ≥ 55 FPS) | `[VERIFIZIERT]` als Hochrechnung | 40 Schläge/s über echten Server-Pfad: Heartbeat 59,9 FPS; echte 12-Spieler-Messung in der Beta |
 
 Exit-Kriterien:
 | Kriterium | Status | Messung |
