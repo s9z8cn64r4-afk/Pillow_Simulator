@@ -19,7 +19,7 @@
 |---|---|
 | M1 (PS-01–10) | **Done** – Gate M1 `[VERIFIZIERT]`, Protokoll `GATES.md` |
 | Tests | **115/115** grün in Studio inkl. Bot-Durchlauf `[VERIFIZIERT]`; CI (StyLua/Selene/Economy-Sim) grün `[VERIFIZIERT]` |
-| Repo ↔ Studio | 0 Abweichungen (87 Skripte, Commit e3a01a4) `[VERIFIZIERT]`; danach 3 Skripte per Sync eingespielt (1942a0a: Ladebildschirm „PILLOW LEGENDS“, Preise, Social) – **Studio-Stand nicht gespeichert** |
+| Repo ↔ Studio | 90 Skripte in beiden; alle in Sitzung 5 geänderten Skripte per Hash identisch (Commit 48a1d43) `[VERIFIZIERT]` – Map/Props/Puppen nur im Place → **Studio-Stand nicht gespeichert** |
 | PS-30 Daily / PS-35 Analytics / PS-31 Codes / PS-32 Leaderboards | `[VERIFIZIERT]` (Tests + Klick/Screenshots); Codes-Liste `[ENTWURF]` bis Owner-Freigabe |
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus aus (Owner: keine Gruppe) |
 | PS-34 Monetarisierung | Testgerüst `[VERIFIZIERT]` (7 Tests, Shop „Extras“ zeigt SOON); Preise festgelegt (149/99/79/25 R$, Config); echte Käufe `[BLOCKIERT]` (Owner: Pässe/Produkte anlegen + IDs, #4) |
