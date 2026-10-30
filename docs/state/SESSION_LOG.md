@@ -16,6 +16,7 @@
 - Phone-Gegenprüfung (844 × 390, Touch-Skalierung) aller geänderten Fenster: Daily, Zonen, Rebirth, Shop, Index passen vollständig `[VERIFIZIERT]`.
 - HUD: Ziel-Leiste zeigt das nächste Kissen als 3D-Vorschau → 115/115, 0 Fehler.
 - **Tutorial als Neuspieler** (frischer Spielstand über `Environment = DEVFRESH1/2`, danach zurückgesetzt): alle 6 Schritte in ~3 Min. durchgespielt. Gefunden + behoben: (1) Schritt 2/4 – Shop öffnete auf dem falschen Reiter → öffnet jetzt passend (Upgrades bzw. Kissen); (2) Schritt 3 – kein Hinweis, wo die Puppen sind → nächste Puppe leuchtet + schwebende Raute darüber (BillboardGui wurde nicht angezeigt → 3D-Marker). Erneut durchgespielt `[VERIFIZIERT]`, 115/115.
+- Rank 2: AUTO-Knopf pulsiert (max. 20 s, bis eingeschaltet) + Hinweis; Daily-Fenster erscheint bei Neuspielern erst 25 s nach Tutorial-Ende (vorher lag es über der Abschluss-Feier) → mit frischem Spielstand geprüft, 115/115.
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
