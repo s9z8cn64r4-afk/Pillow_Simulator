@@ -67,6 +67,7 @@
 | 2026-10-30 | 041a649 | Art-Pass Teil 2+3: Plüsch-Puppen (geschweißt), Props, `AmbientController`, Portale | **115/115 PASS**, 0 Fehler im Log · Puppe folgt Wackeln (0,2 Studs Versatz, zurück 0) · Discokugel dreht, max. 6 Lampen gedimmt, bei Reduced Motion steht beides · Lauf durch den Lounge-Durchgang: Zone wechselt auf `livingroom` · Client 60 FPS | Konsole, Client-Messung |
 | 2026-10-30 | 1af7ecf | UI-Politur: Daily-Fenster, Puppen-Schilder, 3D-Kissen-Vorschau in Shop + Index (28 ViewportFrames) | **115/115 PASS**, 0 Fehler · Shop/Index per Klick geöffnet, Vorschauen + Silhouetten sichtbar | Screenshots Play-Test |
 | 2026-10-30 | 2896306 | UI-Politur Zonen- und Rebirth-Fenster | **115/115 PASS**, 0 Fehler · per Klick geöffnet: Zonen-Kacheln + Markierung aktuelle Zone, Rebirth-Fortschritt 5,82M / 80M | Screenshots Play-Test |
+| 2026-10-30 | 480f12b | Phone-Simulation 844 × 390 + Touch (Daily, Zonen, Rebirth, Shop, Index) + Ziel-Leiste mit Kissen-Vorschau | alle Fenster vollständig sichtbar, Schließen-Knopf erreichbar · **115/115 PASS**, 0 Fehler | Screenshots Play-Test |
 
 ## Offen / ungetestet
 - Echtes Mobilgerät (Touch-Eingabe, Performance) – Closed Beta

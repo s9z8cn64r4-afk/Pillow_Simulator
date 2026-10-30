@@ -4,6 +4,7 @@ Format: Keep a Changelog · Versionierung: SemVer (0.x bis Release).
 
 ## [Unreleased] – 0.3.0-dev (M3 Closed Beta, in Arbeit)
 ### Changed
+- Die Ziel-Leiste unten zeigt das nächste Kissen als 3D-Vorschau.
 - Zonen-Fenster mit Zonen-Symbolen und „You are here“; Rebirth-Fenster mit Fortschrittsbalken bis zum nächsten Rebirth.
 - Shop und Pillow Index zeigen jedes Kissen als 3D-Vorschau; noch nicht gesammelte Kissen erscheinen als Silhouette.
 - Daily-Reward-Fenster kompakter mit größerer Schrift; Puppen-Schilder nur noch in der Nähe sichtbar.

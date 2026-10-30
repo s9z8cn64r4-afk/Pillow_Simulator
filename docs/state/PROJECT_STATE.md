@@ -24,7 +24,7 @@
 | PS-33 Freunde-/Gruppen-Bonus | Logik + HUD `[VERIFIZIERT]` (Tests, Badge-Screenshot); echte Freunde `[IMPLEMENTIERT, UNGETESTET]` (Mehrspielertest); Gruppen-Bonus aus (Owner: keine Gruppe) |
 | PS-34 Monetarisierung | Testgerüst `[VERIFIZIERT]` (7 Tests, Shop „Extras“ zeigt SOON); Preise festgelegt (149/99/79/25 R$, Config); echte Käufe `[BLOCKIERT]` (Owner: Pässe/Produkte anlegen + IDs, #4) |
 | PS-39 Persistenz | Stresstest `[VERIFIZIERT]` (4 Tests + 100 Zyklen mit Prüfsummen, echter DataStore); Übernahme zwischen zwei Servern nur live prüfbar |
-| PS-40 Mobile | alle Fenster auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben); echtes Gerät in Beta |
+| PS-40 Mobile | alle Fenster auf Phone mit Touch-Skalierung `[VERIFIZIERT]` (Fehler gefunden + behoben; nach UI-Politur 30.10. erneut geprüft); echtes Gerät in Beta |
 | PS-41 Tester-Programm | Sitzungsberichte + `beta_report.luau` `[VERIFIZIERT]`; Tester-Anleitung + Beta-Plan `[ENTWURF]`; Start `[BLOCKIERT]` (Owner #5) |
 | PS-36 Logging-Relay | Worker + RelayService `[VERIFIZIERT]` (Tests + Schnittstellentest); live `[BLOCKIERT]` (Owner #6) |
 | Server-Last | 12 Spieler hochgerechnet (40 Schläge/s): Heartbeat 59,9 FPS `[VERIFIZIERT]` (Studio, `DevBench`); echte 12-Spieler-Messung in der Beta |
