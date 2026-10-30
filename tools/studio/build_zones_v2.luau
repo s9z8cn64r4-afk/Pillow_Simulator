@@ -31,6 +31,8 @@ local ZONES = {
 		ownBack = "WallBack",
 		pile = { "cotton", "striped", "fluffy", "heart", "worn", "cloud" },
 		extras = "bedroom",
+		dummySkin = "dummy_bedroom",
+		spawnId = "bedroom",
 	},
 	{
 		folder = "Lounge",
@@ -44,6 +46,8 @@ local ZONES = {
 		frontDoor = true,
 		pile = { "sleepover", "heart", "striped", "fluffy", "satin", "cotton" },
 		extras = "lounge",
+		dummySkin = "dummy_lounge",
+		spawnId = "livingroom",
 	},
 	{
 		folder = "HotelSuite",
@@ -58,6 +62,8 @@ local ZONES = {
 		frontDoor = true,
 		pile = { "hotel", "royal", "satin", "memoryfoam", "royal", "hotel" },
 		extras = "hotel",
+		dummySkin = "dummy_hotel",
+		spawnId = "hotelsuite",
 	},
 	{
 		folder = "CloudKingdom",
@@ -71,6 +77,8 @@ local ZONES = {
 		frontDoor = false, -- Ende der Welt: Durchgang ist durch WallEnd verschlossen
 		pile = { "cloud", "dream", "starlight", "fluffy", "cloud", "starlight" },
 		extras = "cloud",
+		dummySkin = "dummy_cloud",
+		spawnId = "cloudrealm",
 	},
 }
 
@@ -412,6 +420,66 @@ function EXTRAS.cloud(root: Instance, z: any)
 	end
 end
 
+-- Puppen-Optik: generiertes Plüsch-Modell je Zone, an den (unsichtbar gemachten) Körper geschweißt.
+-- Trefferlogik (Tag PillowDummy, Pivot), Wackel-Animation (PrimaryPart) und Schild (Head) bleiben unverändert.
+local DUMMY_MAX_H, DUMMY_MAX_W = 12, 8
+local function skinDummies(model: Instance, z: any): number
+	local folderD = model:FindFirstChild("Dummies")
+	local tpl = Props and z.dummySkin and Props:FindFirstChild(z.dummySkin)
+	if not folderD or not tpl then
+		return 0
+	end
+	local src = tpl:FindFirstChildWhichIsA("MeshPart", true)
+	if not src then
+		return 0
+	end
+	local spawn = workspace.Map:FindFirstChild("ZoneSpawn_" .. tostring(z.spawnId))
+	local scale = math.min(DUMMY_MAX_H / src.Size.Y, DUMMY_MAX_W / math.max(src.Size.X, src.Size.Z))
+	local n = 0
+	for _, d in folderD:GetChildren() do
+		local body = d:IsA("Model") and (d.PrimaryPart or d:FindFirstChild("Body"))
+		if not body then
+			continue
+		end
+		local old = d:FindFirstChild("Plush")
+		if old then
+			old:Destroy()
+		end
+		for _, name in { "Stand", "Pole", "Body", "Head" } do
+			local p = d:FindFirstChild(name)
+			if p and p:IsA("BasePart") then
+				p.Transparency = 1
+			end
+		end
+		local plush = src:Clone()
+		plush.Name = "Plush"
+		plush.Size = src.Size * scale
+		local pivot = d:GetPivot().Position
+		local _, ext = d:GetBoundingBox()
+		local groundY = pivot.Y - ext.Y / 2
+		local pos = Vector3.new(pivot.X, groundY + plush.Size.Y / 2, pivot.Z)
+		-- Gesicht (+Z des Modells) zum Zonen-Spawn drehen
+		if spawn and spawn:IsA("BasePart") then
+			local target = Vector3.new(spawn.Position.X, pos.Y, spawn.Position.Z)
+			plush.CFrame = CFrame.lookAt(pos, target) * CFrame.Angles(0, math.pi, 0)
+		else
+			plush.CFrame = CFrame.new(pos)
+		end
+		plush.Anchored = false
+		plush.Massless = true
+		plush.CanCollide = false
+		plush.CanQuery = false
+		plush.CanTouch = false
+		local weld = Instance.new("WeldConstraint")
+		weld.Part0 = body
+		weld.Part1 = plush
+		weld.Parent = plush
+		plush.Parent = d
+		n += 1
+	end
+	return n
+end
+
 local report = {}
 for _, z in ZONES do
 	local model = Zones:FindFirstChild(z.folder)
@@ -434,6 +502,7 @@ for _, z in ZONES do
 		EXTRAS[z.extras](root, z)
 	end
 	root.Parent = model
-	table.insert(report, ("%s %d"):format(z.folder, count - before))
+	local skinned = skinDummies(model, z)
+	table.insert(report, ("%s %d, Puppen %d"):format(z.folder, count - before, skinned))
 end
 return ("Zonen v2: %d Teile (%s), Wände %d hoch"):format(count, table.concat(report, ", "), WALL_H)
