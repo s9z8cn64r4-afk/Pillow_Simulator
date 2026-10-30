@@ -111,27 +111,27 @@ function TutorialHint.build(root: Instance, targets: { [string]: GuiObject })
 		hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 		hl.Parent = best
 		table.insert(worldMarks, hl)
+		-- Schwebende Raute (3D-Teil, lokal) über der Puppe – klassischer Ziel-Marker
 		local cf, size = best:GetBoundingBox()
-		local anchor = best.PrimaryPart or best:FindFirstChildWhichIsA("BasePart")
-		if not anchor then
-			return
-		end
-		local bb = Instance.new("BillboardGui")
-		bb.Adornee = anchor -- BillboardGui braucht ein Part als Adornee, kein Model
-		bb.Size = UDim2.fromOffset(60, 60)
-		bb.StudsOffsetWorldSpace = Vector3.new(0, cf.Position.Y + size.Y / 2 - anchor.Position.Y + 3, 0)
-		bb.AlwaysOnTop = true
-		bb.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-		local arrow = C.text({ text = "⬇", size = Theme.size.xl, color = Theme.color.feather })
-		arrow.Size = UDim2.fromScale(1, 1)
-		arrow.TextStrokeTransparency = 0
-		arrow.Parent = bb
-		table.insert(worldMarks, bb)
+		local top = cf.Position + Vector3.new(0, size.Y / 2 + 3.5, 0)
+		local marker = Instance.new("Part")
+		marker.Name = "TutorialMarker"
+		marker.Anchored = true
+		marker.CanCollide = false
+		marker.CanQuery = false
+		marker.CanTouch = false
+		marker.CastShadow = false
+		marker.Material = Enum.Material.Neon
+		marker.Color = Theme.color.feather
+		marker.Size = Vector3.new(2, 2, 2)
+		marker.CFrame = CFrame.new(top) * CFrame.Angles(math.rad(45), 0, math.rad(45))
+		marker.Parent = workspace
+		table.insert(worldMarks, marker)
 		if not reducedMotion then
 			TweenService:Create(
-				bb,
-				TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
-				{ StudsOffsetWorldSpace = bb.StudsOffsetWorldSpace + Vector3.new(0, 1.5, 0) }
+				marker,
+				TweenInfo.new(0.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+				{ CFrame = marker.CFrame + Vector3.new(0, 1.5, 0) }
 			):Play()
 		end
 	end
