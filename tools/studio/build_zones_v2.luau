@@ -458,12 +458,12 @@ local function skinDummies(model: Instance, z: any): number
 		local _, ext = d:GetBoundingBox()
 		local groundY = pivot.Y - ext.Y / 2
 		local pos = Vector3.new(pivot.X, groundY + plush.Size.Y / 2, pivot.Z)
-		-- Gesicht (+Z des Modells) zum Zonen-Spawn drehen
+		-- Gesicht (+Z des generierten Modells, Eigendrehung des MeshParts beibehalten) zum Zonen-Spawn drehen
 		if spawn and spawn:IsA("BasePart") then
 			local target = Vector3.new(spawn.Position.X, pos.Y, spawn.Position.Z)
-			plush.CFrame = CFrame.lookAt(pos, target) * CFrame.Angles(0, math.pi, 0)
+			plush.CFrame = CFrame.lookAt(pos, target) * CFrame.Angles(0, math.pi, 0) * src.CFrame.Rotation
 		else
-			plush.CFrame = CFrame.new(pos)
+			plush.CFrame = CFrame.new(pos) * src.CFrame.Rotation
 		end
 		plush.Anchored = false
 		plush.Massless = true
