@@ -19,7 +19,7 @@
 - Rank 2: AUTO-Knopf pulsiert (max. 20 s, bis eingeschaltet) + Hinweis; Daily-Fenster erscheint bei Neuspielern erst 25 s nach Tutorial-Ende (vorher lag es über der Abschluss-Feier) → mit frischem Spielstand geprüft, 115/115.
 - Studio-Fotomodus für Spielseiten-Bilder (P/N/B): 5 Szenen (Icon + 4 Zonen), HUD aus, Kamera fest, Kissen der Szene lokal, Schlag + Federn in Schleife; Kissen-Tool-Bau nach `Shared/Util/PillowTool` verschoben (Server + Fotomodus) → 115/115, Szenen per Screenshot geprüft, Rücksetzen geprüft.
 - Owner: Studio gespeichert und Bilder gemacht (#8, laut Owner).
-- Game-Feel: Schlag-Effekte nach Seltenheit (Federn ×1–×2, ab Rare farbige Funken; Low VFX ohne Funken) `[VERIFIZIERT]` (Satin/Rare: 14 statt 10 Federn gemessen, 115/115); Zonen-Freischaltung mit Feier-Banner statt Toast `[IMPLEMENTIERT, UNGETESTET]` (braucht Zonenkauf im Testlauf).
+- Game-Feel: Schlag-Effekte nach Seltenheit (Federn ×1–×2, ab Rare farbige Funken; Low VFX ohne Funken) `[VERIFIZIERT]` (Satin/Rare: 14 statt 10 Federn gemessen, 115/115); Zonen-Freischaltung mit Feier-Banner statt Toast `[VERIFIZIERT]` (frischer Spielstand, Kauf über `DevBench` mode zoneBuy = gleicher Server-Pfad wie der Prompt; Banner „NEW ZONE! Pajama Party Lounge · x2 feathers“).
 **Probleme:** `loadstring` gibt es im Server-DataModel nicht → Werkzeug-Code direkt an `execute_luau`; Studio-Fenster nur 970 × 465 → Thumbnails besser vom Owner in voller Auflösung.
 
 ## Sitzung 4 – 2026-10-27
