@@ -49,7 +49,12 @@ function Bench.run(registry: any, opts: any): { [string]: any }
 	-- Testhilfe: Zonenkauf wie über den ProximityPrompt (Prompts erscheinen im automatisierten Fenster nicht)
 	if opts.mode == "zoneBuy" then
 		local ok, why = registry.ZoneService:unlock(player, opts.zone)
-		registry.NetService:fire("Notify", player, "purchaseResult", { ok = ok, kind = "zone", id = opts.zone, reason = why })
+		registry.NetService:fire(
+			"Notify",
+			player,
+			"purchaseResult",
+			{ ok = ok, kind = "zone", id = opts.zone, reason = why }
+		)
 		return { ok = ok, reason = why }
 	end
 	local before = snapshot(PD, player)
